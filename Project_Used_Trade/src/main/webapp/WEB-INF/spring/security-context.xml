@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- security-context.xml : 시큐리티 관련 설정  -->
+	
+	<!-- 접근 권한 처리 객체 -->
+	<bean id="customAccessDenied" class="com.bswill.security.CustomAccessDeniedHandler" />
+	
+	<!-- 로그인 성공 시 처리 객체 -->
+	<bean id="customLoginSuccess" class="com.bswill.security.CustomLoginSuccessHandler" />
+	
+	<!-- 로그인 실패 시 처리 객체 -->
+	<bean id="customLoginFailure" class="com.bswill.security.CustomLoginFailureHandler" />
+	
+	<!-- 암호화 처리 객체 -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<security:http>
+		<!-- 접근 권한 -->
+		<security:intercept-url pattern="/main" access="isAuthenticated()" />
+		<security:intercept-url pattern="/employee/*" access="isAuthenticated()" />
+		<security:intercept-url pattern="/event/*" access="isAuthenticated()" />
+
+		<!-- 접근 권한이 없을 때 -->
+		<security:access-denied-handler ref="customAccessDenied" />
+
+		<!-- 로그인 -->
+		<security:form-login login-page="/loginBswill" authentication-success-handler-ref="customLoginSuccess"
+			authentication-failure-handler-ref="customLoginFailure" />
+		
+		<!-- 로그아웃 -->
+		<security:logout logout-url="/logoutBswill" logout-success-url="/loginBswill?logout=1" invalidate-session="true" />
+
+	</security:http>
+
+	<security:authentication-manager>
+
+		<security:authentication-provider>
+
+			<security:jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT employee_id, PASSWD, enabled FROM tbl_employee WHERE employee_id=?"
+				authorities-by-username-query="SELECT employee_id, auth FROM tbl_auth WHERE employee_id=?" />
+
+			<security:password-encoder ref="bcryptPasswordEncoder" />
+
+		</security:authentication-provider>
+
+	</security:authentication-manager>
+
+</beans>
