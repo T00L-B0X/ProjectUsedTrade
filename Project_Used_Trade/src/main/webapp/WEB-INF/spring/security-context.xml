@@ -7,13 +7,13 @@
 	<!-- security-context.xml : 시큐리티 관련 설정  -->
 	
 	<!-- 접근 권한 처리 객체 -->
-	<bean id="customAccessDenied" class="com.bswill.security.CustomAccessDeniedHandler" />
+	<bean id="customAccessDenied" class="com.itwillbs.security.CustomAccessDeniedHandler" />
 	
 	<!-- 로그인 성공 시 처리 객체 -->
-	<bean id="customLoginSuccess" class="com.bswill.security.CustomLoginSuccessHandler" />
+	<bean id="customLoginSuccess" class="com.itwillbs.security.CustomLoginSuccessHandler" />
 	
 	<!-- 로그인 실패 시 처리 객체 -->
-	<bean id="customLoginFailure" class="com.bswill.security.CustomLoginFailureHandler" />
+	<bean id="customLoginFailure" class="com.itwillbs.security.CustomLoginFailureHandler" />
 	
 	<!-- 암호화 처리 객체 -->
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
