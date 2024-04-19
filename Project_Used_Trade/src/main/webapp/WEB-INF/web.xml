@@ -55,6 +55,7 @@
 <!-- 	<filter-mapping> -->
 <!-- 		<filter-name>springSecurityFilterChain</filter-name> -->
 <!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping> asdfasdf-->
+<!-- 	</filter-mapping> -->
+
 
 </web-app>
