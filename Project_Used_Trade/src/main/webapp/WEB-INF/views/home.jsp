@@ -5,4 +5,7 @@
 
 <h1> homepage </h1>
 
+<h3> <a href = "/list">게시판으로 이동</a> </h3>
+<h3> <a href = "/register">글쓰기</a> </h3>
+
 <%@ include file = "./include/footer.jsp" %>

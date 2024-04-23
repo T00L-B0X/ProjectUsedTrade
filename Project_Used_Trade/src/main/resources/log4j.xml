@@ -15,6 +15,18 @@
 		<level value="debug" />
 	</logger>
 	
+	<logger name="com.itwillbs.member">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.board">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.chatting">
+		<level value="debug" />
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
