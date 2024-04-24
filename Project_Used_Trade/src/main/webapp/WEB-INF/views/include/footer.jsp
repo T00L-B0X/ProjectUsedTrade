@@ -83,6 +83,7 @@
 		
 		<script src="/resources/js/tiny-slider.js"></script>
 		<script src="/resources/js/custom.js"></script>
+		<script src = "/resources/js/chatBot.js"></script>
 	</body>
 
 </html>
