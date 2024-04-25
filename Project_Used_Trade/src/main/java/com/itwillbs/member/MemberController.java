@@ -69,8 +69,10 @@ public class MemberController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String memberLoginPOST(MemberVO vo, HttpSession session) {
 		logger.info(" login.jsp -> memberLoginPOST() 호출 ");
+		
+		
 		logger.info(" 로그인 정보 : " + vo);
-		logger.info(" 로그인 정보 : " + vo.getUser_name());
+		logger.info(" 로그인 정보 : " + vo.getUserid());
 		
 		MemberVO memberVO = mService.memberLogin(vo);
 		
@@ -82,9 +84,10 @@ public class MemberController {
 			logger.debug(" 로그인 성공!! -> 메인페이지 ");
 			
 			// 로그인 성공한 사용자의 아이디 정보를 세션에 저장
-			session.setAttribute("id", memberVO.getUserid());
+			session.setAttribute("userid", memberVO.getUserid());
 			session.setAttribute("vo", memberVO.toString());
-			session.setAttribute("loginMember", memberVO);
+			session.setAttribute("user", memberVO);
+			
 			
 			//return "redirect:/member/main";
 			addr = "/";

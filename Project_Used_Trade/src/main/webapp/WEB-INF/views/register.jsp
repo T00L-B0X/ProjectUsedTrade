@@ -5,7 +5,8 @@
 
 <h1>/board/register.jsp</h1>
 <h2>글쓰기</h2>
-<h2> 회원 정보 : ${loginMember } </h2>
+<h2> 회원 정보 : ${user } </h2>
+아이디 : ${userid }
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">게시판 글쓰기</h3>
@@ -23,7 +24,7 @@
 			<div class="form-group">
 				<label>이 름</label>
 				<input type="text" class="form-control" name="writer"
-				 placeholder = "${id }">
+				 placeholder = "${userid }">
 			</div>
 
 			<div class="form-group">

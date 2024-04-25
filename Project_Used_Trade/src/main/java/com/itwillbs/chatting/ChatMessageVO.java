@@ -1,80 +1,85 @@
 package com.itwillbs.chatting;
 
 
+/**
+ * @author ITWILL
+ *
+ */
 public class ChatMessageVO {
-	private int messageId;
-	private int chatNo;
-	private String messageContent;
-	private String messageRegdate;
-	private String userId;
-	private String userName;
-	private int unreadCount;
+	private int message_id;
+	private int chat_no;
+	private String message_content;
+	private String message_regdate;
+	private String userid;
+	private String user_name;
+	private int unread_count;
 	
 	// DB에 없는 필요한 변수
 	private String type;
+
 	
 	
 	@Override
 	public String toString() {
-		return "ChatMessageVO [messageId=" + messageId + ", chatNo=" + chatNo + ", messageContent=" + messageContent
-				+ ", messageRegdate=" + messageRegdate + ", userId=" + userId + ", userName=" + userName
-				+ ", unreadCount=" + unreadCount + ", type=" + type + "]";
+		return "ChatMessageVO [message_id=" + message_id + ", chat_no=" + chat_no + ", message_content="
+				+ message_content + ", message_regdate=" + message_regdate + ", userid=" + userid + ", user_name="
+				+ user_name + ", unread_count=" + unread_count + ", type=" + type + "]";
 	}
 
-	public int getMessageId() {
-		return messageId;
+	public int getMessage_id() {
+		return message_id;
 	}
 
-	public void setMessageId(int messageId) {
-		this.messageId = messageId;
+	public void setMessage_id(int message_id) {
+		this.message_id = message_id;
 	}
 
-	public int getChatNo() {
-		return chatNo;
+	public int getChat_no() {
+		return chat_no;
 	}
 
-	public void setChatNo(int chatNo) {
-		this.chatNo = chatNo;
+	public void setChat_no(int chat_no) {
+		this.chat_no = chat_no;
 	}
 
-	public String getMessageContent() {
-		return messageContent;
+	public String getMessage_content() {
+		return message_content;
 	}
 
-	public void setMessageContent(String messageContent) {
-		this.messageContent = messageContent;
+	public void setMessage_content(String message_content) {
+		this.message_content = message_content;
 	}
 
-	public String getMessageRegdate() {
-		return messageRegdate;
+	public String getMessage_regdate() {
+		return message_regdate;
 	}
 
-	public void setMessageRegdate(String messageRegdate) {
-		this.messageRegdate = messageRegdate;
+	public void setMessage_regdate(String message_regdate) {
+		this.message_regdate = message_regdate;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUser_name() {
+		return user_name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
-	public int getUnreadCount() {
-		return unreadCount;
+	public int getUnread_count() {
+		return unread_count;
 	}
 
-	public void setUnreadCount(int unreadCount) {
-		this.unreadCount = unreadCount;
+	public void setUnread_count(int unread_count) {
+		this.unread_count = unread_count;
 	}
 
 	public String getType() {
@@ -86,5 +91,4 @@ public class ChatMessageVO {
 	}
 	
 	
-
 }

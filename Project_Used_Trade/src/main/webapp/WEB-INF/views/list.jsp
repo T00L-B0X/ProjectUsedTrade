@@ -4,7 +4,8 @@
 <%@ include file = "./include/header.jsp" %>
 
 <h1> Board.jsp </h1>
-<h2> 회원 정보 : ${loginMember } </h2>
+<h2> 회원 정보 : ${user } </h2>
+<h2> 회원 id : ${userid }</h2>
 
 
 <%-- ${boardList.size() } --%>

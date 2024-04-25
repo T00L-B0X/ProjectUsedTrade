@@ -37,7 +37,7 @@ public class BoardController {
 		
 		
 		logger.info(" 전달정보 : " + vo);
-		vo.setWriter((String)session.getAttribute("id"));
+		vo.setWriter((String)session.getAttribute("userid"));
 		bService.regist(vo);
 		
 		logger.info(" 글쓰기 완료! -> 리스트 페이지 이동 ");

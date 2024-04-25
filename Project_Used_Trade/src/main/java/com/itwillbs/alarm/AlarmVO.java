@@ -1,26 +1,28 @@
 package com.itwillbs.alarm;
 
 public class AlarmVO {
-	private int alarmNo;
+	private int alarm_no;
 	private String userId;
-	private String alarmType;
-	private String alarmCdate;
-	private String alarmPrefix;
-	private int chatNo;
+	private String alarm_type;
+	private String alarm_cdate;
+	private String alarm_prefix;
+	private int chat_no;
+	
 	
 	
 	
 	@Override
 	public String toString() {
-		return "AlarmVO [alarmNo=" + alarmNo + ", userId=" + userId + ", alarmType=" + alarmType + ", alarmCdate="
-				+ alarmCdate + ", alarmPrefix=" + alarmPrefix + ", chatNo=" + chatNo + "]";
+		return "AlarmVO [alarm_no=" + alarm_no + ", userId=" + userId + ", alarm_type=" + alarm_type + ", alarm_cdate="
+				+ alarm_cdate + ", alarm_prefix=" + alarm_prefix + ", chat_no=" + chat_no + "]";
 	}
 	
-	public int getAlarmNo() {
-		return alarmNo;
+	
+	public int getAlarm_no() {
+		return alarm_no;
 	}
-	public void setAlarmNo(int alarmNo) {
-		this.alarmNo = alarmNo;
+	public void setAlarm_no(int alarm_no) {
+		this.alarm_no = alarm_no;
 	}
 	public String getUserId() {
 		return userId;
@@ -28,32 +30,31 @@ public class AlarmVO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getAlarmType() {
-		return alarmType;
+	public String getAlarm_type() {
+		return alarm_type;
 	}
-	public void setAlarmType(String alarmType) {
-		this.alarmType = alarmType;
+	public void setAlarm_type(String alarm_type) {
+		this.alarm_type = alarm_type;
 	}
-	public String getAlarmCdate() {
-		return alarmCdate;
+	public String getAlarm_cdate() {
+		return alarm_cdate;
 	}
-	public void setAlarmCdate(String alarmCdate) {
-		this.alarmCdate = alarmCdate;
+	public void setAlarm_cdate(String alarm_cdate) {
+		this.alarm_cdate = alarm_cdate;
 	}
-	public String getAlarmPrefix() {
-		return alarmPrefix;
+	public String getAlarm_prefix() {
+		return alarm_prefix;
 	}
-	public void setAlarmPrefix(String alarmPrefix) {
-		this.alarmPrefix = alarmPrefix;
+	public void setAlarm_prefix(String alarm_prefix) {
+		this.alarm_prefix = alarm_prefix;
 	}
-	public int getChatNo() {
-		return chatNo;
+	public int getChat_no() {
+		return chat_no;
 	}
-	public void setChatNo(int chatNo) {
-		this.chatNo = chatNo;
+	public void setChat_no(int chat_no) {
+		this.chat_no = chat_no;
 	}
 	
 	
 	
-
 }

@@ -3,13 +3,13 @@ package com.itwillbs.chatting;
 public class UnreadMemberVO {
 
 	private int messageId;
-	private String userId;
+	private String userid;
 	private int readCheck;
 	private int chatNo;
 
 	@Override
 	public String toString() {
-		return "UnreadMemberVO [messageId=" + messageId + ", userId=" + userId + ", readCheck=" + readCheck
+		return "UnreadMemberVO [messageId=" + messageId + ", userid=" + userid + ", readCheck=" + readCheck
 				+ ", chatNo=" + chatNo + "]";
 	}
 
@@ -22,11 +22,11 @@ public class UnreadMemberVO {
 	}
 
 	public String getUserId() {
-		return userId;
+		return userid;
 	}
 
 	public void setUserId(String userId) {
-		this.userId = userId;
+		this.userid = userId;
 	}
 
 	public int getReadCheck() {

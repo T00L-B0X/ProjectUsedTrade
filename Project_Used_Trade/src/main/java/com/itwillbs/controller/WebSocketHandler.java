@@ -1,5 +1,7 @@
 package com.itwillbs.controller;
 
-public class WebSocketHandler {
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+public class WebSocketHandler extends TextWebSocketHandler {
 
 }
