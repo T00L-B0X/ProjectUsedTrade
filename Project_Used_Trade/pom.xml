@@ -121,7 +121,7 @@
 		      <artifactId>jackson-databind</artifactId>
 		      <version>2.9.6</version>
 		  </dependency>
-		<!-- // 채팅 위한 socket -->
+		<!--  채팅 위한 socket -->
 		
 		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 		<dependency>

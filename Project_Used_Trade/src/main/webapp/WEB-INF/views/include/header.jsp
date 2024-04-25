@@ -18,7 +18,7 @@
 
 		<!-- Bootstrap CSS -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
  		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -77,7 +77,7 @@
 					msg += `<li><a style='color: black;'class='dropdown-item' id='\${res[i].alarm_no}'href='chatting' >\${res[i].alarm_prefix}<br>\${res[i].alarm_cdate}</a></li>`
 				}
 				$("#toast").html(msg);
-				$("#alarm").attr("style", "color:blue;");
+				$("#alarm").attr("style", "color:red;");
 			}else{
 				$("#toast").html(`<li style='margin-left:20px;'>알람이 없습니다.</li>`);
 				$("#alarm").attr("style", "");
@@ -150,6 +150,11 @@
 						<li><a class="nav-link" href="#">Blog</a></li>
 						<li><a class="nav-link" href="/chathome">채팅방</a>
 						<div class="chatCnt chat-none"></div></li>
+					</ul>
+
+					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+						<li><a class="nav-link" href="#"><img src="/resources/images/user.svg"></a></li>
+						<li><a class="nav-link" href="#"><img src="/resources/images/cart.svg"></a></li>
 						
 						<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" id="alarm" role="button" data-bs-toggle="dropdown" >알림</a>
@@ -157,11 +162,6 @@
 								<!-- 동적 처리 -->
 							</ul>
 						</li>	
-					</ul>
-
-					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						<li><a class="nav-link" href="#"><img src="/resources/images/user.svg"></a></li>
-						<li><a class="nav-link" href="#"><img src="/resources/images/cart.svg"></a></li>
 					</ul>
 					
 				</div>
