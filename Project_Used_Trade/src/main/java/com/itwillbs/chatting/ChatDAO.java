@@ -7,7 +7,7 @@ public interface ChatDAO {
 	
 	public List<ChatMessageVO> messageList(int roomId);
 	public int insertMessage(ChatMessageVO chatMessage);
-	public List<ChatGroupVO> getChatgroupListById(String userid);
+	public List<ChatGroupVO> getChatGroupListById(String userid);
 	public List<ChatMemberVO> getChatMember(int chat_no);
 	public void updateMessageCountExceptMe(ChatMessageVO chatMessage);
 	public void readChatMessage(ChatMessageVO chatMessage);

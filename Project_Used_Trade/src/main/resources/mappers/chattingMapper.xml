@@ -103,18 +103,33 @@
 	</select>
 	
 	<!-- 채팅방 인원수 가져오기 -->
+	<select id = "getMemberCount" parameterType="int" resultType = "int">
+		select count(*) as cnt
+		from chatmember
+		where chat_no = #{chat_no}
+	</select>
+	
+	<!-- 메시지 안읽은 유저 테이블에 삽입 -->
+	<insert id = "insertUnreadMember" parameterType="hashMap">
+		insert into unreadmember (message_id, userid, chat_no) 
+		values (#{message_id}, #{userid}, #{chat_no})
+	</insert>
+	
+	<!-- 방 안에서 해당 메시지 읽음 카운트 -1 처리 -->
+	<update id = "readMessageInRoom" parameterType = "ChatMessageVO">
+		update chatmessage
+		set unread_count = unread_count - 1
+		where chat_no = #{chat_no}
+		and message_id = #{message_id}
+	</update>
+	
+	<!-- 안읽은 메시지 테이블에서 해당 방에 대한 유저의 행 삭제 -->
+	<delete id = "deleteUnreadMsg" parameterType="ChatMessageVO">
+		delete from unreadmember
+		where chat_no = #{chat_no}
+		and userid = #{userid}
+	</delete>
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
 </mapper>
