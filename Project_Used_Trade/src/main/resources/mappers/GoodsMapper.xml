@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mapper.GoodsMapper">
+	<!-- 글목록 조회(최신글10개) -->
+	<select id="selectGoodsList" resultType="GoodsVO"> 
+		select * from GOODS 
+		order by goods_id desc
+	</select>
+	
+	<select id="selectGoodsInfo" resultType="GoodsVO">
+		select * from GOODS
+		where goods_id = #{goods_id}
+	</select>
+	
+	<select id="selectSearchList" parameterType="GoodsVO" resultType="GoodsVO">
+		select * from GOODS
+		where replace(goods_title," ","") like concat('%', #{keyword}, '%')
+		<if test="category != null">
+        and category like concat ('%', #{category}, '%')
+    	</if>
+		order by goods_id desc
+	</select>
+	
+	<select id="selectCateList" parameterType="GoodsVO" resultType="GoodsVO">
+		select * from GOODS
+		where category = #{category}
+		order by goods_id desc
+	</select>
+	
+</mapper>

@@ -14,6 +14,14 @@
 	<logger name="com.itwillbs.article">
 		<level value="debug" />
 	</logger>
+	<logger name="com.itwillbs.goods">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.controller">
+		<level value="debug" />
+	</logger>
+	
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
