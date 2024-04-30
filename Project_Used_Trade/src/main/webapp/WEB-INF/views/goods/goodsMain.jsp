@@ -261,6 +261,11 @@ $(document).ready(function() {
                 $('#goodsBox').empty();
                 selectList();
             });
+            
+            $("#registerBtn").click(function(e){
+            	var url = "/goods/register";
+            	window.location.href = url;
+            });
         });
         
         
@@ -292,8 +297,9 @@ $(document).ready(function() {
 		<div id="searchKeyword">
 			<input type="text" name="keyword" placeholder="검색"></input>
 			<input type="button" value="검색" id="btnSearch">
+			<button id="registerBtn" style="float: right; margin-right: 100px;">글 등록 하기</button>
 		</div>
-			<legend> 게시판 목록 조회(GET) </legend>
+			<h3>게시판 목록 조회(GET)</h3>
 	</div>
 	
 	<div class="container" id="goodsBox"></div>

@@ -64,7 +64,6 @@ $(document).ready(function(){
 	var endTime = new Date(regdate.getTime() + (auction_time * 60 * 60 * 1000));
 	console.log(endTime);
 	$('<h5>').text(regdate).appendTo('.regdate');
-	
 });
 
 </script>

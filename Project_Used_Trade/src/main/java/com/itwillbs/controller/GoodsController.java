@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.goods.GoodsService;
 import com.itwillbs.goods.GoodsVO;
@@ -39,4 +40,20 @@ public class GoodsController {
 			model.addAttribute(gvo);
 			logger.debug("gvo : " + gvo);
 		}
+		
+		@RequestMapping(value = "/goods/register", method = RequestMethod.GET)
+		public void GoodsRegisterGet() {
+			logger.debug("GoodsRegisterGet()");
+		}
+		
+		@RequestMapping(value = "/goods/register", method = RequestMethod.POST)
+		public void GoodsRegisterPost(GoodsVO gvo,
+				@RequestParam("Img1") MultipartFile Img1,
+				@RequestParam("Img2") MultipartFile Img2,
+				@RequestParam("Img3") MultipartFile Img3,
+				@RequestParam("Img4") MultipartFile Img4) {
+			logger.debug("GoodsRegisterPost");
+		}
+		
+		
 }
