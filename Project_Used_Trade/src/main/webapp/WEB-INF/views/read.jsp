@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file = "./include/header.jsp" %>
 
-<h3>회원정보 : ${vvo } <br> </h3>
+<h3>회원정보 : ${user } <br> </h3>
 <h3>bno : ${bno } </h3>
 
 <div class="content">
@@ -11,6 +11,7 @@
 	<h1>read.jsp</h1>
 	<form role="form" action="" method="get" class="fm">
 	   <input type="hidden" name="bno" value="${vo.bno }">
+	   
 	</form>
 	
 
@@ -26,12 +27,17 @@
 					 name="title" id="exampleInputEmail1" 
 					 value="${vo.title }" readonly>
 				</div>
-
 				<div class="form-group">
-					<label>이 름</label>
+					<label>작성자 아이디</label>
 					<input type="text" class="form-control" name="writer" 
 					value="${vo.writer }" readonly>
 				</div>
+				<div class="form-group">
+					<label>작성자 아이디</label>
+					<input type="text" class="form-control" name="writer" 
+					value="${user.user_name }" readonly>
+				</div>
+
 
 				<div class="form-group">
 					<label>내 용</label>
@@ -50,6 +56,24 @@
 
 
 </div>
+<script type = "text/javascript">
+$(function() {
+	var joinBtn = $("#joinBtn");
+	
+	var ChatObject = {
+			"userid" : "${vo.writer}",
+			"user_name" : "${user.user_name}",
+			"chat_title" : "${vo.title}",
+			"auth_role" : "채팅인원"
+	}
+	console.log(ChatObject);
+	
+	joinBtn.on("click", function() {
+		alert("클릭하셨습니다");
+	})
+})
+
+</script>
 
 
 

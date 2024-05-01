@@ -7,6 +7,7 @@
 <h2>글쓰기</h2>
 <h2> 회원 정보 : ${user } </h2>
 아이디 : ${userid }
+이름 : ${user.user_name }
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">게시판 글쓰기</h3>
@@ -22,9 +23,15 @@
 			</div>
 
 			<div class="form-group">
-				<label>이 름</label>
+				<label>아이디</label>
 				<input type="text" class="form-control" name="writer"
 				 placeholder = "${userid }">
+			</div>
+			
+			<div class="form-group">
+				<label>이름</label>
+				<input type="text" class="form-control" name="writer"
+				 placeholder = "${user.user_name }">
 			</div>
 
 			<div class="form-group">

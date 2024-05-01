@@ -12,6 +12,8 @@
 		<result property="writer" column="writer"/>
 	</resultMap>
 	
+	<!-- 게시글에 쓴 작성자 id로 member테이블에 있는 user_name 불러오기 -->
+	
 	<!-- 글쓰기 -->
 	<insert id = "createBoard">
 		insert into board (title,content,writer)

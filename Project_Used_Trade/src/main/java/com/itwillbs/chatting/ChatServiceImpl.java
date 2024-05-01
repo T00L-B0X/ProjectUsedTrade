@@ -33,15 +33,15 @@ public class ChatServiceImpl implements ChatService {
 		chatDao.updateMessageCountExceptMe(chatMessage);
 
 		int chat_no = chatMessage.getChat_no();
-		int message_id = 0;
+		int message_id = 0; // message_id를 0으로 지정
 		
 		List<ChatMemberVO> memberList = chatDao.getChatMember(chat_no);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		for (ChatMemberVO member : memberList) {
 			map.put("userid", member.getUserid());
-//			map.put("message_id", chatMessage.getMessage_id());
-			map.put("message_id", chatDao.getMessageId(message_id));
+			// map.put("message_id", chatMessage.getMessage_id());
+			map.put("message_id", chatDao.getMessageId(message_id)); // 새로 추가된 코드 : (message_id)를 DB에서 꺼내는 코드
 			map.put("chat_no", chatMessage.getChat_no());
 			// 메시지 등록시마다 해당 방에 속한 유저들 대상으로 안읽은 유저
 			// 테이블에 추가

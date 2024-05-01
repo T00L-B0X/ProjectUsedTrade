@@ -137,9 +137,15 @@
 		and userid = #{userid}
 	</select>
 	
-	<!-- message_id 불러오기 -->
+	<!-- 가장 최신의 message_id 불러오기 -->
+	<!-- unreadmember 테이블에 message_id를 넣기 위한 구문 -->
 	<select id = "getMessageId" resultType="int" parameterType="ChatMessageVO">
 		select max(message_id) from chatmessage
+	</select>
+	
+	<!-- 가장 최신의 chat_no 불러오기 -->
+	<select id = "getChatNo" resultType="int">
+		select max(chat_no) from chatgroup
 	</select>
 	
 	

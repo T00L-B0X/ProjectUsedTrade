@@ -22,7 +22,11 @@ import com.itwillbs.chatting.ChatGroupVO;
 import com.itwillbs.chatting.ChatMessageVO;
 import com.itwillbs.chatting.ChatService;
 import com.itwillbs.member.MemberVO;
-
+/**
+ * 
+ * 실시간 채팅을 위한 webSocketHandler
+ *
+ */
 @Controller
 public class WebSocketHandler extends TextWebSocketHandler {
 
