@@ -55,18 +55,18 @@ $(function(){
 	var	joinBtn = $(".joinBtn");
 	
 	joinBtn.on("click", function(){
-		var chatNo = $(this).attr("id");
-		var chatObject = {
+		var chat_no = $(this).attr("id");
+		var ChatObject = {
 			"userid" : "${sessionScope.user.userid}",
 			"user_name" : "${sessionScope.user.user_name}",
-			"chat_no" : stNo,
+			"chat_no" : chat_no,
 			"auth_role" : "채팅인원"
 		}
-		console.log(studyObject);
+		console.log(ChatObject);
 		$.ajax({
 			type : "post",
-			url : "/joinChat",
-			data : JSON.stringify(studyObject),
+			url : "chatting/joinChat",
+			data : JSON.stringify(ChatObject),
 			contentType : "application/json; charset=utf-8",
 			success : function(res){
 				if(res === "SUCCESS"){

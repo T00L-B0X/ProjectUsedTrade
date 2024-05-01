@@ -9,7 +9,7 @@ public class ChatMessageVO {
 	private int message_id;
 	private int chat_no;
 	private String message_content;
-	private String message_regdate;
+	private String message_regdat;
 	private String userid;
 	private String user_name;
 	private int unread_count;
@@ -22,7 +22,7 @@ public class ChatMessageVO {
 	@Override
 	public String toString() {
 		return "ChatMessageVO [message_id=" + message_id + ", chat_no=" + chat_no + ", message_content="
-				+ message_content + ", message_regdate=" + message_regdate + ", userid=" + userid + ", user_name="
+				+ message_content + ", message_regdate=" + message_regdat + ", userid=" + userid + ", user_name="
 				+ user_name + ", unread_count=" + unread_count + ", type=" + type + "]";
 	}
 
@@ -50,12 +50,12 @@ public class ChatMessageVO {
 		this.message_content = message_content;
 	}
 
-	public String getMessage_regdate() {
-		return message_regdate;
+	public String getMessage_regdat() {
+		return message_regdat;
 	}
 
-	public void setMessage_regdate(String message_regdate) {
-		this.message_regdate = message_regdate;
+	public void setMessage_regdatt(String message_regdat) {
+		this.message_regdat = message_regdat;
 	}
 
 	public String getUserid() {

@@ -59,10 +59,10 @@
 	
 	<!-- 메시지 등록하기 -->
 	<insert id = "insertMessage" parameterType="ChatMessageVO" useGeneratedKeys="true">
-	<!-- 	INSERT INTO chatmessage (message_id, chat_no, message_content, message_regdat, userid, unread_count, user_name) -->
-	<!-- 	VALUES (NULL, #{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{user_name}) -->
-	INSERT INTO chatmessage (chat_no, message_content, message_regdat, userid, unread_count, user_name)
-	VALUES (#{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{user_name})
+<!-- 		INSERT INTO chatmessage (message_id, chat_no, message_content, message_regdat, userid, unread_count, user_name) -->
+<!-- 		VALUES (NULL, #{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{user_name}) -->
+	INSERT INTO chatmessage (message_id, chat_no, message_content, message_regdat, userid, unread_count, user_name)
+	VALUES (NULL, #{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{user_name})
 	</insert>
 	
 	<!-- 나를 제외한 해당 방에 속한 사람들 안 읽은 메시지 개수 업데이트 -->
@@ -70,14 +70,14 @@
 		update chatmember
 		set
 		msg_count = msg_count + 1
-		where useriid != #{userid}
+		where userid != #{userid}
 		and chat_no = #{chat_no}
 	</update>
 	
 	<!-- 해당 유저가 속하는 채팅방 가져오기 -->
 	<select id = "getChatGroupListById" parameterType="String" resultType="ChatGroupVO">
 	select A.*, B.msg_count from chatgroup A, chatmember B
-	where A.st_no = B.st_no and
+	where A.chat_no = B.chat_no and
     B.userid = #{userid}
 	</select>
 	
@@ -98,8 +98,8 @@
 	
 	<!-- 해당 유저의 안읽은 메시지 개수 -->
 	<select id = "getChatCnt" parameterType="string" resultType = "int">
-		SELECT IFNULL(SUM(msg_count), 0) AS cnt FROM chatmember
-		WHERE userid = #{userid};
+		SELECT COALESCE(SUM(msg_count), 0) AS cnt FROM chatmember
+    	WHERE userid = #{userid}
 	</select>
 	
 	<!-- 채팅방 인원수 가져오기 -->
@@ -111,7 +111,7 @@
 	
 	<!-- 메시지 안읽은 유저 테이블에 삽입 -->
 	<insert id = "insertUnreadMember" parameterType="hashMap">
-		insert into unreadmember (message_id, userid, chat_no) 
+		insert into UNREADMEMBER (message_id, userid, chat_no) 
 		values (#{message_id}, #{userid}, #{chat_no})
 	</insert>
 	
@@ -130,6 +130,20 @@
 		and userid = #{userid}
 	</delete>
 	
+	<!-- 메시지 안읽은 개수 가져오기 -->
+	<select id = "getUnreadCntByUser" parameterType="ChatMessageVO" resultType = "int">
+		select message_id from unreadmember
+		where chat_no = #{chat_no}
+		and userid = #{userid}
+	</select>
+	
+	<!-- message_id 불러오기 -->
+	<select id = "getMessageId" resultType="int" parameterType="ChatMessageVO">
+		select max(message_id) from chatmessage
+	</select>
+	
+	
+
 	
 	
 </mapper>

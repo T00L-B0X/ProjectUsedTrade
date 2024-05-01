@@ -73,15 +73,15 @@ public class ChattingController {
 	// 읽은 알람 삭제하기
 	@ResponseBody
 	@PostMapping("/chatting/deleteAlarm")
-	public ResponseEntity<String> deleteAlarm(int alarmNo) {
-		chatService.deleteAlarm(alarmNo);
+	public ResponseEntity<String> deleteAlarm(int alarm_no) {
+		chatService.deleteAlarm(alarm_no);
 		return new ResponseEntity<String>("SUCESS", HttpStatus.OK);
 	}
 	
 	
 	// 채팅 가입하기
 	@ResponseBody
-	@PostMapping("/joinChat")
+	@PostMapping("/chatting/joinChat")
 	public ResponseEntity<String> joinChatGroup(@RequestBody ChatMemberVO member) {
 		int result = chatService.joinChatGroup(member);
 		

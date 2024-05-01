@@ -11,9 +11,13 @@ public class ChatGroupVO {
 	private String chat_date;
 	private String user_name;
 	
+
+
 	// DB에는 없음 채팅방장 설정을 위한 변수
 	private String auth_role;
 	private int msgCount;
+	
+	
 	public int getChat_no() {
 		return chat_no;
 	}

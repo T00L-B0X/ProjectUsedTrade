@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.alarm.AlarmVO;
@@ -14,6 +16,8 @@ import com.itwillbs.member.MemberVO;
 
 @Service("ChatGroupService")
 public class ChatGroupServiceImpl implements ChatGroupService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ChatGroupServiceImpl.class);
 	
 	@Inject
 	private ChatGroupDAO chatDao;
@@ -41,8 +45,10 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 			map.put("userid", user.getUserid());
 			map.put("chat_no", chat.getChat_no());
 			
+			
 			// alarm 테이블에 자신을 뺀 모든 유저에 대한 알림 추가
 			chatDao.insertAlarm(map);
+			logger.debug(" 알람 map.put : " + map);
 		}
 		return result;
 	}

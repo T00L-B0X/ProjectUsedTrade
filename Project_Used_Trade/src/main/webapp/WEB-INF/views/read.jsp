@@ -44,7 +44,7 @@
 
 			<div class="box-footer">
 				<button type="submit" class="btn btn-success" onclick = "location.href='/list'">목록이동</button>
-				<button type="submit" class="btn btn-success" onclick = "location.href='#'">이 사람이랑 채팅하기</button>
+				<button type="submit" class="btn btn-success" id = "joinBtn" onclick = "location.href='#'">이 사람이랑 채팅하기</button>
 			</div>
 	</div>
 

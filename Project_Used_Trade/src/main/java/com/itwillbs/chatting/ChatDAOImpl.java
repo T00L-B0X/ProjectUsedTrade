@@ -41,7 +41,7 @@ public class ChatDAOImpl implements ChatDAO {
 
 	@Override
 	public List<ChatMemberVO> getChatMember(int chat_no) {
-		return sqlSession.selectList(NAMESPACE + "getChatMember", chat_no);
+		return sqlSession.selectList(NAMESPACE + ".getChatMember", chat_no);
 	}
 
 	@Override
@@ -51,12 +51,12 @@ public class ChatDAOImpl implements ChatDAO {
 
 	@Override
 	public void readChatMessage(ChatMessageVO chatMessage) {
-		sqlSession.update(NAMESPACE + "readChatMessage", chatMessage);
+		sqlSession.update(NAMESPACE + ".readChatMessage", chatMessage);
 	}
 
 	@Override
 	public int getChatCnt(String userid) {
-		return sqlSession.selectOne(NAMESPACE + "getChatCnt", userid);
+		return sqlSession.selectOne(NAMESPACE + ".getChatCnt", userid);
 	}
 
 	@Override
@@ -85,6 +85,12 @@ public class ChatDAOImpl implements ChatDAO {
 	@Override
 	public void deleteUnreadMsg(ChatMessageVO chatMessage) {
 		sqlSession.update(NAMESPACE + ".deleteUnreadMsg", chatMessage);
+	}
+
+	@Override
+	public int getMessageId(int message_id) {
+		return sqlSession.selectOne(NAMESPACE + ".getMessageId", message_id);
+		
 	}
 
 }

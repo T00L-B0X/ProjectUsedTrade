@@ -33,16 +33,20 @@ public class ChatServiceImpl implements ChatService {
 		chatDao.updateMessageCountExceptMe(chatMessage);
 
 		int chat_no = chatMessage.getChat_no();
+		int message_id = 0;
+		
 		List<ChatMemberVO> memberList = chatDao.getChatMember(chat_no);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		for (ChatMemberVO member : memberList) {
 			map.put("userid", member.getUserid());
-			map.put("message_id", chatMessage.getMessage_id());
+//			map.put("message_id", chatMessage.getMessage_id());
+			map.put("message_id", chatDao.getMessageId(message_id));
 			map.put("chat_no", chatMessage.getChat_no());
 			// 메시지 등록시마다 해당 방에 속한 유저들 대상으로 안읽은 유저
 			// 테이블에 추가
 			chatDao.insertUnreadMember(map);
+			logger.debug("map : " + map);
 		}
 		return result;
 	}
@@ -83,6 +87,12 @@ public class ChatServiceImpl implements ChatService {
 		// 안읽은 멤버 테이블에 해당 방에 대한 유저에 관한 행 삭제
 		chatDao.deleteUnreadMsg(chatMessage);
 		chatDao.readMessageInRoom(chatMessage);
+	}
+
+	@Override
+	public int getMessageId(int message_id) {
+		return chatDao.getMessageId(message_id);
+		
 	}
 
 }

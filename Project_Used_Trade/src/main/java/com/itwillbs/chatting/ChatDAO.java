@@ -17,5 +17,6 @@ public interface ChatDAO {
 	public List<Integer> getUnreadCntByUser(ChatMessageVO chatMessage);
 	public void readMessageInRoom(ChatMessageVO chatMessage);
 	public void deleteUnreadMsg(ChatMessageVO chatMessage);
+	public int getMessageId(int message_id);
 	
 }

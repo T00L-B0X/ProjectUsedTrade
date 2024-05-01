@@ -60,7 +60,7 @@ public class ChatGroupDAOImpl implements ChatGroupDAO{
 
 	@Override
 	public int joinChatGroup(ChatMemberVO member) {
-		return sqlSession.insert(NAMESPACE + "joinChatGroup", member);
+		return sqlSession.insert(NAMESPACE + ".joinChatGroup", member);
 	}
 
 }

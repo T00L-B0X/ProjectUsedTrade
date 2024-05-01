@@ -2,47 +2,43 @@ package com.itwillbs.chatting;
 
 public class UnreadMemberVO {
 
-	private int messageId;
+	private int message_id;
 	private String userid;
 	private int readCheck;
-	private int chatNo;
-
+	private int chat_no;
+	
+	
+	
 	@Override
 	public String toString() {
-		return "UnreadMemberVO [messageId=" + messageId + ", userid=" + userid + ", readCheck=" + readCheck
-				+ ", chatNo=" + chatNo + "]";
+		return "UnreadMemberVO [message_id=" + message_id + ", userid=" + userid + ", readCheck=" + readCheck
+				+ ", chat_no=" + chat_no + "]";
 	}
-
-	public int getMessageId() {
-		return messageId;
+	
+	public int getMessage_id() {
+		return message_id;
 	}
-
-	public void setMessageId(int messageId) {
-		this.messageId = messageId;
+	public void setMessage_id(int message_id) {
+		this.message_id = message_id;
 	}
-
-	public String getUserId() {
+	public String getUserid() {
 		return userid;
 	}
-
-	public void setUserId(String userId) {
-		this.userid = userId;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
-
 	public int getReadCheck() {
 		return readCheck;
 	}
-
 	public void setReadCheck(int readCheck) {
 		this.readCheck = readCheck;
 	}
-
-	public int getChatNo() {
-		return chatNo;
+	public int getChat_no() {
+		return chat_no;
+	}
+	public void setChat_no(int chat_no) {
+		this.chat_no = chat_no;
 	}
 
-	public void setChatNo(int chatNo) {
-		this.chatNo = chatNo;
-	}
-
+	
 }

@@ -158,6 +158,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 		// Json 객체 -> Java객체
 		ChatMessageVO chatMessage = objectMapper.readValue(msg, ChatMessageVO.class);
+		
+		logger.debug(" @@@@@@@@@@@@@@@ : " + chatMessage );
 
 		// 해당 채팅방 인원수 가져오기
 		int memCnt = chatService.getMemberCount(chatMessage.getChat_no());
@@ -223,6 +225,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			String formattedDateTime = currentDateTime.format(formatter);
 			
+			logger.debug(" @@@@@@@@@@@@@@@@@@@@@chatMessage : " + chatMessage);
 			// DB에 메시지 등록
 			chatService.insertMessage(chatMessage);
 			

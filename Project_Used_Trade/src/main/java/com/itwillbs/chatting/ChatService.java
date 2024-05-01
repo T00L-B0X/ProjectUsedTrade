@@ -21,5 +21,7 @@ public interface ChatService {
 	public List<Integer> getUnreadCntByUser(ChatMessageVO chatMessage);
 	
 	public void readMessageInRoom(ChatMessageVO chatMessage);
+	
+	public int getMessageId(int message_id);
 
 }
