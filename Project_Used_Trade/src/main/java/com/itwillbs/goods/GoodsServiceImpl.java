@@ -1,5 +1,6 @@
 package com.itwillbs.goods;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,6 +39,38 @@ public class GoodsServiceImpl implements GoodsService{
 	public List<GoodsVO> getCateList(GoodsVO gvo) {
 		logger.debug(" getCateList(GoodsVO gvo) ");
 		return GDao.selectCateList(gvo);
+	}
+
+	@Override
+	public int getNewGoodsId() {
+		logger.debug("getNewGoodsId()");
+		return GDao.selectNewGoodsId();		
+	}
+
+	@Override
+	public int insertImageInfo(GoodsImgVO ivo) {
+		logger.debug("insertImageInfo(GoodsImgVO ivo)");
+		logger.debug("ivo : "+ivo.getGoods_id() + ivo.getGoods_img());
+		return GDao.insertImageInfo(ivo);
+		
+	}
+
+	@Override
+	public int insertGoodsInfo(GoodsVO gvo) {
+		logger.debug("insertGoodsInfo(GoodsVO gvo)");
+		return GDao.insertGoodsInfo(gvo);
+	}
+
+	@Override
+	public List<String> getImgList(int goods_id) {
+		logger.debug("getImgList(int goods_id)");
+		return GDao.selectImgList(goods_id);
+	}
+
+	@Override
+	public Timestamp getRegdate(int newGoodsId) {
+		logger.debug("getRegdate(int newGoodsId)");
+		return GDao.selectRegdate(newGoodsId);
 	}
 	
 	

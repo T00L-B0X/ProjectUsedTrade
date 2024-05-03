@@ -17,6 +17,9 @@
 	<logger name="com.itwillbs.goods">
 		<level value="debug" />
 	</logger>
+	<logger name="com.itwillbs.auction">
+		<level value="debug" />
+	</logger>
 	
 	<logger name="com.itwillbs.controller">
 		<level value="debug" />

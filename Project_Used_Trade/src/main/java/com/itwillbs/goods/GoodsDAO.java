@@ -1,5 +1,6 @@
 package com.itwillbs.goods;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface GoodsDAO {
@@ -11,5 +12,15 @@ public interface GoodsDAO {
 	public List<GoodsVO> selectSearchList(GoodsVO gvo);
 
 	public List<GoodsVO> selectCateList(GoodsVO gvo);
+
+	public int selectNewGoodsId();
+
+	public int insertImageInfo(GoodsImgVO ivo);
+
+	public int insertGoodsInfo(GoodsVO gvo);
+
+	public List<String> selectImgList(int goods_id);
+
+	public Timestamp selectRegdate(int newGoodsId);
 
 }

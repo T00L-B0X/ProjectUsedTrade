@@ -3,6 +3,8 @@ package com.itwillbs.goods;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,10 +51,11 @@ public class GoodsRestController {
 	@RequestMapping(value="/read/{goods_id}", method = RequestMethod.GET)
 	public ResponseEntity<GoodsVO> goodsInfo(
 			@PathVariable("goods_id") int goods_id) throws Exception{
-		logger.debug(" goosInfo() 호출 ");
-		
+		logger.debug(" goosInfo() 호출 ");		
 		GoodsVO goodsInfo = gService.getGoodsInfo(goods_id);
 		logger.debug("goodsInfo : " + goodsInfo);
+		
+		
 		return new ResponseEntity<GoodsVO>(goodsInfo,HttpStatus.OK);
 		
 	}

@@ -2,7 +2,8 @@
 <%@ include file="../include/header.jsp"%>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <style>
 	.searchKeyword{
 		display:flex;
@@ -66,9 +67,9 @@ $(document).ready(function() {
 
         // 새로운 카드를 goodsBox에 추가
         var $newCard = $(cardHtml).appendTo("#goodsBox");
-
+        
         // 새로운 카드에 데이터 적용
-        $newCard.find(".goodsImg").attr("src", "/resources/images/" + item.goods_repimg);
+        $newCard.find(".goodsImg").attr("src", "/displayImages?goods_id=" + item.goods_id + "&imageNo=0");
         $newCard.find("#imgLink a").attr("href", "/goods/read?goods_id=" + item.goods_id);
         $newCard.find(".goodsTitle").text(item.goods_title);
         $newCard.find("#titleLink a").attr("href", "/goods/read?goods_id=" + item.goods_id);

@@ -1,7 +1,7 @@
 package com.itwillbs.goods;
 
 import java.sql.Timestamp;
-import java.time.Duration;
+import java.util.List;
 
 public class GoodsVO {
 	private int goods_id;
@@ -22,6 +22,15 @@ public class GoodsVO {
 	private Timestamp regdate;
 	private Timestamp updatedate;
 	private String keyword;
+	private List<String> imgList;
+
+	public List<String> getImgList() {
+		return imgList;
+	}
+
+	public void setImgList(List<String> imgList) {
+		this.imgList = imgList;
+	}
 
 	public int getGoods_id() {
 		return goods_id;

@@ -30,9 +30,32 @@
 		order by goods_id desc
 	</select>
 	
-	<select id="selectNewGoods_id" resultType="int">
+	<select id="selectNewGoodsId" resultType="int">
 		select max(Goods_id)+1
 		from GOODS
+	</select>
+	
+	<insert id="insertImageInfo" parameterType="GoodsImgVO">
+		insert into Goods_Img(goods_id,goods_img)
+		values(#{goods_id}, #{goods_img})
+	</insert>
+	
+	<insert id="insertGoodsInfo" parameterType="GoodsVO">
+		insert into 
+		Goods(goods_id, user_id, category, goods_title, status, goods_info, goods_repimg, start_price, instant_price, area,transact_type,auction_time)
+		values(#{goods_id}, #{user_id}, #{category}, #{goods_title}, #{status}, #{goods_info}, #{goods_repimg}, #{start_price}, ${instant_price}, #{area}, #{transact_type}, #{auction_time})
+	</insert>
+	
+	<select id="selectImgList" parameterType="integer" resultType="String">
+		select goods_img
+		from goods_img
+		where goods_id = #{goods_id}
+	</select>
+	
+	<select id="selectRegdate" parameterType="integer" resultType="java.sql.Timestamp">
+		select regdate
+		from goods
+		where goods_id = #{goods_id}
 	</select>
 	
 </mapper>

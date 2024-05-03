@@ -3,6 +3,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 #remainTime{
 color: red;
@@ -107,25 +108,27 @@ $(document).ready(function() {
 </script>
 
 <div class="container">
-    <h2>판매글 Read 페이지</h2><h5></h5>
+    <hr><h3>제목 : ${goodsVO.goods_title}</h3><span id="regdate"></span><hr>
     <div class="product-info">
         <div class="product-image">
-            <img src="/resources/images/${goodsVO.goods_repimg}" alt="상품 이미지">
+        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=0" alt="">
+        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=1" alt="">
+        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=2" alt="">
+        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=3" alt="">
+        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=4" alt="">
         </div>
         <div class="details">
-            <h3>제목 : ${goodsVO.goods_title}</h3>
-            <span id="regdate"></span>
             <hr>
             <h3>제품 상태 : ${goodsVO.status}</h3>
             <h3>거래 희망 지역 : ${goodsVO.area}</h3>
             <h3>거래 방법 : ${goodsVO.transact_type}</h3>
             <h3>시작가 : ${goodsVO.start_price}</h3>
             <h3>현재 입찰가 : ${goodsVO.current_price}</h3>
+            <h3>입찰수 : </h3><a href="#">경매 기록</a>
             <h3>남은 경매 시간 : <span id="remainTime"></span></h3>
             <h3>종료시간 : <span id="endTime"></span></h3>
             <button id="likeGoods">관심 상품 등록 </button><br><br>
-            <input type="number" placeholder="입찰가 입력">
-            <input type="submit" value="입찰하기"> 경매페이지 따로 만들예정
+            <input type="submit" value="입찰하기" onclick="location.href='/auction/bid?goods_id=${goodsVO.goods_id}'">
             <hr>
             <h3>내용</h3>
             <p>${goodsVO.goods_info}</p>

@@ -1,5 +1,6 @@
 package com.itwillbs.goods;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,6 +43,39 @@ public class GoodsDAOImpl implements GoodsDAO {
 		logger.debug(" selectCateList(GoodsVO gvo) 실행 ");
 		return sqlSession.selectList(NAMESPACE+".selectCateList", gvo);
 	}
+
+	@Override
+	public int selectNewGoodsId() {
+		logger.debug(" selectNewGoodsId() ");
+		return sqlSession.selectOne(NAMESPACE+".selectNewGoodsId");
+	}
+
+	@Override
+	public int insertImageInfo(GoodsImgVO ivo) {
+		logger.debug(" insertImageInfo(GoodsImgVO ivo) ");
+		logger.debug("ivo : "+ivo.getGoods_id() + ivo.getGoods_img());
+		return sqlSession.insert(NAMESPACE+".insertImageInfo", ivo);
+	}
+
+	@Override
+	public int insertGoodsInfo(GoodsVO gvo) {
+		logger.debug("insertGoodsInfo(GoodsVO gvo)");
+		return sqlSession.insert(NAMESPACE+".insertGoodsInfo", gvo);
+	}
+
+	@Override
+	public List<String> selectImgList(int goods_id) {
+		logger.debug("selectImgList(int goods_id)");
+		return sqlSession.selectList(NAMESPACE+".selectImgList",goods_id);
+	}
+
+	@Override
+	public Timestamp selectRegdate(int newGoodsId) {
+		logger.debug("selectRegdate(int newGoodsId)");
+		return sqlSession.selectOne(NAMESPACE + ".selectRegdate", newGoodsId);
+	}
+	
+	
 	
 	
 	
