@@ -57,6 +57,24 @@ public class ChattingController {
 	}
 	
 	
+	// 게시글에서 채팅하기 눌렀을 때 채팅방 생성
+	@ResponseBody
+	@RequestMapping(value = "read/joinChat", method = RequestMethod.POST)
+	public String joinChat(@RequestBody ChatGroupVO chat, MemberVO vo, HttpSession session) {
+		String goPage = "";
+		chat.setUserid((String) session.getAttribute("userid"));
+		int result = chatService.insertChat(chat);
+		if(result > 0) {
+			goPage = "redirect:/read";
+			logger.debug(" 생성 완료! ");
+		} else {
+			goPage = "";
+			logger.debug(" 생성 실패! ");
+		}
+		return goPage;
+	}
+	
+	
 	// 해당 유저의 안읽은 알람 정보 가져오기
 	@ResponseBody
 	@PostMapping("/chatting/getAlarmInfo")
