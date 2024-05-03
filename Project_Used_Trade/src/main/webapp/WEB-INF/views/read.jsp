@@ -4,7 +4,7 @@
 <%@ include file = "./include/header.jsp" %>
 
 <h3>회원정보 : ${user } <br> </h3>
-<h3>bno : ${bno } </h3>
+<h3>bno : ${vo.bno } </h3>
 
 <div class="content">
 
@@ -57,50 +57,52 @@
 
 </div>
 <script type="text/javascript">
-	$(function() {
-		var joinBtn = $("#joinBtn");
-		joinBtn.on("click", function() {
-			var chat_no = $(this).attr("id");
-			var ChatObject = {
-				"userid" : "${vo.writer}",
-				"user_name" : "${user.user_name}",
-				"chat_title" : "${vo.title}",
-				"auth_role" : "채팅인원"
-			}
-			console.log(ChatObject);
-			$.ajax({
-				type : "post",
-				url : "read/joinChat",
-				data : JSON.stringify(ChatObject),
-				contentType : "application/json; charset=utf-8",
-				success : function(response) {
-					if (confirm("채팅방이 생성되었습니다. 추가 동작을 수행하시겠습니까?")) {
-						// 확인을 누르면 추가적인 ajax 실행
-						// 확인을 누름과 동시에 채팅방에 작성자와 채팅 연결
-						$.ajax({
-							type : "post",
-							url : "read/connectChat",
-							data : JSON.stringify({}),
-							contentType : "application/json; charset=utf-8",
-							success : function(response) {
-								// 추가 동작이 성공했을 때 처리할 내용을 여기에 작성합니다.
-							},
-							error : function(xhr, status, error) {
-								// 추가 동작이 실패했을 때 처리할 내용을 여기에 작성합니다.
-								console.error("추가 동작이 실패했습니다.");
-								console.error(xhr.responseText);
-							}
-						});
-					}
-				},
-				error : function(xhr, status, error) {
-					// 채팅방 생성에 실패했을 때 처리할 내용을 여기에 작성합니다.
-					console.error("채팅방 생성에 실패했습니다.");
-					console.error(xhr.responseText);
-				}
-			});
-		});
-	});
+$(function() {
+    var joinBtn = $("#joinBtn");
+    joinBtn.on("click", function() {
+        var chat_no = $(this).attr("id");
+        var bno = ${vo.bno};
+        var ChatObject = {
+            "userid" : "${vo.writer}",
+            "user_name" : "${user.user_name}",
+            "chat_title" : "${vo.title}",
+            "auth_role" : "채팅인원"
+        };
+
+        console.log(ChatObject);
+        console.log(bno);
+
+        // 채팅방 생성 Ajax 요청
+        $.ajax({
+            type: "post",
+            url: "read/joinChat",
+            data: JSON.stringify(ChatObject),
+            contentType: "application/json; charset=utf-8",
+            success: function(response) {
+                // 채팅방 생성이 성공적으로 완료된 경우 추가 작업을 수행하는 Ajax 요청
+                $.ajax({
+                    type: "post",
+                    url: "read/connectChat?bno=" + bno,
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(ChatObject),
+                    success: function(response) {
+                    	alert(" 채팅이 연결되었습니다. ")
+                        // 성공적으로 처리된 경우의 동작
+                    },
+                    error: function(xhr, status, error) {
+                        // 요청이 실패한 경우의 동작
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                // 채팅방 생성에 실패한 경우 처리
+                console.error("채팅방 생성에 실패했습니다.");
+                console.error(error);
+            }
+        });
+    });
+});
+
 </script>
 
 

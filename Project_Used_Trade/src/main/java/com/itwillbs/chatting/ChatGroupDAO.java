@@ -25,6 +25,11 @@ public interface ChatGroupDAO {
 	
 	public int joinChatGroup(ChatMemberVO member);
 	
+	public int getChatNo(int chat_no);
+	
+	public String getMemberFromTable(int bno);
+	
+	public String getUserNameFromTable(int bno);
 	
 
 }

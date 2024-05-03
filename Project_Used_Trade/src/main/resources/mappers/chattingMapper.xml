@@ -148,6 +148,26 @@
 		select max(chat_no) from chatgroup
 	</select>
 	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (userid) -->
+	<select id = "getMemberFromTable" resultType = "String">
+	select member.userid
+	from member
+	inner join board
+	on
+	member.userid = board.writer
+	where board.bno = #{bno}
+	</select>
+	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (user_name) -->
+	<select id = "getUserNameFromTable" resultType = "String">
+	select member.user_name
+	from member
+	inner join board
+	on
+	member.userid = board.writer
+	where board.bno = #{bno}
+	</select>
+	
 	
 
 	

@@ -18,6 +18,12 @@ public interface ChatGroupService {
 	
 	public int joinChatGroup(ChatMemberVO member);
 	
+	public String getMemberFromTable(int bno);
+	
+	public String getUserNameFromTable(int bno);
+	
+	public int getChatNo(int chat_no);
+	
 	
 
 }

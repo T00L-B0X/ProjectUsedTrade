@@ -63,4 +63,20 @@ public class ChatGroupDAOImpl implements ChatGroupDAO{
 		return sqlSession.insert(NAMESPACE + ".joinChatGroup", member);
 	}
 
+	@Override
+	public String getMemberFromTable(int bno) {
+		return sqlSession.selectOne(NAMESPACE + ".getMemberFromTable", bno);
+	}
+
+	@Override
+	public String getUserNameFromTable(int bno) {
+		return sqlSession.selectOne(NAMESPACE + ".getUserNameFromTable", bno);
+	}
+
+	@Override
+	public int getChatNo(int chat_no) {
+		return sqlSession.selectOne(NAMESPACE + ".getChatNo", chat_no);
+	}
+
+
 }

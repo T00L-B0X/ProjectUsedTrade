@@ -67,6 +67,21 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 	public int joinChatGroup(ChatMemberVO member) {
 		return chatDao.joinChatGroup(member);
 	}
+
+	@Override
+	public String getMemberFromTable(int bno) {
+		return chatDao.getMemberFromTable(bno);
+	}
+
+	@Override
+	public String getUserNameFromTable(int bno) {
+		return chatDao.getUserNameFromTable(bno);
+	}
+
+	@Override
+	public int getChatNo(int chat_no) {
+		return chatDao.getChatNo(chat_no);
+	}
 	
 
 }
