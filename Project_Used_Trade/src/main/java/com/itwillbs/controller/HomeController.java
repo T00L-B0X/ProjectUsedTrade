@@ -36,4 +36,9 @@ public class HomeController {
 		return "home";
 	}
 	
+//	@RequestMapping(value = "/chatting/chatting", method = RequestMethod.GET)
+//	public void chatting() {
+//		logger.debug(" chatting 페이지 연결 ");
+//	}
+	
 }
