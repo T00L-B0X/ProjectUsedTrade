@@ -97,15 +97,6 @@ public class PayController {
 		model.addAttribute("pResultVO", pResultVO);
 	}
 	
-	// http://localhost:8088/pay/payChargeTest
-	// 충전페이지 GET (테스트용 페이지)
-	@RequestMapping(value = "/payChargeTest", method = RequestMethod.GET)
-	public void PayChargeTestGET() throws Exception {
-		logger.debug("payChargeTestGET() 실행");
-		logger.debug("/payChargeTest.jsp 뷰 연결");
-		
-	}
-	
 	// 충전페이지 POST (결제 정보 검증 후 충전)
 	@ResponseBody
 	@RequestMapping(value = "/vertifyIamport", method = RequestMethod.POST)
@@ -175,6 +166,7 @@ public class PayController {
 	// 충전취소 POST
 	
 	// 환불 GET
+	// http://localhost:8088/pay/payRefund
 	@RequestMapping(value = "/payRefund", method = RequestMethod.GET)
 	public void payRefundGET(HttpSession session, Model model) throws Exception {
 		logger.debug("payRefundGET() 실행");
@@ -219,7 +211,6 @@ public class PayController {
 			pService.insertPayInfoRefund(pivo, session);
 			
 			pService.updatePayRefund(pivo);
-			
 	        
 		} catch (Exception e) {
 			logger.debug(" DAO의 페이환불 신청 동작 실패! ");

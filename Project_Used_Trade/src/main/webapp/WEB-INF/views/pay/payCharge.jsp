@@ -33,15 +33,22 @@
                 updateAmount(parseInt($(this).val()));
             }
         });
+        
+        $("#selboxDirect").on('input', function(event) {
+            // 입력된 값을 가져옵니다.
+            var inputValue = $(this).val();
 
-        $("#selboxDirect").keyup(function() {
-            var chargeAmount = parseInt($(this).val());
-            if (!isNaN(chargeAmount)) {
-                updateAmount(chargeAmount);
-            } else {
-                // 숫자가 아닌 값이 입력되었을 때 처리할 내용
-                //alert("숫자를 입력해주세요!");
-            }
+            // 입력된 값에서 숫자 이외의 문자를 제거하여 숫자만 남깁니다.
+            var numericValue = inputValue.replace(/\D/g, '');
+
+            // 입력란에 숫자만 남긴 값을 설정합니다.
+            $(this).val(numericValue);
+            
+            // 숫자만 입력되었을 때 chargeAmount를 설정합니다.
+            var chargeAmount = numericValue === '' ? 0 : parseInt(numericValue);
+
+            // updateAmount 함수를 호출합니다.
+            updateAmount(chargeAmount);
         });
 
         function updateAmount(chargeAmount) {
@@ -131,11 +138,8 @@
                 	console.log(rsp);
                     alert("결제에 실패하였습니다. 에러 내용 : " + rsp.error_msg);
                 }
-                
-                alert(msg);
             }
         );
-        
     }
 </script>
    
