@@ -23,4 +23,7 @@ public interface GoodsDAO {
 
 	public Timestamp selectRegdate(int newGoodsId);
 
+	public int updateCurrentPrice(GoodsVO gvo);
+
+	public int selectNowPrice(int goods_id);
 }

@@ -42,8 +42,8 @@
 	
 	<insert id="insertGoodsInfo" parameterType="GoodsVO">
 		insert into 
-		Goods(goods_id, user_id, category, goods_title, status, goods_info, goods_repimg, start_price, instant_price, area,transact_type,auction_time)
-		values(#{goods_id}, #{user_id}, #{category}, #{goods_title}, #{status}, #{goods_info}, #{goods_repimg}, #{start_price}, ${instant_price}, #{area}, #{transact_type}, #{auction_time})
+		Goods(goods_id, userid, category, goods_title, status, goods_info, goods_repimg, start_price, instant_price, area,transact_type,auction_time)
+		values(#{goods_id}, #{userid}, #{category}, #{goods_title}, #{status}, #{goods_info}, #{goods_repimg}, #{start_price}, ${instant_price}, #{area}, #{transact_type}, #{auction_time})
 	</insert>
 	
 	<select id="selectImgList" parameterType="integer" resultType="String">
@@ -58,4 +58,14 @@
 		where goods_id = #{goods_id}
 	</select>
 	
+	<update id="updateCurrentPrice" parameterType="GoodsVO">
+		update goods set current_price = #{current_price}
+		where goods_id = #{goods_id}
+	</update>
+	
+	<select id="selectNowPrice" parameterType="Int" resultType="Int">
+		select current_price
+		from goods
+		where goods_id = #{goods_id}
+	</select>
 </mapper>

@@ -74,8 +74,19 @@ public class GoodsDAOImpl implements GoodsDAO {
 		logger.debug("selectRegdate(int newGoodsId)");
 		return sqlSession.selectOne(NAMESPACE + ".selectRegdate", newGoodsId);
 	}
-	
-	
+
+	@Override
+	public int updateCurrentPrice(GoodsVO gvo) {
+		
+		return sqlSession.update(NAMESPACE+".updateCurrentPrice", gvo);
+	}
+
+	@Override
+	public int selectNowPrice(int goods_id) {
+		logger.debug(" selectNowPrice(int goods_id) ");
+		logger.debug("goods_id : " + goods_id);
+		return sqlSession.selectOne(NAMESPACE+".selectNowPrice", goods_id);
+	}
 	
 	
 	

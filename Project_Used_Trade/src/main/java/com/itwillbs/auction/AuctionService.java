@@ -6,4 +6,6 @@ public interface AuctionService {
 
 	public AuctionVO getAuctionInfo(int goods_id);
 
+	public int insertRecord(AuctionRecordVO arvo);
+
 }

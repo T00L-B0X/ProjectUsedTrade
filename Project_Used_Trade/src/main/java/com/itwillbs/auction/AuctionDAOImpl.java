@@ -25,6 +25,11 @@ public class AuctionDAOImpl implements AuctionDAO {
 	public AuctionVO selectAuctionInfo(int goods_id) {
 		return sqlSession.selectOne(NAMESPACE+".selectAuctionInfo", goods_id);
 	}
+	@Override
+	public int insertRecord(AuctionRecordVO arvo) {
+		return sqlSession.insert(NAMESPACE+".insertRecord", arvo);
+	}
+	
 	
 	
 	

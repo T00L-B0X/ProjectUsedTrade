@@ -7,7 +7,7 @@ public class AuctionRecordVO {
 	private int goods_id;
 	private Timestamp bid_time;
 	private int bid_price;
-	private String ar_user_id;
+	private String ar_userid;
 	private int status;
 	private Timestamp regdate;
 	
@@ -35,11 +35,11 @@ public class AuctionRecordVO {
 	public void setBid_price(int bid_price) {
 		this.bid_price = bid_price;
 	}
-	public String getAr_user_id() {
-		return ar_user_id;
+	public String getAr_userid() {
+		return ar_userid;
 	}
-	public void setAr_user_id(String ar_user_id) {
-		this.ar_user_id = ar_user_id;
+	public void setAr_userid(String ar_userid) {
+		this.ar_userid = ar_userid;
 	}
 	public int getStatus() {
 		return status;
@@ -56,8 +56,9 @@ public class AuctionRecordVO {
 	@Override
 	public String toString() {
 		return "AuctionRecordVO [ar_no=" + ar_no + ", goods_id=" + goods_id + ", bid_time=" + bid_time + ", bid_price="
-				+ bid_price + ", ar_user_id=" + ar_user_id + ", status=" + status + ", regdate=" + regdate + "]";
+				+ bid_price + ", ar_userid=" + ar_userid + ", status=" + status + ", regdate=" + regdate + "]";
 	}
+	
 	
 	
 }

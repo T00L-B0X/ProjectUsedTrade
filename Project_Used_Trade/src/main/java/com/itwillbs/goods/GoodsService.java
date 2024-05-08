@@ -23,4 +23,8 @@ public interface GoodsService {
 
 	public Timestamp getRegdate(int newGoodsId);
 
+	public int modifyCurrentPrice(GoodsVO gvo);
+
+	public int getNowPrice(int goods_id);
+
 }

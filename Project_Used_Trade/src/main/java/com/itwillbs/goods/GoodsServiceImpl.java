@@ -72,9 +72,19 @@ public class GoodsServiceImpl implements GoodsService{
 		logger.debug("getRegdate(int newGoodsId)");
 		return GDao.selectRegdate(newGoodsId);
 	}
-	
-	
-	
-	
 
+	@Override
+	public int modifyCurrentPrice(GoodsVO gvo) {
+		
+		return GDao.updateCurrentPrice(gvo);
+	}
+
+	@Override
+	public int getNowPrice(int goods_id) {
+		logger.debug(" getNowPrice(int goods_id) ");
+		logger.debug("goods_id : " + goods_id);
+		return GDao.selectNowPrice(goods_id);
+	}
+	
+	
 }

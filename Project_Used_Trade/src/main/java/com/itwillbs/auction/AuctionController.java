@@ -1,6 +1,9 @@
 package com.itwillbs.auction;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +27,7 @@ public class AuctionController {
 	
 	@RequestMapping(value="/auction/bid", method=RequestMethod.GET)
 	public void bidGet(@RequestParam("goods_id") int goods_id,
-						Model model) {
+						Model model) throws Exception{
 		logger.debug(" bidGet() 호출 ");
 		AuctionVO avo = aService.getAuctionInfo(goods_id);
 		model.addAttribute("avo", avo);
@@ -33,5 +36,47 @@ public class AuctionController {
 		GoodsVO gvo = gService.getGoodsInfo(goods_id);
 		model.addAttribute("gvo", gvo);
 		logger.debug("gvo : " + gvo);
+	}
+	
+	@RequestMapping(value="/auction/bid", method=RequestMethod.POST)
+	public void bidPost(@RequestParam("goods_id") int goods_id,
+						@RequestParam("current_price") int current_price,
+						HttpServletResponse response
+						/* 입찰자(로그인한 사용자 id) 가져오기 */) throws Exception{
+		logger.debug(" bidPost() 호출 ");
+		
+		// goods테이블 현재 경매가 update
+		GoodsVO gvo = new GoodsVO();
+		gvo.setGoods_id(goods_id);
+		gvo.setCurrent_price(current_price);	
+
+		// 실제 db와 입찰하려는 가격을 비교
+		int NowPrice = gService.getNowPrice(goods_id);
+		logger.debug("DB의 현재입찰가"+NowPrice);
+		
+		int updateResult = gService.modifyCurrentPrice(gvo);
+		
+		if(updateResult == 1) {
+			logger.debug(" goods테이블 현재 경매가 update 성공 ");
+		}else {
+			logger.debug(" goods테이블 현재 경매가 update 실패 ");
+		}
+		
+		
+		// auction record 테이블 insert
+		AuctionRecordVO arvo = new AuctionRecordVO();
+		arvo.setAr_userid("TEST");
+		arvo.setBid_price(current_price);
+		arvo.setGoods_id(goods_id);
+
+		int insertResult = aService.insertRecord(arvo);
+		
+		if(insertResult == 1) {
+			logger.debug(" 경매 기록 추가 성공 ");
+		}else {
+			logger.debug(" 경매 기록 추가 실패 ");
+		}
+		
+		response.sendRedirect("/auction/bid?goods_id=" + goods_id);
 	}
 }

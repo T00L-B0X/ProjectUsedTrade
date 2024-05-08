@@ -26,6 +26,14 @@ public class AuctionSerivceImpl implements AuctionService {
 		
 		return ADao.selectAuctionInfo(goods_id);
 	}
+
+	@Override
+	public int insertRecord(AuctionRecordVO arvo) {
+		
+		return ADao.insertRecord(arvo);
+	}
+
+	
 	
 	
 	

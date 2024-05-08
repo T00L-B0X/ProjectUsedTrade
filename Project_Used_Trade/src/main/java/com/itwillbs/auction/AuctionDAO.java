@@ -6,4 +6,6 @@ public interface AuctionDAO {
 
 	public AuctionVO selectAuctionInfo(int goods_id);
 
+	public int insertRecord(AuctionRecordVO arvo);
+
 }

@@ -1,4 +1,4 @@
-package com.itwillbs.controller;
+package com.itwillbs.goods;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.itwillbs.auction.AuctionService;
 import com.itwillbs.auction.AuctionVO;
-import com.itwillbs.goods.GoodsImgVO;
-import com.itwillbs.goods.GoodsService;
-import com.itwillbs.goods.GoodsVO;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,7 +74,7 @@ public class GoodsController {
 				HttpServletRequest req) throws Exception {
 			logger.debug("GoodsRegisterPost()");
 			// 로그인 한 사용자의 id (일단 임시로 지정)
-			gvo.setUser_id("TEST");	
+			gvo.setUserid("TEST");	
 			// 등록할 새로운 상품번호(max(goods_id)+1) 가져오기
 			
 			int newGoodsId = gService.getNewGoodsId();
@@ -93,7 +90,7 @@ public class GoodsController {
 			// insert 경매정보 -> Auction 테이블
 			AuctionVO avo = new AuctionVO();
 			avo.setGoods_id(gvo.getGoods_id());
-			avo.setAu_userid(gvo.getUser_id());
+			avo.setUserid(gvo.getUserid());
 			avo.setAu_title(gvo.getGoods_title());
 			avo.setInstant_price(gvo.getInstant_price());
 			avo.setStart_time(regdate);
@@ -313,6 +310,4 @@ public class GoodsController {
 		        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		    }
 		}
-		
-		
 }

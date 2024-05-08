@@ -5,13 +5,17 @@
 
 <mapper namespace="com.itwillbs.mapper.AuctionMapper">
 	<insert id="insertAuctionInfo" parameterType="AuctionVO">
-		insert into Auction(goods_id, au_userid, au_title, instant_price, start_time, end_time, start_price, au_status)
-		values(#{goods_id}, #{au_userid}, #{au_title}, #{instant_price}, #{start_time}, #{end_time}, #{start_price}, #{au_status})
+		insert into Auction(goods_id, userid, au_title, instant_price, start_time, end_time, start_price, au_status)
+		values(#{goods_id}, #{userid}, #{au_title}, #{instant_price}, #{start_time}, #{end_time}, #{start_price}, #{au_status})
 	</insert>
 	
 	<select id="selectAuctionInfo" resultType="AuctionVO">
 		select * from Auction
 		where goods_id = #{goods_id}
 	</select>
-
+	<insert id="insertRecord" parameterType="AuctionRecordVO">
+		insert into auction_record(goods_id,bid_price,ar_userid)
+		values(#{goods_id}, #{bid_price}, #{ar_userid})
+	</insert>
+	
 </mapper>
