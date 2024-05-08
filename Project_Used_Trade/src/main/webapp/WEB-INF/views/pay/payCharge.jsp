@@ -106,7 +106,7 @@
                     var result = {
 							"imp_uid" : rsp.imp_uid,						// 포트원 결제 ID
 							"merchant_uid" : rsp.merchant_uid, 				// 결제 번호 (주문 고유 번호)
-							"PAY_ID" : makeMerchantUid,						// 페이 번호
+							"PAY_ID" : USERID || makeMerchantUid,			// 페이 번호
 							"USER_ID" : USERID, 							// 회원 번호
 							"PAY_TYPE" : "충전",							// 페이 유형
 							"PAY_STATE" : "충전완료",						// 페이 처리상태
@@ -190,7 +190,7 @@
 			<div class="row">
 				<div class="col-md-4">
 					<p>현재 페이 금액</p>
-					<input type="text" class="form-control" id="currentAmount" value="${pResultVO.PAY_BALANCE }" readonly>
+					<input type="text" class="form-control" id="currentAmount" value="${pResultVO.PAY_BALANCE}" readonly>
 				</div>
 				<div class="col-md-4">
 					<p>충전할 금액</p>
