@@ -16,8 +16,8 @@
 	<fieldset>
 		<legend>아이디 찾기</legend>
 		<form action="" method="POST">
-			이름 : <input type="text" name="name" > <br>
-			이메일 : <input type="text" name="email"> <br>
+			이름 : <input type="text" name="usernm" > <br>
+			이메일 : <input type="text" name="uemail"> <br>
 			
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<input type="submit" value="아이디 찾기">

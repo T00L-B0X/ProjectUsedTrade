@@ -19,7 +19,7 @@
         </c:when>
         
         <c:otherwise>
-            아이디는 ${result.id} 입니다. <br>
+            아이디는 ${result.userid} 입니다. <br>
         </c:otherwise>
     </c:choose>
     

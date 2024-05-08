@@ -29,18 +29,20 @@ public class UserRestController {
 	private MailService mailService;
 	
 	
-	@PostMapping("/user/ConfirmId")
-    public ResponseEntity<Integer> confirmId(@RequestParam("id") String id) throws Exception {
-        int cnt = bService.boardIdCheck(id);
+	@PostMapping("/ConfirmId")
+    public ResponseEntity<Integer> confirmId(@RequestParam("userid") String userid) throws Exception {
+        int cnt = bService.boardIdCheck(userid);
         return ResponseEntity.ok().body(cnt);
     }
 	
-	@PostMapping("/user/sendEmail")
-	public ResponseEntity<String> sendEmail(@RequestParam("email") String email) throws Exception{
-		logger.debug("email:"+email);
+	@PostMapping("/sendEmail")
+	public ResponseEntity<String> sendEmail(@RequestParam("uemail") String uemail) throws Exception{
+		logger.debug("email:"+uemail);
+		
+		System.out.println("!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
 		// email이 null이거나 비어있는 경우 실패로 처리
-	    if (email == null || email.isEmpty()) {
+	    if (uemail == null || uemail.isEmpty()) {
 	        // 실패 응답 반환
 	    	
 	    	return ResponseEntity.badRequest()
@@ -62,7 +64,7 @@ public class UserRestController {
 	    sb.append(" <p>임시 비밀번호: " + pw + "</p> ");
 	    sb.append(" </body></html> ");
 
-	    mailService.sendMail(email, "임시 비밀번호 발급 안내", sb.toString());
+	    mailService.sendMail(uemail, "임시 비밀번호 발급 안내", sb.toString());
 	    
 
 	    // 성공 응답 반환

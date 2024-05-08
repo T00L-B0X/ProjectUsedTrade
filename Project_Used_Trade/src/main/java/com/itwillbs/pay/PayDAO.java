@@ -1,5 +1,7 @@
 package com.itwillbs.pay;
 
+import com.itwillbs.member.MemberVO;
+
 public interface PayDAO {
 	
 	// 로그인 처리 동작

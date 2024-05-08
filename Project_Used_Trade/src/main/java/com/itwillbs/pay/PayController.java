@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.member.MemberVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -75,7 +76,7 @@ public class PayController {
 		} else {
 			logger.debug(" 로그인 성공!! -> 페이 충전 페이지 이동 ");
 			
-			session.setAttribute("id", resultVO.getUSERID());
+			session.setAttribute("id", resultVO.getUserid());
 
 			addr = "/pay/payCharge";
 		}		

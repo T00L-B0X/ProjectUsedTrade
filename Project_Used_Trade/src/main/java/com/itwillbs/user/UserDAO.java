@@ -13,7 +13,7 @@ public interface UserDAO {
 	
 	public UserVO loginBoard(UserVO vo) throws Exception;
 	
-	public int checkIdBoard(String id) throws Exception;
+	public int checkIdBoard(String userid) throws Exception;
 	
 	public List<UserVO> findIdBoard(UserVO vo) throws Exception;
 	
@@ -21,7 +21,7 @@ public interface UserDAO {
 	
 	public void pwUpdate(UserVO vo) throws Exception;
 	
-	public UserVO read(String id) throws Exception;
+	public UserVO read(String userid) throws Exception;
 	
 	
 }

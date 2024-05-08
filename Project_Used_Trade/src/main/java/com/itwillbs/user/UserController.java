@@ -55,13 +55,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String joinPOST(UserVO vo,AuthVO avo, String pw,String id) throws Exception{
+	public String joinPOST(UserVO vo,AuthVO avo, String userpw,String userid) throws Exception{
 		logger.debug("joinPOST()");
-		logger.debug("id==>"+id);
-		logger.debug("pw"+pw);
+		logger.debug("id==>"+userid);
+		logger.debug("pw"+userpw);
 		logger.debug("vo==>"+vo);
 		
-		vo.setPw(pwEncoder.encode(vo.getPw()));
+		vo.setUserpw(pwEncoder.encode(vo.getUserpw()));
 
 		
 		bService.boardJoin(vo);
@@ -96,7 +96,7 @@ public class UserController {
 	 */
 	
 	@RequestMapping(value = "/home",method = RequestMethod.GET)
-	public String main(Model model,String id,Principal principal) throws Exception {
+	public String main(Model model, Principal principal) throws Exception {
 		logger.debug("main() 호출");
 		
 		/*
@@ -127,15 +127,15 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/findId", method = RequestMethod.POST)
-	public String findIdPOST(String name, String email, Model model, UserVO vo) throws Exception {
+	public String findIdPOST(String usernm, String uemail, Model model, UserVO vo) throws Exception {
 		logger.debug("findIdPOST() 호출");
-		logger.debug("name:" + name);
-		logger.debug("email:" + email);
+		logger.debug("name:" + usernm);
+		logger.debug("email:" + uemail);
 
 		List<UserVO> list = bService.boardIdFind(vo);
 
 		for (UserVO result : list) {
-			if (result.getName().equals(name) && result.getEmail().equals(email)) {
+			if (result.getUsernm().equals(usernm) && result.getUemail().equals(uemail)) {
 				logger.debug("result=====>" + result);
 
 				model.addAttribute("result", result);
@@ -159,10 +159,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
-	public String findPwPOST(String id, String email, Model model, UserVO vo) throws Exception {
+	public String findPwPOST(String userid, String uemail, Model model, UserVO vo) throws Exception {
 		logger.debug("findPwPOST() 호출");
-		logger.debug("id:" + id);
-		logger.debug("email:" + email);
+		logger.debug("id:" + userid);
+		logger.debug("email:" + uemail);
 
 		
 		  UserVO result = bService.boardPwFind(vo);		  
@@ -176,7 +176,7 @@ public class UserController {
 	        // 암호화된 임시 비밀번호 생성
 	        String pw = pwEncoder.encode(temporaryPassword);
 	        // 사용자의 비밀번호를 암호화된 임시 비밀번호로 변경
-	        result.setPw(pw);
+	        result.setUserpw(pw);
 	        // 변경된 비밀번호를 데이터베이스에 업데이트
 	        bService.updatePw(result);
 	        
@@ -187,7 +187,7 @@ public class UserController {
 	        sb.append(" <p>임시 비밀번호: " + temporaryPassword + "</p> ");
 	        sb.append(" </body></html> ");
 	        
-	        mailService.sendMail(email, "임시 비밀번호 발급 안내", sb.toString());
+	        mailService.sendMail(uemail, "임시 비밀번호 발급 안내", sb.toString());
 	        
 	        // 비밀번호 변경 후 메시지를 모델에 추가
 	        model.addAttribute("message", "임시 비밀번호가 이메일로 발송되었습니다. 새로운 비밀번호로 로그인해주세요.");
@@ -197,9 +197,9 @@ public class UserController {
 	    } else {
 	        // 사용자가 존재하지 않는 경우에는 메시지를 모델에 추가
 	        model.addAttribute("message", "입력한 정보와 일치하는 사용자가 없습니다.");
+	        return "/user/findpw";
 	    }
 
-	    return "/user/findpw";
 	}
 
 	/*

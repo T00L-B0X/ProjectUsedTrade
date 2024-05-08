@@ -2,24 +2,25 @@ package com.itwillbs.user;
 
 public class AuthVO {
 
-	private String id;
-	private String AUTHORITY;
-	public String getId() {
-		return id;
+	private String userid;
+	private String auth;
+	public String getUserid() {
+		return userid;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public String getAuth() {
+		return auth;
 	}
-	public String getAUTHORITY() {
-		return AUTHORITY;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
-	public void setAUTHORITY(String aUTHORITY) {
-		AUTHORITY = aUTHORITY;
+	public void setAuth(String auth) {
+		this.auth = auth;
 	}
 	@Override
 	public String toString() {
-		return "AuthVO [id=" + id + ", AUTHORITY=" + AUTHORITY + "]";
+		return "AuthVO [userid=" + userid + ", auth=" + auth + "]";
 	}
 	
+
 	
 }
