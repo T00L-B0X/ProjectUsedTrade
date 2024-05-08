@@ -33,6 +33,16 @@
 	</div>
 </div>
 
+
+
+<!-- 채팅 버튼 클릭 시 ~~ 기능 테스트 중  -->
+<div class = "chatButton">
+<button> 채팅.jpg </button>
+</div>
+
+
+
+
 <script type="text/javascript">
 let roomId; // roomId 초기화 입장 버튼 누르면 id 들어오게 설계
 
@@ -60,6 +70,8 @@ let roomId; // roomId 초기화 입장 버튼 누르면 id 들어오게 설계
 		}
 	})
 }
+
+
 
 // 채팅방에서 닫기 버튼 누를 시 
 $('.close').on('click', function(){
