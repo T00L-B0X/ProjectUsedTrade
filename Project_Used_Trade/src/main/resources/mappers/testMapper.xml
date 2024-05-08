@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+	<mapper namespace="com.itwillbs.mapper.TestMapper">
+
+	<resultMap type="com.itwillbs.user.UserVO" id="boardMap">
+		<id property="id" column="id"/>
+		<result property="id" column="id"/>
+		<result property="pw" column="pw"/>
+		<result property="email" column="email"/>
+		<result property="name" column="name"/>
+		<result property="birthday" column="birthday"/>
+		<result property="gender" column="gender"/>
+		<result property="phoneNumber" column="phoneNumber"/>
+		<result property="regdate" column="regdate"/>
+		<result property="updatedate" column="updatedate"/>
+		
+		<collection property="authList" resultMap="authMap"></collection>
+		<collection property="gradeList" resultMap="gradeMap"></collection>
+		
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.user.AuthVO" id="authMap">
+		
+		<result property="id" column="id"/>
+		<result property="AUTHORITY" column="AUTHORITY"/>
+		
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.user.GradeVO" id="gradeMap">
+		
+		<result property="grade" column="grade"/>
+		<result property="grade_commission" column="grade_commission"/>
+	
+	</resultMap>
+	
+	<insert id="join">
+		insert into test_tbl (id,pw,email,name,birthday,gender,phoneNumber)
+		values(#{id},#{pw},#{email},#{name},#{birthday},#{gender},#{phoneNumber}) 
+	</insert>
+	
+	<insert id="authJoin">
+		insert into auth (id) values(#{id})
+	</insert>
+	
+	<select id="login" resultType="com.itwillbs.user.UserVO">
+		select * from test_tbl
+		where id=#{id} AND pw=#{pw}
+	</select>
+	
+	<select id="checkId" parameterType="String" resultType="int">
+	
+		SELECT COUNT(id)
+		  FROM test_tbl
+		 where id=#{id}
+	
+	</select>
+	
+	<select id="findId" resultType="com.itwillbs.user.UserVO">
+		select * from test_tbl
+		where name=#{name} AND email=#{email}
+	</select>
+	
+	<select id="findPw" resultType="com.itwillbs.user.UserVO">
+		select * from test_tbl
+		where id=#{id} AND email=#{email}
+	</select>
+	
+	<update id="newPw">
+		 UPDATE test_tbl SET pw = #{pw}
+    	WHERE id = #{id} AND email = #{email}
+	</update>
+	
+	<select id="list" resultMap="boardMap">
+			SELECT test.id, pw, name, birthday, gender, phoneNumber, email, enabled, AUTHORITY, regdate, mem.grade, mem.grade_commission
+FROM test_tbl test
+LEFT OUTER JOIN auth ON test.id = auth.id
+LEFT OUTER JOIN membership mem ON test.grade = mem.grade
+WHERE test.id = #{id};
+	</select>
+	
+
+	
+	
+	
+	
+	</mapper>

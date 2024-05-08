@@ -16,41 +16,34 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(CustomLoginSuccessHandler.class);
-
+	
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
-			throws IOException, ServletException {
-		logger.warn("Login Success");
-
-		List<String> roleNames = new ArrayList<>();
-
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication auth) throws IOException, ServletException {
+		logger.debug("CustomLoginSuccessHandler_onAuthenticationSuccess() í˜¸ì¶œ");
+		logger.debug("ì¸ì¦ ì„±ê³µ(ë¡œê·¸ì¸ ì„±ê³µ, í† ê·¼ì •ë³´O) í›„ ì²˜ë¦¬ ìˆ˜í–‰");
+		
+		List<String> roleNames = new ArrayList<String>();
+		
 		auth.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
 		});
-
-		logger.warn("ROLE NAMES: " + roleNames);
-
-		String path = "";
-
-		if (roleNames.contains("ROLE_ADMIN")) {
-			logger.warn("ê´?ë¦¬ì ?•„?´?”” ë¡œê·¸?¸");
-
-			path = "/main";
+		
+		logger.debug("roleNames :"+roleNames);
+		
+		if(roleNames.contains("ROLE_ADMIN")) {
+			logger.debug("ê´€ë¦¬ì ê¶Œí•œ ë¡œê·¸ì¸");
+			response.sendRedirect("/user/home");
+			return;
 		}
-
-		if (roleNames.contains("ROLE_MANAGER")) {
-			logger.warn("ë§¤ë‹ˆ?? ?•„?´?”” ë¡œê·¸?¸");
-
-			path = "/main";
+		if(roleNames.contains("ROLE_MANAGER")) {
+			logger.debug("íšŒì› ê¶Œí•œ ë¡œê·¸ì¸");
+			response.sendRedirect("/user/home");
+			return;
 		}
-
-		if (roleNames.contains("ROLE_MEMBER")) {
-			logger.warn("?‚¬?š©? ?•„?´?”” ë¡œê·¸?¸");
-
-			path = "/main";
-		}
-
-		response.sendRedirect(path);
+			logger.debug("ê¶Œí•œì´ ì—†ëŠ”(ë¹„íšŒì›) ë¡œê·¸ì¸");
+			response.sendRedirect("/user/home");
+	
 	}
 
 }
