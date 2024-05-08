@@ -19,27 +19,27 @@
 	<fieldset>
 		<legend>회원가입</legend>
 		<form action="" method="POST" onsubmit="return checkAll()" id="myForm">
-			<input type="text" name="id" placeholder="아이디" id="id" required="required"  autofocus="autofocus"> <br>
+			<input type="text" name="userid" placeholder="아이디" id="id" required="required"  autofocus="autofocus"> <br>
 				<span class="idchk" style="color: red; display: none;">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span>
 				<span class="id_ok" style="color: green; display: none;">사용 가능한 아이디 입니다.</span>
 				<span class="id_already" style="color: red; display: none;">중복된 아이디 입니다.</span>
 				
-			<input type="password" name="pw" placeholder="비밀번호" id="pw" required="required"> <br>
+			<input type="password" name="userpw" placeholder="비밀번호" id="pw" required="required"> <br>
 				<span class="pwchk" style="color : red; display: none;">8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</span>
 				
-			<input type="text" name="name"placeholder="이름" id="name" required="required"> <br>
+			<input type="text" name="usernm"placeholder="이름" id="name" required="required"> <br>
 				<span class="namechk" style="color: red; display: none">한글, 영문 대/소문자를 사용해 주세요. (특수기호, 공백 사용 불가)</span>
 				
-			<input type="text" name="birthday" placeholder="생년월일" id="birthday" required="required"> <br>
+			<input type="text" name="ubirth" placeholder="생년월일" id="birthday" required="required"> <br>
 				<span class="birthdaychk" style="color: red; display: none; ">생년월일은 8자리 숫자로 입력해 주세요.</span>
 			
 			<input type="radio" name="gender" value="남" >남
 			<input type="radio" name="gender" value="여" >여 <br>
 			
-			<input type="text" name="phoneNumber" placeholder="휴대폰번호" id="phoneNumber" required="required"> <br>
+			<input type="text" name="uphone" placeholder="휴대폰번호" id="phoneNumber" required="required"> <br>
 				<span class="phoneNumberchk" style="color : red; display: none">숫자만 입력해주세요.</span>
 			
-			<input type="email" name="email"placeholder="이메일" id="email" required="required"> 
+			<input type="email" name="uemail"placeholder="이메일" id="email" required="required"> 
 			<button type="button" id="sendEmail">메일보내기</button>
 			<button type="button" id="sendEmail1" style="display: none">재전송</button><br>
 				<span class="emailchk" style="color: red; display: none">이메일 형식에 맞게 입력해 주세요.</span>
@@ -80,9 +80,9 @@
     
     function validateId() {
         var RegId = /^[a-z0-9_-]{5,20}$/;
-        var id = $('#id').val();
+        var userid = $('#id').val();
 
-        if (!RegId.test($.trim(id))) {
+        if (!RegId.test($.trim(userid))) {
             $('.idchk').css({'display': 'block'}); 
             $('.id_ok').css({"display":"none"});
             $('.id_already').css({"display":"none"});
@@ -94,19 +94,19 @@
             var isValidId = false;
             
             $.ajax({
-                url: './ConfirmId',
+                url: '/ConfirmId',
          		beforeSend : function(xhr){
          			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
          		},
-                data: { id: id },
+                data: { userid : userid },
                 type: 'post',
                 async: false, // 동기적으로 설정
                 success: function(cnt) {
-                    if (cnt != 1 && id.length > 0) {
+                    if (cnt != 1 && userid.length > 0) {
                         $('.id_ok').css({"display":"block"});
                         $('.id_already').css({"display":"none"});
                         isValidId = true;
-                    } else if (cnt == 1 && id.length > 0) {
+                    } else if (cnt == 1 && userid.length > 0) {
                         $('.id_already').css({"display":"block"});
                         $('.id_ok').css({"display":"none"});
                     } else {
@@ -163,14 +163,14 @@
     
     function sendEmail() {
         console.log("Send email button clicked");
-        var email = $('#email').val();
+        var uemail = $('#email').val();
 
         $.ajax({
-            url: "./sendEmail",
+            url: "/sendEmail",
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
             },
-            data: { email: email },
+            data: { uemail: uemail },
             type: 'post',
             success: function(response) {
                 // 성공 응답 받은 경우

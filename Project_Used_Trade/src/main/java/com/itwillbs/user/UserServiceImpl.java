@@ -47,10 +47,10 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int boardIdCheck(String id) throws Exception {
+	public int boardIdCheck(String userid) throws Exception {
 		logger.debug("boardIdCheck(String id) 호출");
-		logger.debug("Ser id==>"+id);
-		int cnt = bDao.checkIdBoard(id);
+		logger.debug("Ser id==>"+userid);
+		int cnt = bDao.checkIdBoard(userid);
 		return cnt;
 		
 	}
@@ -81,9 +81,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserVO read(String id) throws Exception {
+	public UserVO read(String userid) throws Exception {
 		// TODO Auto-generated method stub
-		return bDao.read(id);
+		return bDao.read(userid);
 		
 	}
 	

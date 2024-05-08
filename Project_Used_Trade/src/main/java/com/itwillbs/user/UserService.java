@@ -13,7 +13,7 @@ public interface UserService {
 
 	public UserVO boardLogin(UserVO vo) throws Exception;
 	
-	public int boardIdCheck(String id) throws Exception;
+	public int boardIdCheck(String userid) throws Exception;
 	
 	public List<UserVO> boardIdFind(UserVO vo) throws Exception;
 	
@@ -21,7 +21,7 @@ public interface UserService {
 	
 	public void updatePw(UserVO vo) throws Exception;
 	
-	public UserVO read(String id) throws Exception;
+	public UserVO read(String userid) throws Exception;
 	
 	
 	

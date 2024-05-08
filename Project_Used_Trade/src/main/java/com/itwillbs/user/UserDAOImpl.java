@@ -46,11 +46,11 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public int checkIdBoard(String id) throws Exception {
+	public int checkIdBoard(String userid) throws Exception {
 	    logger.debug("checkIdBoard(String id) 호출");
-	    logger.debug("DAO id==>"+id);
+	    logger.debug("DAO id==>"+userid);
 
-	    int cnt =  sqlSession.selectOne(NAMESPACE + ".checkId", id);
+	    int cnt =  sqlSession.selectOne(NAMESPACE + ".checkId", userid);
 	    return cnt;
 	}
 
@@ -80,9 +80,9 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public UserVO read(String id) throws Exception {
+	public UserVO read(String userid) throws Exception {
 		
-		return sqlSession.selectOne(NAMESPACE+".list", id);
+		return sqlSession.selectOne(NAMESPACE+".list", userid);
 	}
 	
 	

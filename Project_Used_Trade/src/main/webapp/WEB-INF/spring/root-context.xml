@@ -14,8 +14,8 @@
 	<!-- HikariConfig : 디비연결 정보 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://localhost:3306/c6d2311t1_2" />
-		<property name="username" value="root" />
+		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://itwillbs.com:3306/c6d2311t1_2" />
+		<property name="username" value="c6d2311t1" />
 		<property name="password" value="1234" />
 	</bean>
 	
@@ -37,5 +37,29 @@
 	</bean>
 
 	<context:component-scan base-package="com.itwillbs" />
+	
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<!-- <property name="port" value="465or587" /> -->
+		<property name="port" value="587" />
+		<property name="username" value="zxcfsfsfs1@gmail.com" />
+		<property name="password" value="fwofllijpkbmhgvc" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<!-- 서비스 객체 주입 -->
+	<context:component-scan base-package="com.itwillbs.user"/>
+	
+	<bean id="preConfigMailSender" class="org.springframework.mail.SimpleMailMessage"/>
 	
 </beans>

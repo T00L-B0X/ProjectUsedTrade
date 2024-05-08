@@ -6,17 +6,17 @@
   
 	<mapper namespace="com.itwillbs.mapper.UserMapper">
 
-	<resultMap type="com.itwillbs.user.UserVO" id="boardMap">
-		<id property="id" column="id"/>
-		<result property="id" column="id"/>
-		<result property="pw" column="pw"/>
-		<result property="email" column="email"/>
-		<result property="name" column="name"/>
-		<result property="birthday" column="birthday"/>
+	<resultMap type="com.itwillbs.user.UserVO" id="userMap">
+		<id property="userid" column="userid"/>
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="userpw"/>
+		<result property="uemail" column="uemail"/>
+		<result property="usernm" column="usernm"/>
+		<result property="ubirth" column="ubirth"/>
 		<result property="gender" column="gender"/>
-		<result property="phoneNumber" column="phoneNumber"/>
+		<result property="uphone" column="uphone"/>
 		<result property="regdate" column="regdate"/>
-		<result property="updatedate" column="updatedate"/>
+		<result property="edtdat" column="edtdat"/>
 		
 		<collection property="authList" resultMap="authMap"></collection>
 		<collection property="gradeList" resultMap="gradeMap"></collection>
@@ -25,61 +25,57 @@
 	
 	<resultMap type="com.itwillbs.user.AuthVO" id="authMap">
 		
-		<result property="id" column="id"/>
-		<result property="AUTHORITY" column="AUTHORITY"/>
+		<result property="userid" column="userid"/>
+		<result property="auth" column="auth"/>
 		
 	</resultMap>
 	
-	<resultMap type="com.itwillbs.user.GradeVO" id="gradeMap">
+	<resultMap type="com.itwillbs.user.UGradeVO" id="gradeMap">
 		
-		<result property="grade" column="grade"/>
-		<result property="grade_commission" column="grade_commission"/>
+		<result property="ugrade" column="ugrade"/>
+		<result property="feerage" column="feerage"/>
 	
 	</resultMap>
 	
 	<insert id="join">
-		insert into test_tbl (id,pw,email,name,birthday,gender,phoneNumber)
-		values(#{id},#{pw},#{email},#{name},#{birthday},#{gender},#{phoneNumber}) 
+		insert into MEMBER (userid,userpw,uemail,usernm,ubirth,gender,uphone)
+		values(#{userid},#{userpw},#{uemail},#{usernm},#{ubirth},#{gender},#{uphone}) 
 	</insert>
 	
 	<insert id="authJoin">
-		insert into auth (id) values(#{id})
+		insert into AUTH (userid) values(#{userid})
 	</insert>
 	
 	<select id="login" resultType="com.itwillbs.user.UserVO">
-		select * from test_tbl
-		where id=#{id} AND pw=#{pw}
+		select * from MEMBER
+		where userid=#{userid} AND userpw=#{userpw}
 	</select>
-	
+
 	<select id="checkId" parameterType="String" resultType="int">
-	
-		SELECT COUNT(id)
-		  FROM test_tbl
-		 where id=#{id}
-	
+		SELECT COUNT(*) FROM MEMBER WHERE userid=#{userid}
 	</select>
 	
 	<select id="findId" resultType="com.itwillbs.user.UserVO">
-		select * from test_tbl
-		where name=#{name} AND email=#{email}
+		select * from MEMBER
+		where usernm=#{usernm} AND uemail=#{uemail}
 	</select>
 	
 	<select id="findPw" resultType="com.itwillbs.user.UserVO">
-		select * from test_tbl
-		where id=#{id} AND email=#{email}
+		select * from MEMBER
+		where userid=#{userid} AND uemail=#{uemail}
 	</select>
 	
 	<update id="newPw">
-		UPDATE test_tbl SET pw = #{pw}
-    	WHERE id = #{id} AND email = #{email}
+		UPDATE MEMBER SET userpw = #{userpw}
+    	WHERE userid = #{userid} AND uemail = #{uemail}
 	</update>
 	
-	<select id="list" resultMap="boardMap">
-		SELECT test.id, pw, name, birthday, gender, phoneNumber, email, enabled, AUTHORITY, regdate, mem.grade, mem.grade_commission
-		FROM test_tbl test
-		LEFT OUTER JOIN auth ON test.id = auth.id
-		LEFT OUTER JOIN membership mem ON test.grade = mem.grade
-		WHERE test.id = #{id};
+	<select id="list" resultMap="userMap">
+		SELECT MEMBER.userid, userpw, usernm, ubirth, gender, uphone, uemail, enabled, auth, regdate, UGRADE.ugrade, UGRADE.feerage
+		FROM MEMBER
+		LEFT OUTER JOIN AUTH ON MEMBER.userid = AUTH.userid
+		LEFT OUTER JOIN UGRADE ON MEMBER.ugrade = UGRADE.ugrade
+		WHERE MEMBER.userid = #{userid};
 	</select>
 	
 

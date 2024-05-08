@@ -2,6 +2,7 @@ package com.itwillbs.pay;
 
 import javax.servlet.http.HttpSession;
 
+import com.itwillbs.member.MemberVO;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 

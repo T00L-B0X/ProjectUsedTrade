@@ -7,90 +7,91 @@ import java.util.List;
 
 public class UserVO {
 	
-	private String id;
-	private String pw;
-	private String email;
-	private String name;
-	private String birthday;
+	private String userid;
+	private String userpw;
+	private String uemail;
+	private String usernm;
+	private String ubirth;
 	private String gender;
-	private String phoneNumber;
+	private String uphone;
 	private Timestamp regdate;
-	private Timestamp updatedate;
+	private Timestamp edtdat;
 	
 	private List<AuthVO> authList;
-	private List<GradeVO> gradeList;
-	public String getId() {
-		return id;
+	private List<UGradeVO> gradeList;
+	public String getUserid() {
+		return userid;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public String getUserpw() {
+		return userpw;
 	}
-	public String getPw() {
-		return pw;
+	public String getUemail() {
+		return uemail;
 	}
-	public void setPw(String pw) {
-		this.pw = pw;
+	public String getUsernm() {
+		return usernm;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getBirthday() {
-		return birthday;
-	}
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+	public String getUbirth() {
+		return ubirth;
 	}
 	public String getGender() {
 		return gender;
 	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public String getUphone() {
+		return uphone;
 	}
 	public Timestamp getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Timestamp regdate) {
-		this.regdate = regdate;
-	}
-	public Timestamp getUpdatedate() {
-		return updatedate;
-	}
-	public void setUpdatedate(Timestamp updatedate) {
-		this.updatedate = updatedate;
+	public Timestamp getEdtdat() {
+		return edtdat;
 	}
 	public List<AuthVO> getAuthList() {
 		return authList;
 	}
+	public List<UGradeVO> getGradeList() {
+		return gradeList;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public void setUserpw(String userpw) {
+		this.userpw = userpw;
+	}
+	public void setUemail(String uemail) {
+		this.uemail = uemail;
+	}
+	public void setUsernm(String usernm) {
+		this.usernm = usernm;
+	}
+	public void setUbirth(String ubirth) {
+		this.ubirth = ubirth;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public void setUphone(String uphone) {
+		this.uphone = uphone;
+	}
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
+	public void setEdtdat(Timestamp edtdat) {
+		this.edtdat = edtdat;
+	}
 	public void setAuthList(List<AuthVO> authList) {
 		this.authList = authList;
 	}
-	public List<GradeVO> getGradeList() {
-		return gradeList;
-	}
-	public void setGradeList(List<GradeVO> gradeList) {
+	public void setGradeList(List<UGradeVO> gradeList) {
 		this.gradeList = gradeList;
 	}
 	@Override
 	public String toString() {
-		return "UserVO [id=" + id + ", pw=" + pw + ", email=" + email + ", name=" + name + ", birthday=" + birthday
-				+ ", gender=" + gender + ", phoneNumber=" + phoneNumber + ", regdate=" + regdate + ", updatedate="
-				+ updatedate + ", authList=" + authList + ", gradeList=" + gradeList + "]";
+		return "UserVO [userid=" + userid + ", userpw=" + userpw + ", uemail=" + uemail + ", usernm=" + usernm
+				+ ", ubirth=" + ubirth + ", gender=" + gender + ", uphone=" + uphone + ", regdate=" + regdate
+				+ ", edtdat=" + edtdat + ", authList=" + authList + ", gradeList=" + gradeList + "]";
 	}
+	
 	
 	
 	
