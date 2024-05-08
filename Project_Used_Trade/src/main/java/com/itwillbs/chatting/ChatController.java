@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.itwillbs.member.MemberVO;
+import com.itwillbs.user.MemberVO;
 
 @Controller
 public class ChatController {

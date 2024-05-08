@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.alarm.AlarmVO;
 import com.itwillbs.chatting.ChatMemberVO;
-import com.itwillbs.member.MemberVO;
+import com.itwillbs.user.MemberVO;
 
 @Service("ChatGroupService")
 public class ChatGroupServiceImpl implements ChatGroupService {

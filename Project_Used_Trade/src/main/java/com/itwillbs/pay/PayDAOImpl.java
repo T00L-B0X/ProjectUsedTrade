@@ -7,7 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.itwillbs.member.MemberVO;
+import com.itwillbs.user.MemberVO;
+
 
 @Repository
 public class PayDAOImpl implements PayDAO {

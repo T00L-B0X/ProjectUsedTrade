@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.itwillbs.alarm.AlarmVO;
-import com.itwillbs.member.MemberVO;
-import com.itwillbs.chatting.ChatMemberVO;
+import com.itwillbs.user.MemberVO;
 
 public interface ChatGroupDAO {
 	
