@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itwillbs.chatting.ChatGroupVO;
 import com.itwillbs.chatting.ChatMessageVO;
 import com.itwillbs.chatting.ChatService;
-import com.itwillbs.member.MemberVO;
+import com.itwillbs.user.MemberVO;
 /**
  * 
  * 실시간 채팅을 위한 webSocketHandler

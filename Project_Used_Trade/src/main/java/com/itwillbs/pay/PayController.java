@@ -13,10 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.itwillbs.member.MemberVO;
+import com.itwillbs.user.MemberVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -61,29 +60,24 @@ public class PayController {
 	}
 	
 	// 로그인 - POST
-	@RequestMapping(value = "/login",method = RequestMethod.POST)
-	public String memberLoginPOST(MemberVO vo, HttpSession session) {
-		logger.debug(" login.jsp ->LoginPOST() 호출 ");
-		
-		logger.debug(" 로그인 정보 vo : " + vo);
-		
-		MemberVO resultVO = pService.memberLogin(vo);
-		
-		String addr ="";
-		if(resultVO == null) {
-			logger.debug(" 로그인 실패! -> 다시 로그인 ");
-			addr = "/member/login";
-		} else {
-			logger.debug(" 로그인 성공!! -> 페이 충전 페이지 이동 ");
-			
-			session.setAttribute("id", resultVO.getUserid());
-
-			addr = "/pay/payCharge";
-		}		
-		
-		return "redirect:"+addr;
-	}
-	
+	/*
+	 * @RequestMapping(value = "/login",method = RequestMethod.POST) public String
+	 * memberLoginPOST(MemberVO vo, HttpSession session) {
+	 * logger.debug(" login.jsp ->LoginPOST() 호출 ");
+	 * 
+	 * logger.debug(" 로그인 정보 vo : " + vo);
+	 * 
+	 * MemberVO resultVO = pService.memberLogin(vo);
+	 * 
+	 * String addr =""; if(resultVO == null) { logger.debug(" 로그인 실패! -> 다시 로그인 ");
+	 * addr = "/member/login"; } else { logger.debug(" 로그인 성공!! -> 페이 충전 페이지 이동 ");
+	 * 
+	 * session.setAttribute("id", resultVO.getUserid());
+	 * 
+	 * addr = "/pay/payCharge"; }
+	 * 
+	 * return "redirect:"+addr; }
+	 */
 	// http://localhost:8088/pay/payCharge
 	// 충전페이지 GET
 	@RequestMapping(value = "/payCharge", method = RequestMethod.GET)

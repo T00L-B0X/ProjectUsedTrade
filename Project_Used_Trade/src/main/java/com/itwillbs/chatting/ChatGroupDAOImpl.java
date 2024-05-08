@@ -9,8 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.alarm.AlarmVO;
-import com.itwillbs.member.MemberVO;
-import com.itwillbs.chatting.ChatMemberVO;
+import com.itwillbs.user.MemberVO;
 
 @Repository("ChatGroupDAO")
 public class ChatGroupDAOImpl implements ChatGroupDAO{
