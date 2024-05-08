@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mapper.PayMapper">
+
+	<!-- 로그인 여부 확인(테스트용) -->
+    <select id="loginMember" resultType="com.itwillbs.pay.MemberVO">
+    	select * from member 
+    	where USERID = #{USERID} and USERPW = #{USERPW}
+    </select>
+
+	<!-- 페이 결제(충전) -->
+	<!-- 현제 페이 금액 조회 -->
+	<select id="getMemberPay" resultType="com.itwillbs.pay.PayVO">
+    	select * from pay 
+    	where USERID = #{USERID}
+    </select>
+	
+	<!-- 결제 정보 저장 -->
+	<insert id="insertPayInfo" parameterType="PayInfoVO">
+		insert into payinfo 
+		values(#{PAY_ID}, #{USER_ID}, #{PAY_TYPE}, #{PAY_STATE}, #{PAY_AMOUNT}, #{CHARGE_TYPE}, NULL, NULL, NULL, NULL, NOW(), NOW())
+	</insert>
+	
+	<!-- 페이 충전 금액 저장 -->
+	<update id="updatePay">
+		update pay set PAY_BALANCE = PAY_BALANCE + #{PAY_AMOUNT}
+		where USERID = #{USER_ID};
+	</update>
+	
+	<!-- 결제 정보 조회 -->
+	<select id="selectPayInfo" resultType="com.itwillbs.pay.PayInfoVO">
+	    select * from payinfo
+    	where USERID = #{USERID}
+	</select>
+	
+	<!-- 페이 환불 -->
+	<!-- 환불 정보 저장 -->
+	<insert id="insertPayInfoRefund" parameterType="PayInfoVO">
+		insert into payinfo 
+		values(#{PAY_ID}, #{USER_ID}, #{PAY_TYPE}, #{PAY_STATE}, #{PAY_AMOUNT}, NULL, NULL, #{BANK}, #{ACCOUNT}, #{ACCOUNT_HOLDER}, NOW(), NULL)
+	</insert>
+	
+	<!-- 페이 환불 금액 저장 -->
+	<update id="updatePayRefund">
+		update pay set PAY_BALANCE = PAY_BALANCE - #{PAY_AMOUNT}
+		where USERID = #{USER_ID};
+	</update>
+
+
+</mapper>
