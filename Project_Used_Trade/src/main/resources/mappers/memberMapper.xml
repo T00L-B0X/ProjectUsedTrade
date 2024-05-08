@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 기능 완성 시 삭제되는 매퍼 -->  
+<mapper namespace="com.itwillbs.mapper.MemberMapper">
+	
+	<!-- 회원가입 -->
+	<insert id="insertMember">
+		insert into member (userid, user_password, user_email, user_name)
+		values (#{userid}, #{user_pw}, #{user_email}, #{user_name})
+	</insert>
+	
+	<!-- 로그인 여부 확인 -->
+	<select id = "loginMember" resultType="com.itwillbs.member.MemberVO">
+		select * from member
+		where userid = #{userid} and user_password = #{user_pw}
+	</select>
+  
+  
+</mapper>
