@@ -70,7 +70,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	private String getUserid(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
 		MemberVO loginUser = (MemberVO) httpSession.get("user");
-
+//		MemberVO loginUser = new MemberVO();
+//		loginUser.setUserid((String)httpSession.get("user"));
 		if (loginUser == null) {
 			return session.getId(); // WebSocketSession 의 session id 반환
 		} else {

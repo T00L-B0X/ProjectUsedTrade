@@ -4,8 +4,10 @@
 %>
 <%@ include file="../include/header.jsp"%>
 
+${sessionScope }
+<h3>userid = ${sessionScope.user.userid }</h3>
+<h3>usernm = ${sessionScope.user.usernm }</h3> 
 <h1>로그인 유저 정보 : ${user }</h1>
-<h3>user = ${user}</h3>
 
 
 <div class="container">
@@ -35,6 +37,18 @@
 </div>
 
 <script type="text/javascript">
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+
+$.ajax({
+    url: './ConfirmId',
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+    data: { id: id },
+})
+
+
 let roomId; // roomId 초기화 입장 버튼 누르면 id 들어오게 설계
 
  getChatList();
@@ -49,7 +63,7 @@ let roomId; // roomId 초기화 입장 버튼 누르면 id 들어오게 설계
 			room = `<h3 style="text-align: center" >채팅방 리스트</h3>`;
 			for(var i = 0; i < res.length; i++){
 				room += `	<div class="room">`;
-				room += `		<div class="name" style="display: inline; padding-left: 20px;">\${res[i].user_name }</div>`;
+				room += `		<div class="name" style="display: inline; padding-left: 20px;">\${res[i].usernm }</div>`;
 				room += `		<div class="title" style="display: inline; padding-left: 10px;">\${res[i].chat_title }</div>`;
 				room += `		<button class="enter" style="margin-right: 10px;" id="\${res[i].chat_no }" value="\${res[i].chat_title }" onclick='enterRoom(this)'>입장</button>`
 				if(res[i].msg_count > 0){
@@ -67,7 +81,7 @@ $('.close').on('click', function(){
 	// 방에 입장 시 해당 정보 서버에 전달
 	const roomData = {
 		 "chat_no" : roomId,
-		 "user_name" : "${sessionScope.user.user_name}",
+		 "usernm" : "${sessionScope.usernm}",
 		 "userid" : "${sessionScope.user.userid}",
 		 "type" : "close-room"
 	}
@@ -87,7 +101,7 @@ function enterRoom(obj){
 	// 방에 입장 시 해당 정보 서버에 전달
 	const roomData = {
 		 "chat_no" : roomId,
-		 "user_name" : "${sessionScope.user.user_name}",
+		 "usernm" : "${sessionScope.user.usernm}",
 		 "userid" : "${sessionScope.user.userid}",
 		 "type" : "enter-room"
 	}
@@ -127,11 +141,11 @@ function chatMessageList(){
 					var member = "멤버 : ";
 					for(var i = 0; i < res.length; i++){
 						if(res[i].auth_role == '방장'){
-							$("#leader").html(`방장 : \${res[i].user_name}`)
+							$("#leader").html(`방장 : \${res[i].usernm}`)
 						}else if(i == res.length-1){
-							member += `\${res[i].user_name}`
+							member += `\${res[i].usernm}`
 						}else{
-							member += `\${res[i].user_name}, `
+							member += `\${res[i].usernm}, `
 						}
 						cnt += 1;
 					}
@@ -173,7 +187,7 @@ function chatMessageList(){
 function sendMessage(message){
 	const data = {
 			 "chat_no" : roomId,
-			 "user_name" : "${sessionScope.user.user_name}",
+			 "usernm" : "${sessionScope.user.usernm}",
 			 "userid" : "${sessionScope.user.userid}",
 			 "message_content" : message,
 			 "message_regdat" : dateFormat(),
@@ -199,7 +213,7 @@ function sendMessage(message){
 		 	let receive = evt.data.split(","); // evt.data 서버에서 전송된 메시지 데이터
 	        
 	        const data = {
-	                "user_name" : receive[0],
+	                "usernm" : receive[0],
 	                "userid" : receive[1],
 	             "message_content" : receive[2],
 	             "message_regdat" : receive[3],
@@ -214,7 +228,7 @@ function sendMessage(message){
  	// id가 로그인한 회원의 id와 다르면 left , 같으면 right
  	const LR = (data.userid != "${sessionScope.user.userid}") ? "left" : "right";
  	// 메시지 추가 함수 호출
- 	appendMessageTag(LR, data.userid, data.message_content, data.user_name, data.message_regdat, data.unread_count);
+ 	appendMessageTag(LR, data.userid, data.message_content, data.usernm, data.message_regdat, data.unread_count);
  }
  
 // * 3 메시지 태그 append

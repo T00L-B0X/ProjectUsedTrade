@@ -49,6 +49,8 @@ public class ChattingController {
 		model.addAttribute("chatList", list);
 
 		logger.debug("chatList : " + list);
+		logger.debug("userid : " + userid);
+		logger.debug(" chatting.jsp 이동 ");
 		return "/chatting/chatting";
 	}
 
@@ -61,6 +63,7 @@ public class ChattingController {
 		int result = chatService.insertChat(chat);
 		if (result > 0) {
 			goPage = "redirect:/chatting";
+			logger.debug(" 글쓴이 : " + chat.getUserid());
 		} else {
 			goPage = "";
 		}
