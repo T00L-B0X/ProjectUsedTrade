@@ -119,6 +119,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			}
 		}
 		System.out.println("연결 후 userSessionMap 상태 : " + userSessionMap);
+		//d
 	}
 
 	// websocket 연결 종료 시
