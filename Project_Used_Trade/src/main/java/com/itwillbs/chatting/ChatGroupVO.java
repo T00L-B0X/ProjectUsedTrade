@@ -4,15 +4,17 @@ package com.itwillbs.chatting;
  * @author ITWILL
  *
  */
+/**
+ * @author ITWILL
+ *
+ */
 public class ChatGroupVO {
 	private int chat_no;
 	private String chat_title;
 	private String userid;
 	private String chat_date;
-	private String user_name;
+	private String usernm;
 	
-
-
 	// DB에는 없음 채팅방장 설정을 위한 변수
 	private String auth_role;
 	private int msgCount;
@@ -42,11 +44,11 @@ public class ChatGroupVO {
 	public void setChat_date(String chat_date) {
 		this.chat_date = chat_date;
 	}
-	public String getUser_name() {
-		return user_name;
+	public String getUsernm() {
+		return usernm;
 	}
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUsernm(String usernm) {
+		this.usernm = usernm;
 	}
 	public String getAuth_role() {
 		return auth_role;
@@ -61,12 +63,15 @@ public class ChatGroupVO {
 		this.msgCount = msgCount;
 	}
 	
-	
 	@Override
 	public String toString() {
 		return "ChatGroupVO [chat_no=" + chat_no + ", chat_title=" + chat_title + ", userid=" + userid + ", chat_date="
-				+ chat_date + ", user_name=" + user_name + ", auth_role=" + auth_role + ", msgCount=" + msgCount + "]";
+				+ chat_date + ", usernm=" + usernm + ", auth_role=" + auth_role + ", msgCount=" + msgCount + "]";
 	}
+	
+	
+	
+	
 	
 	
 	

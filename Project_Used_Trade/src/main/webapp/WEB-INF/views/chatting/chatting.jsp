@@ -5,7 +5,7 @@
 
 <h1> 채팅방 </h1>
 <h2> 사용자 정보 : ${user }</h2>
-<h2> userid : ${sessionScope.user.userid }</h2>
+<h2> userid : ${user.userid }</h2>
 <h2> 페이지에 저장된 모든 Session : ${sessionScope }</h2>
 
 <h2> userid : ${userid }</h2>
@@ -13,8 +13,8 @@
 		<h2>채팅방 생성</h2>
 		<form method="post">
 			채팅방 제목 : <input id="chat_title" type="text" name="chat_title">
-			<input type="hidden" name="userid" value="${sessionScope.user.userid }">
-			<input type="hidden" name="user_name" value="${sessionScope.user.user_name }">
+			<input type="hidden" name="userid" value="${user.userid }">
+			<input type="hidden" name="usernm" value="${user.usernm }">
 			<input id="subBtn" type="button" value="생성하기">
 		</form>
 	</div>
@@ -38,7 +38,7 @@
 					<c:forEach items="${chatList }" var="chat">
 						<tr>
 							<td align="center">${chat.chat_no }</td>
-							<td align="center">${chat.user_name }</td>
+							<td align="center">${chat.usernm }</td>
 							<td align="center">${chat.chat_title }</td>
 							<td align="center">${chat.chat_date }</td>
 							<td align="center"><input type="button" class="joinBtn" value="가입하기" id="${chat.chat_no }"></td>

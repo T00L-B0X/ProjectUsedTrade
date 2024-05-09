@@ -41,7 +41,7 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 		List<MemberVO> userList = chatDao.getUserList(userid);
 		Map<String, Object> map = new HashMap<String, Object>();
 		for (MemberVO user : userList) {
-			map.put("sender_name", chat.getUser_name());
+			map.put("sender_name", chat.getUsernm());
 			map.put("userid", user.getUserid());
 			map.put("chat_no", chat.getChat_no());
 			

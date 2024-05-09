@@ -1,5 +1,6 @@
 package com.itwillbs.chatting;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,11 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.alarm.AlarmVO;
 import com.itwillbs.user.MemberVO;
+import com.itwillbs.user.UserService;
 @Controller
 public class ChattingController {
 
 	@Inject
 	private ChatGroupService chatService;
+	
+	@Inject
+	private UserService userService;
 
 	@Inject
 	private ChatService service;
@@ -32,8 +37,14 @@ public class ChattingController {
 	private static final Logger logger = LoggerFactory.getLogger(ChattingController.class);
 
 	@RequestMapping(value = "chatting", method = RequestMethod.GET)
-	public String chatForm(Model model, HttpSession session) {
+	public String chatForm(Model model, HttpSession session, Principal principal) throws Exception {
 		List<ChatGroupVO> list = chatService.getChatGroupList();
+		
+		// model.addAttribute에 session에 있는 사용자 정보 저장
+		String userid = principal.getName();
+		MemberVO memberVO = userService.read(userid);
+		model.addAttribute("user", memberVO);
+		
 
 		model.addAttribute("chatList", list);
 
