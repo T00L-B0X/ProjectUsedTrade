@@ -31,11 +31,76 @@
 <link href="/resources/css/tiny-slider.css" rel="stylesheet">
 <link href="/resources/css/style.css" rel="stylesheet">
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/resources/css/test.css" rel="stylesheet">
+<link href="/resuorces/css/ChatCSS.css" rel = "stylesheet">
 <title>Furni Free Bootstrap 5 Template for Furniture and
 	Interior Design Websites by Untree.co</title>
 <style>
+.container {
+	display: flex;
+	width: 1300px;
+	margin-top: 20px;
+}
 
+.chatList, .chatRoom {
+	border: 1px solid black;
+	height: 682px;
+	padding-top: 5px
+}
+/* .chatList{flex:2} */
+/* .chatRoom{flex:3} */
+.room {
+	border: 1px solid black;
+	height: 70px;
+	padding-top: 20px;
+}
+
+.roomTitle {
+	height: 30px;
+}
+
+.chatMiddle {
+	height: 450px;
+	border: 1px solid black;
+	overflow: auto;
+}
+
+.display-none {
+	display: none;
+}
+
+.right {
+	text-align: right;
+	margin-right: 45px;
+}
+
+.chatMiddle li {
+	list-style: none;
+}
+
+.sender {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.message {
+	margin-top: 8px;
+	margin-bottom: 4px;
+}
+
+.message .msg {
+	padding: 5px;
+	border: 1px solid rgb(99, 99, 102);
+	color: rgb(99, 99, 102);
+}
+
+.message .cnt {
+	color: red;
+	font-size: 13px;
+}
+
+.regDate span {
+	font-size: 12px;
+}
 </style>
 <script>
 

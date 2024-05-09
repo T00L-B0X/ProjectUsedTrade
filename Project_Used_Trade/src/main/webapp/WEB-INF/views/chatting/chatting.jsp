@@ -15,6 +15,7 @@
 			채팅방 제목 : <input id="chat_title" type="text" name="chat_title">
 			<input type="hidden" name="userid" value="${user.userid }">
 			<input type="hidden" name="usernm" value="${user.usernm }">
+			<input type = "hidden" name="${_csrf.parameterName }" value = "${_csrf.token }">
 			<input id="subBtn" type="button" value="생성하기">
 		</form>
 	</div>
@@ -55,8 +56,8 @@ $(function(){
 	joinBtn.on("click", function(){
 		var chat_no = $(this).attr("id");
 		var ChatObject = {
-			"userid" : "${sessionScope.user.userid}",
-			"user_name" : "${sessionScope.user.user_name}",
+			"userid" : "${user.userid}",
+			"usernm" : "${user.usernm}",
 			"chat_no" : chat_no,
 			"auth_role" : "채팅인원"
 		}
@@ -89,6 +90,17 @@ $(function(){
 	})
 	
 })
+
+	var csrfHeaderName = "${_csrf.headerName}";
+    var csrfTokenValue = "${_csrf.token}";
+    
+    $.ajax({
+        url: './ConfirmId',
+ 		beforeSend : function(xhr){
+ 			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+ 		},
+        data: { id: id },
+    })
 </script>
 
 

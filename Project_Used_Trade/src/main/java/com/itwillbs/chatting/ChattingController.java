@@ -56,8 +56,8 @@ public class ChattingController {
 	@RequestMapping(value = "chatting", method = RequestMethod.POST)
 	public String insertChat(ChatGroupVO chat, MemberVO vo, HttpSession session) {
 		String goPage = "";
-		// vo.setUserid((String) session.getAttribute("userid"));
-		chat.setUserid((String) session.getAttribute("userid"));
+		// chat.setUserid((String) session.getAttribute("userid"));
+		chat.setUserid(vo.getUserid());
 		int result = chatService.insertChat(chat);
 		if (result > 0) {
 			goPage = "redirect:/chatting";
@@ -118,7 +118,7 @@ public class ChattingController {
 		member.setChat_no(chatService.getChatNo(chat_no));
 		member.setUserid(chatService.getMemberFromTable(bno));
 		member.setAuth_role("게시글 작성자");
-		member.setUser_name(chatService.getUserNameFromTable(bno));
+		member.setUsernm(chatService.getUserNameFromTable(bno));
 		logger.debug("DB에 저장되는 게시글 작성자 정보 : " + member);
 
 		// 채팅 멤버에 추가하는 작업을 수행한다.

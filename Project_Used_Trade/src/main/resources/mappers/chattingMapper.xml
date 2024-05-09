@@ -24,14 +24,14 @@
 	
 	<!-- 채팅 게시글 등록 쿼리 -->
 	<insert id="insertChat" parameterType="ChatGroupVO" useGeneratedKeys="true" keyProperty="chat_no">
-	    INSERT INTO CHATGROUP (chat_title, userid, chat_date, user_name)
-	    VALUES (#{chat_title}, #{userid}, NOW(), #{user_name})
+	    INSERT INTO CHATGROUP (chat_title, userid, chat_date, usernm)
+	    VALUES (#{chat_title}, #{userid}, NOW(), #{usernm})
 	</insert>
 	
 	<!-- 채팅 멤버 추가 쿼리 -->
 	<insert id = "addChatMember" parameterType="ChatGroupVO">
 		INSERT INTO CHATMEMBER
-		VALUES(#{chat_no}, #{userid}, #{user_name}, #{auth_role}, 0)
+		VALUES(#{chat_no}, #{userid}, #{usernm}, #{auth_role}, 0)
 	</insert>
 	
 	<!-- 해당 아이디에 대한 안읽은 alarm 리스트 가져오기 -->
@@ -47,7 +47,7 @@
 	<!-- 채팅 가입하기 쿼리 -->
 	<insert id = "joinChatGroup" parameterType="ChatMemberVO">
 		INSERT INTO CHATMEMBER 
-		VALUES (#{chat_no}, #{userid}, #{user_name}, #{auth_role}, 0)
+		VALUES (#{chat_no}, #{userid}, #{usernm}, #{auth_role}, 0)
 	</insert>
 	
 	
@@ -59,10 +59,10 @@
 	
 	<!-- 메시지 등록하기 -->
 	<insert id = "insertMessage" parameterType="ChatMessageVO" useGeneratedKeys="true">
-<!-- 		INSERT INTO chatmessage (message_id, chat_no, message_content, message_regdat, userid, unread_count, user_name) -->
-<!-- 		VALUES (NULL, #{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{user_name}) -->
-	INSERT INTO CHATMESSAGE (message_id, chat_no, message_content, message_regdat, userid, unread_count, user_name)
-	VALUES (NULL, #{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{user_name})
+<!-- 		INSERT INTO chatmessage (message_id, chat_no, message_content, message_regdat, userid, unread_count, usernm) -->
+<!-- 		VALUES (NULL, #{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{usernm}) -->
+	INSERT INTO CHATMESSAGE (message_id, chat_no, message_content, message_regdat, userid, unread_count, usernm)
+	VALUES (NULL, #{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{usernm})
 	</insert>
 	
 	<!-- 나를 제외한 해당 방에 속한 사람들 안 읽은 메시지 개수 업데이트 -->
@@ -158,9 +158,9 @@
 	WHERE BOARD.BNO = #{bno}
 	</select>
 	
-	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (user_name) -->
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (usernm) -->
 	<select id = "getUserNameFromTable" resultType = "String">
-	SELECT MEMBER.USER_NAME
+	SELECT MEMBER.usernm
 	FROM MEMBER
 	INNER JOIN BOARD
 	ON
