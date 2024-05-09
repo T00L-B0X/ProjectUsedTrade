@@ -4,7 +4,8 @@
 %>
 <%@ include file="../include/header.jsp"%>
 
-<%-- <h1>로그인 유저 정보 : ${user }</h1> --%>
+<h1>로그인 유저 정보 : ${user }</h1>
+<h3>user = ${user}</h3>
 
 
 <div class="container">

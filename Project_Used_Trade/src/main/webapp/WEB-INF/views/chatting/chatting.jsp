@@ -6,8 +6,6 @@
 <h1> 채팅방 </h1>
 <h2> 사용자 정보 : ${user }</h2>
 <h2> userid : ${sessionScope.user.userid }</h2>
-<h2> user_name : ${sessionScope.user.user_name }</h2>
-chatList : ${chatList }
 <h2> 페이지에 저장된 모든 Session : ${sessionScope }</h2>
 
 <h2> userid : ${userid }</h2>
