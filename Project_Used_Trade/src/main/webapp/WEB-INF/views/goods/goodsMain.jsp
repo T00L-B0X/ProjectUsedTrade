@@ -281,6 +281,7 @@ $(document).ready(function() {
 </script>
 	<div class="container">
 	<h2>경매 상품</h2>
+<h3> USER: ${user }</h3>
 		<ul>
 			<li><a href="#" class="cate-all">전체</a></li>
 			<li><a href="#" class="cate-link" data-category="패션">패션</a></li>

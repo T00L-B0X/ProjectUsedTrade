@@ -18,9 +18,9 @@ public interface ChatGroupService {
 	
 	public int joinChatGroup(ChatMemberVO member);
 	
-	public String getMemberFromTable(int bno);
+	public String getMemberFromTable(int goods_id);
 	
-	public String getUserNameFromTable(int bno);
+	public String getUserNameFromTable(int goods_id);
 	
 	public int getChatNo(int chat_no);
 	

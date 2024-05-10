@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.user.AuthVO;
-import com.itwillbs.user.UserVO;
+import com.itwillbs.user.MemberVO;
 import com.itwillbs.user.PasswordGenerator;
 import com.itwillbs.user.UserDAO;
 import com.itwillbs.user.UserService;
@@ -56,7 +56,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String joinPOST(UserVO vo,AuthVO avo, String userpw,String userid) throws Exception{
+	public String joinPOST(MemberVO vo,AuthVO avo, String userpw,String userid) throws Exception{
 		logger.debug("joinPOST()");
 		logger.debug("id==>"+userid);
 		logger.debug("pw"+userpw);
@@ -97,16 +97,17 @@ public class UserController {
 	 */
 	
 	@RequestMapping(value = "/home",method = RequestMethod.GET)
+
 	public String main(HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
 		
 	
 		String userid = principal.getName();
+
 		UserVO vo = bService.read(userid); 
-        session.setAttribute("user", vo);
-		
-          
-        return "/user/home";
+    session.setAttribute("user", vo);
+
+    return "/user/home";
 
 		
 	}
@@ -117,14 +118,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/findId", method = RequestMethod.POST)
-	public String findIdPOST(String usernm, String uemail, Model model, UserVO vo) throws Exception {
+	public String findIdPOST(String usernm, String uemail, Model model, MemberVO vo) throws Exception {
 		logger.debug("findIdPOST() 호출");
 		logger.debug("name:" + usernm);
 		logger.debug("email:" + uemail);
 
-		List<UserVO> list = bService.boardIdFind(vo);
+		List<MemberVO> list = bService.boardIdFind(vo);
 
-		for (UserVO result : list) {
+		for (MemberVO result : list) {
 			if (result.getUsernm().equals(usernm) && result.getUemail().equals(uemail)) {
 				logger.debug("result=====>" + result);
 
@@ -149,7 +150,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
+
 	public String findPwPOST(String userid, String uemail, Model model, UserVO vo,RedirectAttributes attr) throws Exception {
+
 		logger.debug("findPwPOST() 호출");
 		logger.debug("id:" + userid);
 		logger.debug("email:" + uemail);
@@ -157,6 +160,7 @@ public class UserController {
 		
 		UserVO result = bService.boardPwFind(vo);		  
 		//model.addAttribute("result", result);
+
 		 
 		
 		 // 사용자가 존재하는 경우에만 처리
@@ -222,7 +226,6 @@ public class UserController {
 	@RequestMapping(value = "/mypage",method = RequestMethod.GET)
 	public void mypage() throws Exception {
 		logger.debug("mypage() 호출");
-		
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
@@ -231,8 +234,9 @@ public class UserController {
 		logger.debug("modify() 호출");
 		
 		String userid = principal.getName();
+
 		UserVO vo = bService.read(userid); 
-        model.addAttribute("user", vo);
+    model.addAttribute("user", vo);
 
 	}
 	

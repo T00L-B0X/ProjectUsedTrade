@@ -3,25 +3,25 @@ package com.itwillbs.user;
 import java.util.List;
 
 import com.itwillbs.user.AuthVO;
-import com.itwillbs.user.UserVO;
+import com.itwillbs.user.MemberVO;
 
 public interface UserDAO {
 
-	public void joinBoard(UserVO vo) throws Exception;
+	public void joinBoard(MemberVO vo) throws Exception;
 	
 	public void authJoin(AuthVO avo) throws Exception;
 	
-	public UserVO loginBoard(UserVO vo) throws Exception;
+	public MemberVO loginBoard(MemberVO vo) throws Exception;
 	
 	public int checkIdBoard(String userid) throws Exception;
 	
-	public List<UserVO> findIdBoard(UserVO vo) throws Exception;
+	public List<MemberVO> findIdBoard(MemberVO vo) throws Exception;
 	
-	public UserVO findPwBoard(UserVO vo) throws Exception;
+	public MemberVO findPwBoard(MemberVO vo) throws Exception;
 	
-	public void pwUpdate(UserVO vo) throws Exception;
+	public void pwUpdate(MemberVO vo) throws Exception;
 	
-	public UserVO read(String userid) throws Exception;
+	public MemberVO read(String userid) throws Exception;
 	
 	public UserVO updateUser(UserVO vo) throws Exception;
 	

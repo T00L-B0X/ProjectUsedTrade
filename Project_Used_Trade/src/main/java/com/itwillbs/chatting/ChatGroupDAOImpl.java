@@ -9,8 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.alarm.AlarmVO;
-import com.itwillbs.member.MemberVO;
-import com.itwillbs.chatting.ChatMemberVO;
+import com.itwillbs.user.MemberVO;
 
 @Repository("ChatGroupDAO")
 public class ChatGroupDAOImpl implements ChatGroupDAO{
@@ -64,13 +63,13 @@ public class ChatGroupDAOImpl implements ChatGroupDAO{
 	}
 
 	@Override
-	public String getMemberFromTable(int bno) {
-		return sqlSession.selectOne(NAMESPACE + ".getMemberFromTable", bno);
+	public String getMemberFromTable(int goods_id) {
+		return sqlSession.selectOne(NAMESPACE + ".getMemberFromTable", goods_id);
 	}
 
 	@Override
-	public String getUserNameFromTable(int bno) {
-		return sqlSession.selectOne(NAMESPACE + ".getUserNameFromTable", bno);
+	public String getUserNameFromTable(int goods_id) {
+		return sqlSession.selectOne(NAMESPACE + ".getUserNameFromTable", goods_id);
 	}
 
 	@Override

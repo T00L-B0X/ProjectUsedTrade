@@ -58,7 +58,7 @@
 	<h1>mypage.jsp</h1>
 
 	user = ${user} <br>
-	
+
 
 
 

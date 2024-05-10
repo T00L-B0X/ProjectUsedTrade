@@ -5,18 +5,17 @@
 
 <h1> 채팅방 </h1>
 <h2> 사용자 정보 : ${user }</h2>
-<h2> userid : ${sessionScope.user.userid }</h2>
-<h2> user_name : ${sessionScope.user.user_name }</h2>
-chatList : ${chatList }
-<h2> 페이지에 저장된 모든 Session : ${sessionScope }</h2>
+<h2> userid : ${user.userid }</h2>
+<h2> userid(sessionScope) : ${sessionScope.user.userid }</h2>
+<h2> userid(sessionScope) : ${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }</h2>
 
-<h2> userid : ${userid }</h2>
 <div style="margin-left: 20px;">
 		<h2>채팅방 생성</h2>
 		<form method="post">
 			채팅방 제목 : <input id="chat_title" type="text" name="chat_title">
-			<input type="hidden" name="userid" value="${sessionScope.user.userid }">
-			<input type="hidden" name="user_name" value="${sessionScope.user.user_name }">
+			<input type="hidden" name="userid" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
+			<input type="hidden" name="usernm" value="${sessionScope.user.usernm }">
+			<input type = "hidden" name="${_csrf.parameterName }" value = "${_csrf.token }">
 			<input id="subBtn" type="button" value="생성하기">
 		</form>
 	</div>
@@ -40,7 +39,7 @@ chatList : ${chatList }
 					<c:forEach items="${chatList }" var="chat">
 						<tr>
 							<td align="center">${chat.chat_no }</td>
-							<td align="center">${chat.user_name }</td>
+							<td align="center">${chat.usernm }</td>
 							<td align="center">${chat.chat_title }</td>
 							<td align="center">${chat.chat_date }</td>
 							<td align="center"><input type="button" class="joinBtn" value="가입하기" id="${chat.chat_no }"></td>
@@ -51,14 +50,17 @@ chatList : ${chatList }
 		</table>	
 	</div>
 <script type="text/javascript">
+
 $(function(){
 	var	joinBtn = $(".joinBtn");
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	joinBtn.on("click", function(){
 		var chat_no = $(this).attr("id");
 		var ChatObject = {
-			"userid" : "${sessionScope.user.userid}",
-			"user_name" : "${sessionScope.user.user_name}",
+			"userid" : "${user.userid}",
+			"usernm" : "${user.usernm}",
 			"chat_no" : chat_no,
 			"auth_role" : "채팅인원"
 		}
@@ -66,6 +68,10 @@ $(function(){
 		$.ajax({
 			type : "post",
 			url : "chatting/joinChat",
+			beforeSend : function(xhr) {
+				// CSRF 헤더 설정
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			data : JSON.stringify(ChatObject),
 			contentType : "application/json; charset=utf-8",
 			success : function(res){
@@ -91,6 +97,7 @@ $(function(){
 	})
 	
 })
+
 </script>
 
 

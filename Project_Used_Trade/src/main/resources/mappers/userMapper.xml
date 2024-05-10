@@ -6,7 +6,7 @@
   
 	<mapper namespace="com.itwillbs.mapper.UserMapper">
 
-	<resultMap type="com.itwillbs.user.UserVO" id="userMap">
+	<resultMap type="com.itwillbs.user.MemberVO" id="userMap">
 		<id property="userid" column="userid"/>
 		<result property="userid" column="userid"/>
 		<result property="userpw" column="userpw"/>
@@ -47,7 +47,7 @@
 		insert into AUTH (userid) values(#{userid})
 	</insert>
 	
-	<select id="login" resultType="com.itwillbs.user.UserVO">
+	<select id="login" resultType="com.itwillbs.user.MemberVO">
 		select * from MEMBER
 		where userid=#{userid} AND userpw=#{userpw}
 	</select>
@@ -56,12 +56,12 @@
 		SELECT COUNT(*) FROM MEMBER WHERE userid=#{userid}
 	</select>
 	
-	<select id="findId" resultType="com.itwillbs.user.UserVO">
+	<select id="findId" resultType="com.itwillbs.user.MemberVO">
 		select * from MEMBER
 		where usernm=#{usernm} AND uemail=#{uemail}
 	</select>
 	
-	<select id="findPw" resultType="com.itwillbs.user.UserVO">
+	<select id="findPw" resultType="com.itwillbs.user.MemberVO">
 		select * from MEMBER
 		where userid=#{userid} AND uemail=#{uemail}
 	</select>

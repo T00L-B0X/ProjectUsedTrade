@@ -1,6 +1,6 @@
 package com.itwillbs.pay;
 
-import com.itwillbs.member.MemberVO;
+import com.itwillbs.user.MemberVO;
 
 public interface PayDAO {
 	

@@ -1,8 +1,10 @@
 package com.itwillbs.chatting;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,12 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.itwillbs.member.MemberVO;
+import com.itwillbs.user.MemberVO;
+import com.itwillbs.user.UserService;
 
 @Controller
 public class ChatController {
@@ -24,10 +28,20 @@ public class ChatController {
 
 	@Inject
 	private ChatService chatService;
+	
+	@Inject
+	private UserService userService;
 
 	// 채팅방 폼으로 이동
 	@RequestMapping(value = "chathome", method = RequestMethod.GET)
-	public String chatForm() {
+	public String chatForm(Model model, Principal principal, HttpSession session) throws Exception {
+		
+		// ${user}
+		String userid = principal.getName();
+		MemberVO memberVO = userService.read(userid);
+//		model.addAttribute("user", memberVO);
+		logger.debug(memberVO+"");
+		session.setAttribute("user", memberVO);
 		logger.debug(" chat.jsp 페이지로 이동 ");
 		return "/chatting/chat";
 	}
@@ -35,9 +49,13 @@ public class ChatController {
 	// 채팅방 리스트 가져오기 ajax
 	@ResponseBody
 	@RequestMapping(value = "chathome/chatList.do", method = RequestMethod.POST)
-	public ResponseEntity<List<ChatGroupVO>> getChatList(HttpSession session) {
+	public ResponseEntity<List<ChatGroupVO>> getChatList(Model model, Principal principal, MemberVO vo, HttpSession session) throws Exception {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		String userid = user.getUserid();
+//		String userid = vo.getUserid();
+//		MemberVO user = userService.read(userid);
+//		model.addAttribute("user", user);
+		
 
 		logger.debug(" 채팅방 리스트 가져오기 (ajax) userid : " + userid);
 		logger.debug(" /chatList.do 연결 ");
