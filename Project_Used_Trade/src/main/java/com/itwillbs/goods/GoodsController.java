@@ -3,11 +3,18 @@ package com.itwillbs.goods;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +23,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.itwillbs.auction.AuctionRecordVO;
 import com.itwillbs.auction.AuctionService;
 import com.itwillbs.auction.AuctionVO;
+import com.itwillbs.user.MemberVO;
+import com.itwillbs.user.UserService;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,38 +36,52 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Controller
 public class GoodsController {
-	
+
 	@Inject
 	private GoodsService gService;
 	
 	@Inject
 	private AuctionService aService;
+
 	
 	private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 	// http://localhost:8088/goods/goodsMain
 		@RequestMapping(value = "/goods/goodsMain", method = RequestMethod.GET)
 		public void GoodsListGET() throws Exception {
 			logger.debug(" GoodsListGET() 호출 ");
-
 		}
 		
 		@RequestMapping(value = "/goods/read", method = RequestMethod.GET)
 		public void GoodsInfoGET(@RequestParam("goods_id") int goods_id, Model model) throws Exception {
 			logger.debug(" GoodsInfoGET() 호출 ");
-			// 조회수 증가
-			
-			// 사진 전부 들고오기
-			
 			// 글정보 저장
 			GoodsVO gvo = gService.getGoodsInfo(goods_id);
+			AuctionVO avo = aService.getAuctionInfo(goods_id);
+			
+			// 입찰 횟수
+			int bidCount = aService.getBidCount(goods_id);			
+			
 			model.addAttribute(gvo);
+			model.addAttribute("avo", avo);
 			logger.debug("gvo : " + gvo);
+			
+			model.addAttribute("bidCount", bidCount);
 		}
+		
+		@RequestMapping(value = "/goods/record", method = RequestMethod.GET)
+		public void GoodsRecordGET(@RequestParam("goods_id") int goods_id, Model model) {
+			logger.debug(" GoodsRecordGET() 호출 ");
+			// 경매정보 가져오기
+			List<AuctionRecordVO> recordList = aService.getRecordList(goods_id);
+			model.addAttribute("recordList", recordList);
+		}
+		
 		
 		@RequestMapping(value = "/goods/register", method = RequestMethod.GET)
 		public void GoodsRegisterGet() {
@@ -66,19 +90,20 @@ public class GoodsController {
 		
 		@RequestMapping(value = "/goods/register", method = RequestMethod.POST)
 		public String GoodsRegisterPost(GoodsVO gvo,
-				@RequestParam("Img0") MultipartFile Img0,
+				@RequestParam(name ="Img0") MultipartFile Img0,
 				@RequestParam(name ="Img1", required = false) MultipartFile Img1,
 				@RequestParam(name ="Img2", required = false) MultipartFile Img2,
 				@RequestParam(name ="Img3", required = false) MultipartFile Img3,
 				@RequestParam(name ="Img4", required = false) MultipartFile Img4,
 				HttpServletRequest req) throws Exception {
 			logger.debug("GoodsRegisterPost()");
-			// 로그인 한 사용자의 id (일단 임시로 지정)
-			gvo.setUserid("TEST");	
+			// 로그인 한 사용자의 id
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String userid = authentication.getName();
+			gvo.setUserid(userid);	
 			// 등록할 새로운 상품번호(max(goods_id)+1) 가져오기
 			
 			int newGoodsId = gService.getNewGoodsId();
-			
 			gvo.setGoods_id(newGoodsId);
 			gvo.setGoods_repimg("Img0");
 			
@@ -221,12 +246,11 @@ public class GoodsController {
 	            
 	        }
 			
-			
-			
-			
 			return "redirect:/goods/read?goods_id="+newGoodsId;
-			}
-		
+			
+			
+		}
+
 		/*@RequestMapping(value="/displayImage", method = RequestMethod.GET)
 		public void displayImage(@RequestParam("goods_id") int goods_id, HttpServletRequest req,HttpServletResponse resp) throws Exception {
 			logger.debug("displayImages() 호출");

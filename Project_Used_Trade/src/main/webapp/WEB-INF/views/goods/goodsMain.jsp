@@ -52,11 +52,11 @@ $(document).ready(function() {
                                 <a target="_blank"><span class="goodsTitle"></span></a>
                             </h5>
                             <p class="card-text">
-                                <span class="goodsCurrent"></span>
-                            </p>
-                            <p class="card-text">
-                                <span class="goodsReg"></span>
-                            </p>
+                            	현재입찰가 : <span class="goodsCurrent"></span>
+                        	</p>
+                        	<p class="card-text">
+                            	즉시구매가 : <span class="goodsInstant"></span>
+                        	</p>
                             <p class="card-text">
                                 <small class="goodsEnd text-body-secondary"></small>
                             </p>
@@ -74,6 +74,7 @@ $(document).ready(function() {
         $newCard.find(".goodsTitle").text(item.goods_title);
         $newCard.find("#titleLink a").attr("href", "/goods/read?goods_id=" + item.goods_id);
         $newCard.find(".goodsCurrent").text(item.current_price + "원");
+        $newCard.find(".goodsInstant").text(item.instant_price + "원");
 
         var date = new Date(item.regdate);
         
@@ -126,7 +127,7 @@ $(document).ready(function() {
 		var remainhours = Math.floor((timeDiff % (1000 * 60 * 60 * 24))/ (1000 * 60 * 60));
 		var remainminutes = Math.floor((timeDiff % (1000 * 60 * 60))/ (1000 * 60));
 		var remainseconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-		if (timeDiff < 0) {
+		if (item.current_price == item.instant_price || timeDiff < 0) {
 			console.log("경매 종료");
 			var remainingTime = "경매 종료";
 		} else {
@@ -139,9 +140,7 @@ $(document).ready(function() {
 					+ "분";
 		}
 
-        if (timeDiff < 0) {
-			var remainingTime = "경매 종료";
-		}
+        
 
         $newCard.find(".goodsEnd").html('<span style="color: black;">경매마감 ' + formattedEndTime + '</span>'+' (' + remainingTime + ')');
     }
@@ -304,7 +303,5 @@ $(document).ready(function() {
 	</div>
 	
 	<div class="container" id="goodsBox"></div>
-	
-	<!-- <div id="scrollObserver"></div> -->
 
 <%@ include file="../include/footer.jsp"%>

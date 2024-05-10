@@ -12,6 +12,10 @@ color: red;
 <script type="text/javascript">
 $(document).ready(function() {
         // 디비에서 최신글부터 조회
+        var csrfHeaderName = "${_csrf.headerName}";
+    	var csrfTokenValue = "${_csrf.token}";
+        var goods_id = ${goodsVO.goods_id};
+        var au_status = ${avo.au_status};
         $.ajax({
             url: "/goods/read/${goodsVO.goods_id}",
             method: "GET",
@@ -85,8 +89,10 @@ $(document).ready(function() {
             	    if (timeDiff < 0) {
             	        console.log("경매 종료");
             	        var remainingTime = "경매 종료";
+            	        $('#bidButton').hide();            	        
             	    } else {
             	        // 출력 포맷에 맞게 문자열 조합
+            	        $('#bidEnd').hide();
             	        var remainingTime = remaindays + "일 " + remainhours + "시간 " + remainminutes + "분 " + remainseconds+ "초";
             	    }
             	    
@@ -98,12 +104,45 @@ $(document).ready(function() {
             	updateRemainingTime();
 
             	// 1초마다 업데이트 수행
-            	setInterval(updateRemainingTime, 1000);
+            	remainTimer = setInterval(updateRemainingTime, 1000);
                 
                 $('<span>').text(regdate).appendTo('#regdate');
                 $('<span>').text(formattedEndTime).appendTo('#endTime');
+                
+                // 즉시 입찰가로 입찰된 경매
+                if(data.current_price == data.instant_price){
+                	$('#remainTime').text('경매 종료');
+                	clearInterval(remainTimer);
+                	$('#bidButton').hide();
+                }
             }
         });
+        
+        $('#bidEnd').click(function(){
+        	$.ajax({
+        		url: "/bidEnd/${goodsVO.goods_id}",
+        		beforeSend : function(xhr){
+         			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+         		},
+         		contentType : 'application/json; charset=UTF-8',
+        		method: "PUT",
+				success : function(){
+					alert("경매가 종료되었습니다. 거래를 진행해주세요.");
+					location.reload(true);
+				},
+				error : function(){
+					alert("실패");
+				}
+        	});
+        	
+        });
+        
+        if(au_status == 0){
+            $('#bidEnd').hide();
+            $('#bidEndMessage').text("경매가 종료되었습니다.");       
+        }
+        	
+        
 });
 </script>
 
@@ -124,12 +163,20 @@ $(document).ready(function() {
             <h3>거래 방법 : ${goodsVO.transact_type}</h3>
             <h3>시작가 : ${goodsVO.start_price}</h3>
             <h3>현재 입찰가 : ${goodsVO.current_price}</h3>
-            <h3>입찰수 : </h3><a href="#">경매 기록</a>
+            <h3>입찰수 : ${bidCount }</h3>
+            <input type="button" value="경매 기록 보기" onclick="window.open('/goods/record?goods_id=${goodsVO.goods_id}','win2','scrollbars=yes width=650, height=700');return false"/>
             <h3>남은 경매 시간 : <span id="remainTime"></span></h3>
             <h3>종료시간 : <span id="endTime"></span></h3>
-            <button id="likeGoods">관심 상품 등록 </button><br><br>
-            <input type="submit" value="입찰하기" onclick="location.href='/auction/bid?goods_id=${goodsVO.goods_id}'">
-            <hr>
+            <h3>즉시구매가 : ${goodsVO.instant_price }</h3>
+            <button id="likeGoods">관심 상품 등록 </button><br><br><br><button id="joinBtn">1:1 채팅</button><br><br>
+            <input id="bidButton" type="button" value="입찰하기" onclick="location.href='/auction/bid?goods_id=${goodsVO.goods_id}'">
+            <!-- 경매 종료 버튼은 판매자에게만 보임 -->
+            <c:if test="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name eq goodsVO.userid}">
+    		<input id="bidEnd" type="button" value="경매 종료 하기">
+    		<div id="bidEndMessage"></div>
+			</c:if>
+			
+            <hr>            
             <h3>내용</h3>
             <p>${goodsVO.goods_info}</p>
         </div>

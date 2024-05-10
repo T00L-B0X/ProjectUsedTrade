@@ -28,6 +28,7 @@ public class AuctionRestController {
 			@PathVariable("goods_id") int goods_id) throws Exception{
 		logger.debug(" getAuctionInfo() 호출 ");
 		AuctionVO avo = aService.getAuctionInfo(goods_id);
+		logger.debug("가져온 값 : "+ avo);
 		
 		return new ResponseEntity<AuctionVO>(avo,HttpStatus.OK);
 	}
@@ -40,5 +41,17 @@ public class AuctionRestController {
 		
 		return new ResponseEntity<GoodsVO>(gvo,HttpStatus.OK);
 	}
+	@RequestMapping(value = "/bidEnd/{goods_id}", method = RequestMethod.PUT)
+	public ResponseEntity<String> endBid(@PathVariable("goods_id") int goods_id) throws Exception{
+		logger.debug("000");
+		int result = aService.updateAuStatusEnd(goods_id);
+		
+		if(result == 1) {
+			return new ResponseEntity<String>("수정성공",HttpStatus.OK);
+		}else {
+			return new ResponseEntity<String>("수정실패",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	
 }

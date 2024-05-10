@@ -85,6 +85,6 @@ public class GoodsServiceImpl implements GoodsService{
 		logger.debug("goods_id : " + goods_id);
 		return GDao.selectNowPrice(goods_id);
 	}
-	
+
 	
 }
