@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.user.AuthVO;
 import com.itwillbs.user.UserVO;
@@ -148,7 +149,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
-	public String findPwPOST(String userid, String uemail, Model model, UserVO vo) throws Exception {
+	public String findPwPOST(String userid, String uemail, Model model, UserVO vo,RedirectAttributes attr) throws Exception {
 		logger.debug("findPwPOST() 호출");
 		logger.debug("id:" + userid);
 		logger.debug("email:" + uemail);
@@ -179,15 +180,13 @@ public class UserController {
 	        mailService.sendMail(uemail, "임시 비밀번호 발급 안내", sb.toString());
 	        
 	        // 비밀번호 변경 후 메시지를 모델에 추가
-	        model.addAttribute("message", "임시 비밀번호가 이메일로 발송되었습니다. 새로운 비밀번호로 로그인해주세요.");
-	        
-	        return "/user/login";
-	        
+	        attr.addFlashAttribute("message", "임시 비밀번호가 이메일로 발송되었습니다. 새로운 비밀번호로 로그인해주세요.");
+
 	    } else {
 	        // 사용자가 존재하지 않는 경우에는 메시지를 모델에 추가
-	        model.addAttribute("message", "입력한 정보와 일치하는 사용자가 없습니다.");
-	        return "/user/findpw";
+	    	 attr.addFlashAttribute("message", "입력한 정보와 일치하는 사용자가 없습니다.");
 	    }
+	    return "redirect:/user/login";
 
 	}
 
