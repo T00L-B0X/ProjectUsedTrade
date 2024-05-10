@@ -96,7 +96,7 @@ public class UserController {
 	 */
 	
 	@RequestMapping(value = "/home",method = RequestMethod.GET)
-	public String main(Model model, Principal principal) throws Exception {
+	public String main(Model model, Principal principal, HttpSession session) throws Exception {
 		logger.debug("main() 호출");
 		
 		/*
@@ -113,7 +113,8 @@ public class UserController {
 		
 		String userid = principal.getName();
         MemberVO vo = bService.read(userid);
-        model.addAttribute("user", vo);
+        session.setAttribute("user", vo);
+//        model.addAttribute("user", vo);
 		
 		
         // home.jsp로 이동

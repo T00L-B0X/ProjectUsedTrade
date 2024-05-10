@@ -70,7 +70,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	private String getUserid(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
 		MemberVO loginUser = (MemberVO) httpSession.get("user");
-
+//		MemberVO loginUser = new MemberVO();
+//		loginUser.setUserid((String)httpSession.get("user"));
 		if (loginUser == null) {
 			return session.getId(); // WebSocketSession 의 session id 반환
 		} else {
@@ -118,6 +119,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			}
 		}
 		System.out.println("연결 후 userSessionMap 상태 : " + userSessionMap);
+		//ddd
 	}
 
 	// websocket 연결 종료 시
@@ -241,7 +243,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			}
 			
 			// 메세지에 이름, 아이디, 내용을 담는다
-			TextMessage textMessage = new TextMessage(chatMessage.getUser_name() + "," + chatMessage.getUserid() +
+			TextMessage textMessage = new TextMessage(chatMessage.getUsernm() + "," + chatMessage.getUserid() +
 					"," + chatMessage.getMessage_content() + "," + formattedDateTime + "," + 
 					(chatMessage.getUnread_count()-sessionCount)); 
 			

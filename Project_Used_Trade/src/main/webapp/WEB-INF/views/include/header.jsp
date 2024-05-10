@@ -31,114 +31,211 @@
 <link href="/resources/css/tiny-slider.css" rel="stylesheet">
 <link href="/resources/css/style.css" rel="stylesheet">
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/resources/css/test.css" rel="stylesheet">
+<!-- <link href="/resources/css/test.css" rel="stylesheet"> -->
 <title>Furni Free Bootstrap 5 Template for Furniture and
 	Interior Design Websites by Untree.co</title>
 <style>
+.container {
+	display: flex;
+	width: 1300px;
+	margin-top: 20px;
+}
 
+.chatList, .chatRoom {
+	border: 1px solid black;
+	height: 682px;
+	padding-top: 5px
+}
+/* .chatList{flex:2} */
+/* .chatRoom{flex:3} */
+.room {
+	border: 1px solid black;
+	height: 70px;
+	padding-top: 20px;
+}
+
+.roomTitle {
+	height: 30px;
+}
+
+.chatMiddle {
+	height: 450px;
+	border: 1px solid black;
+	overflow: auto;
+}
+
+.display-none {
+	display: none;
+}
+
+.right {
+	text-align: right;
+	margin-right: 45px;
+}
+
+.chatMiddle li {
+	list-style: none;
+}
+
+.sender {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.message {
+	margin-top: 8px;
+	margin-bottom: 4px;
+}
+
+.message .msg {
+	padding: 5px;
+	border: 1px solid rgb(99, 99, 102);
+	color: rgb(99, 99, 102);
+}
+
+.message .cnt {
+	color: red;
+	font-size: 13px;
+}
+
+.regDate span {
+	font-size: 12px;
+}
 </style>
-<script>
-
+<script type="text/javascript">
 	// ------------------------------chat에 대한 script 시작------------------------------------------------------------------
 	// 웹소켓
 	var websocket = null;
-	  connect();
-	 //입장 버튼을 눌렀을 때 호출되는 함수
+	connect();
+	//입장 버튼을 눌렀을 때 호출되는 함수
 	function connect() {
-	    // 웹소켓 주소
-	    var wsUri 
-	    = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/websocket/chat.do";
-	    // 소켓 객체 생성
-	    websocket = new WebSocket(wsUri);
-	    //웹 소켓에 이벤트가 발생했을 때 호출될 함수 등록 (오버라이딩)
-	    websocket.onopen = function(){
-	    	console.log('info: connection opened.');
-	    }
+		// 웹소켓 주소
+		var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/websocket/chat.do";
+		// 소켓 객체 생성
+		websocket = new WebSocket(wsUri);
+		console.log("ws : " + wsUri)
+		//웹 소켓에 이벤트가 발생했을 때 호출될 함수 등록 (오버라이딩)
+		websocket.onopen = function() {
+			console.log('info: connection opened.');
+		}
 	}
-	 
+
 	// 채팅방 이외의 공간에 있을 떄 실시간 채팅 개수 알람 받기.
 	websocket.onmessage = function(evt) {
-	 	console.log("evt.data : ", evt.data)
-	 	
-	    if(evt.data == "reload"){
-	    	getChatCnt();
-	    }
-	 }
-	// ------------------------------chat에 대한 script 끝------------------------------------------------------------------
-	
-	// ------------------------------alarm 에 대한 script 시작----------------------------------------------------------------
- 	// 처음 로드시 실행
-  getAlarm();
-  
-  //3초마다 반복 실행
-//   setInterval(() => {
-// 	  getAlarm();
-// 	}, 3000);
-  
-  function getAlarm(){
-	$.ajax({
-		type : "post",
-		url : "/chatting/getAlarmInfo",
-		contentType : "application/json; charset=utf-8",
-		success : function(res){
-			if(res.length > 0){
-				var msg = "";
-				for(var i = 0; i < res.length; i++){
-					msg += `<li><a style='color: black;'class='dropdown-item' id='\${res[i].alarm_no}'href='chatting' >\${res[i].alarm_prefix}<br>\${res[i].alarm_cdate}</a></li>`
-				}
-				$("#toast").html(msg);
-				$("#alarm").attr("style", "color:red;");
-			}else{
-				$("#toast").html(`<li style='margin-left:20px;'>알람이 없습니다.</li>`);
-				$("#alarm").attr("style", "");
-			}
+		console.log("evt.data : ", evt.data)
+
+		if (evt.data == "reload") {
+			getChatCnt();
 		}
-	})
-}
-  
-  
-  function getChatCnt(){
+	}
+	// ------------------------------chat에 대한 script 끝------------------------------------------------------------------
+
+	// ------------------------------alarm 에 대한 script 시작----------------------------------------------------------------
+	// 처음 로드시 실행
+	getAlarm();
+
+	//3초마다 반복 실행
+	//   setInterval(() => {
+	// 	  getAlarm();
+	// 	}, 3000);
+
+	function getAlarm() {
+		// CSRF 토큰 가져오기
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+
 		$.ajax({
+					type : "post",
+					url : "/chatting/getAlarmInfo",
+					beforeSend : function(xhr) {
+						// CSRF 헤더 설정
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					contentType : "application/json; charset=utf-8",
+					success : function(res) {
+						console.log("res.length : " + res.length);
+						if (res.length > 0) {
+							var msg = "";
+							for (var i = 0; i < res.length; i++) {
+								console.log("res[i] : " + res[i]);
+								console.log("res[i].alarm_no : "
+										+ res[i].alarm_no);
+								console.log("res[i].alarm_prefix : "
+										+ res[i].alarm_prefix);
+								console.log("res[i].alarm_cdate : "
+										+ res[i].alarm_cdate);
+								
+								// 백틱 사용시 에러
+								// msg += `<li><a style='color: black;' class='dropdown-item' id='${'${res[i].alarm_no}'}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
+								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='http://localhost:8088/chatting'>" + res[i].alarm_prefix + "<br>" + res[i].alarm_cdate + "</a></li>";
+
+							}
+							$("#toast").html(msg);
+							$("#alarm").attr("style", "color:red;");
+						} else {
+							$("#toast")
+									.html(
+											`<li style='margin-left:20px;'>알람이 없습니다.</li>`);
+							$("#alarm").attr("style", "");
+						}
+					}
+				});
+	}
+
+	function getChatCnt() {
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		$.ajax({
+			
 			type : "post",
 			url : "/getChatCnt.do",
+			beforeSend : function(xhr) {
+				// CSRF 헤더 설정
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			data : {
 				"userid" : "${sessionScope.user.userid}"
 			},
-			success : function(res){
+			success : function(res) {
 				var chatCnt = $(".chatCnt")
-				if(res > 0){
+				if (res > 0) {
 					chatCnt.removeClass("chat-none");
 					chatCnt.text(res);
-				}else{
+				} else {
 					chatCnt.addClass("chat-none");
 				}
 			}
 		})
 	}
-  
 
-	$(document).on("click", "#toast a",function(){
+	$(document).on("click", "#toast a", function() {
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
 		var alarm_no = $(this).attr("id");
 		$.ajax({
 			type : "post",
 			data : {
 				"alarm_no" : alarm_no
-				},
+			},
 			url : "/chatting/deleteAlarm",
-// 			contentType : "application/json; charset=utf-8", // 이렇게 설정하면 JSON.stringify()로 js를 JSON문자열로 변환해서 보내야함
-			success : function(res){
-				if(res == "SUCCESS"){
+			beforeSend : function(xhr) {
+				// CSRF 헤더 설정
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			// 			contentType : "application/json; charset=utf-8", // 이렇게 설정하면 JSON.stringify()로 js를 JSON문자열로 변환해서 보내야함
+			success : function(res) {
+				if (res == "SUCCESS") {
 					console.log(res)
 				}
 			}
 		})
 	})
-// ------------------------------------alarm 에 대한 script 끝----------------------------------------------------------------	
+	// ------------------------------------alarm 에 대한 script 끝----------------------------------------------------------------
 </script>
 </head>
 
 <body>
-
+	data : ${data}
 	<!-- Start Header/Navigation -->
 	<nav
 		class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
@@ -162,8 +259,8 @@
 					<li><a class="nav-link" href="#">Shop</a></li>
 					<li><a class="nav-link" href="#">About us</a></li>
 					<li><a class="nav-link" href="#">Services</a></li>
-					<li><a class="nav-link" href="/chatting">채팅구하기</a></li>
-					<li><a class="nav-link" href="/chathome">채팅방</a>
+					<li><a class="nav-link" href="/chatting">구해요</a></li>
+					<li><a class="nav-link" href="/chathome">채팅창</a>
 						<div class="chatCnt chat-none"></div></li>
 				</ul>
 
@@ -181,7 +278,7 @@
 					>알림</a>
 						<ul class="dropdown-menu" id="toast">
 							<!-- 동적 처리 -->
-						</ul></li>
+						</ul>
 				</ul>
 
 			</div>

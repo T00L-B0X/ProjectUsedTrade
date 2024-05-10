@@ -56,7 +56,8 @@
 <body>
 
 	<h1>mypage.jsp</h1>
-
+	${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }
+	<hr>
 	user = ${user}
 	<br>
 

@@ -105,6 +105,62 @@ $(document).ready(function() {
             }
         });
 });
+
+$(function() {
+    var joinBtn = $("#joinBtn");
+    joinBtn.on("click", function() {
+        var chat_no = $(this).attr("id");
+        var goods_id = ${goodsVO.goods_id};
+        var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+        var ChatObject = {
+            "userid" : "${goodsVO.userid}",
+            "usernm" : "${user.usernm}",
+            "chat_title" : "${goodsVO.goods_title}",
+            "auth_role" : "채팅인원"
+        };
+
+        console.log(ChatObject);
+        console.log(goods_id);
+
+        // 채팅방 생성 Ajax 요청
+        $.ajax({
+            type: "post",
+            url: "read/joinChat",
+            beforeSend : function(xhr) {
+				// CSRF 헤더 설정
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+            data: JSON.stringify(ChatObject),
+            contentType: "application/json; charset=utf-8",
+            success: function(response) {
+                // 채팅방 생성이 성공적으로 완료된 경우 추가 작업을 수행하는 Ajax 요청
+                $.ajax({
+                    type: "post",
+                    url: "/goods/read/connectChat?goods_id=" + goods_id,
+                    beforeSend : function(xhr) {
+						// CSRF 헤더 설정
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(ChatObject),
+                    success: function(response) {
+                    	alert(" 채팅이 연결되었습니다. ")
+                        // 성공적으로 처리된 경우의 동작
+                    },
+                    error: function(xhr, status, error) {
+                        // 요청이 실패한 경우의 동작
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                // 채팅방 생성에 실패한 경우 처리
+                console.error("채팅방 생성에 실패했습니다.");
+                console.error(error);
+            }
+        });
+    });
+});
 </script>
 
 <div class="container">
@@ -129,6 +185,7 @@ $(document).ready(function() {
             <h3>종료시간 : <span id="endTime"></span></h3>
             <button id="likeGoods">관심 상품 등록 </button><br><br>
             <input type="submit" value="입찰하기" onclick="location.href='/auction/bid?goods_id=${goodsVO.goods_id}'">
+            <button id = "joinBtn">1:1 채팅</button>
             <hr>
             <h3>내용</h3>
             <p>${goodsVO.goods_info}</p>
