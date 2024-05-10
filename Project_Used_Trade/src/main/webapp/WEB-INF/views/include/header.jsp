@@ -259,8 +259,8 @@
 					<li><a class="nav-link" href="#">Shop</a></li>
 					<li><a class="nav-link" href="#">About us</a></li>
 					<li><a class="nav-link" href="#">Services</a></li>
-					<li><a class="nav-link" href="/chatting">채팅구하기</a></li>
-					<li><a class="nav-link" href="/chathome">채팅방</a>
+					<li><a class="nav-link" href="/chatting">구해요</a></li>
+					<li><a class="nav-link" href="/chathome">채팅창</a>
 						<div class="chatCnt chat-none"></div></li>
 				</ul>
 
