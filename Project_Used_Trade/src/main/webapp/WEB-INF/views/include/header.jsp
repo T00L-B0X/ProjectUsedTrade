@@ -115,6 +115,7 @@
 	    = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/websocket/chat.do";
 	    // 소켓 객체 생성
 	    websocket = new WebSocket(wsUri);
+	    console.log("ws : " + wsUri)
 	    //웹 소켓에 이벤트가 발생했을 때 호출될 함수 등록 (오버라이딩)
 	    websocket.onopen = function(){
 	    	console.log('info: connection opened.');
@@ -136,14 +137,14 @@
   getAlarm();
   
   //3초마다 반복 실행
-  setInterval(() => {
-	  getAlarm();
-	}, 3000);
+//   setInterval(() => {
+// 	  getAlarm();
+// 	}, 3000);
   
   function getAlarm(){
 	$.ajax({
 		type : "post",
-		url : "/getAlarmInfo",
+		url : "chatting/getAlarmInfo",
 		contentType : "application/json; charset=utf-8",
 		success : function(res){
 			if(res.length > 0){

@@ -72,7 +72,7 @@ public class ChattingController {
 
 	// 해당 유저의 안읽은 알람 정보 가져오기
 	@ResponseBody
-	@PostMapping("/getAlarmInfo")
+	@PostMapping("chatting/getAlarmInfo")
 	public List<AlarmVO> getAlarmInfo(HttpSession session) {
 		MemberVO memberVO = (MemberVO) session.getAttribute("user");
 
