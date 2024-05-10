@@ -27,6 +27,8 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"
 ></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <link href="/resources/css/tiny-slider.css" rel="stylesheet">
 <link href="/resources/css/style.css" rel="stylesheet">
@@ -155,9 +157,14 @@ function getAlarm(){
         },
         contentType : "application/json; charset=utf-8",
         success : function(res){
+        	console.log("res.length : " + res.length);
             if(res.length > 0){
                 var msg = "";
                 for(var i = 0; i < res.length; i++){
+        	console.log("res[i] : " + res[i]);
+        	console.log("res[i].alarm_no : " + res[i].alarm_no);
+        	console.log("res[i].alarm_prefix : " + res[i].alarm_prefix);
+        	console.log("res[i].alarm_cdate : " + res[i].alarm_cdate);
                     msg += `<li><a style='color: black;' class='dropdown-item' id='${res[i].alarm_no}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
                 }
                 $("#toast").html(msg);
@@ -213,7 +220,7 @@ function getAlarm(){
 </head>
 
 <body>
-
+	data : ${data}
 	<!-- Start Header/Navigation -->
 	<nav
 		class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
