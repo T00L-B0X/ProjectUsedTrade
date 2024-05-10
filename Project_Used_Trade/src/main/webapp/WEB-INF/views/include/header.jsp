@@ -102,7 +102,7 @@
 	font-size: 12px;
 }
 </style>
-<script>
+<script type="text/javascript">
 	// ------------------------------chat에 대한 script 시작------------------------------------------------------------------
 	// 웹소켓
 	var websocket = null;
@@ -164,10 +164,14 @@
 										+ res[i].alarm_prefix);
 								console.log("res[i].alarm_cdate : "
 										+ res[i].alarm_cdate);
-								msg += `<li><a style='color: black;' class='dropdown-item' id='${res[i].alarm_no}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
+// 								msg += `<li><a style='color: black;' class='dropdown-item' id='${'${res[i].alarm_no}'}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
+								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='chatting'>" + res[i].alarm_prefix + "<br>" + res[i].alarm_cdate + "</a></li>";
+
 							}
+							console.log(msg);
 							$("#toast").html(msg);
 							$("#alarm").attr("style", "color:red;");
+							alert(msg);
 						} else {
 							$("#toast")
 									.html(
@@ -260,7 +264,7 @@
 						data-bs-toggle="dropdown"
 					>알림</a>
 						<ul class="dropdown-menu" id="toast">
-							<li>안녕하세요</li>
+							<!-- 동적 처리 -->
 						</ul>
 				</ul>
 
