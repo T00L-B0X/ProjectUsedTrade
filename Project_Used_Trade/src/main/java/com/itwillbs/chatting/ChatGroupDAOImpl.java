@@ -63,13 +63,13 @@ public class ChatGroupDAOImpl implements ChatGroupDAO{
 	}
 
 	@Override
-	public String getMemberFromTable(int bno) {
-		return sqlSession.selectOne(NAMESPACE + ".getMemberFromTable", bno);
+	public String getMemberFromTable(int goods_id) {
+		return sqlSession.selectOne(NAMESPACE + ".getMemberFromTable", goods_id);
 	}
 
 	@Override
-	public String getUserNameFromTable(int bno) {
-		return sqlSession.selectOne(NAMESPACE + ".getUserNameFromTable", bno);
+	public String getUserNameFromTable(int goods_id) {
+		return sqlSession.selectOne(NAMESPACE + ".getUserNameFromTable", goods_id);
 	}
 
 	@Override

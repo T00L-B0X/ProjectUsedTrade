@@ -152,20 +152,20 @@
 	<select id = "getMemberFromTable" resultType = "String">
 	SELECT MEMBER.USERID
 	FROM MEMBER
-	INNER JOIN BOARD
+	INNER JOIN GOODS
 	ON
-	MEMBER.USERID = BOARD.WRITER
-	WHERE BOARD.BNO = #{bno}
+	MEMBER.USERID = GOODS.USERID
+	WHERE GOODS.GOODS_ID = #{goods_id}
 	</select>
 	
 	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (usernm) -->
 	<select id = "getUserNameFromTable" resultType = "String">
 	SELECT MEMBER.usernm
 	FROM MEMBER
-	INNER JOIN BOARD
+	INNER JOIN GOODS
 	ON
-	MEMBER.USERID = BOARD.WRITER
-	WHERE BOARD.BNO = #{bno}
+	MEMBER.USERID = GOODS.USERID
+	WHERE GOODS.GOODS_ID = #{goods_id}
 	</select>
 	
 	
