@@ -26,7 +26,7 @@
 	</logger>
 	
 	
-	<logger name="com.itwillbs.member">
+	<logger name="com.itwillbs.user">
 		<level value="debug" />
 	</logger>
 	
