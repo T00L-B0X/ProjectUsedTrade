@@ -119,22 +119,22 @@ public class ChattingController {
 	
 	// 게시글에서 채팅방 생성 이 후 채팅 멤버에 게시글 작성자 넣기
 	@ResponseBody
-	@RequestMapping(value = "read/connectChat", method = RequestMethod.POST)
+	@RequestMapping(value = "/goods/read/connectChat", method = RequestMethod.POST)
 	public ResponseEntity<String> connectChat(ChatMemberVO member, HttpServletRequest request) {
 		int chat_no = 0;
 		
-		// 클라이언트로부터 전달된 bno 값을 가져옴
-		String bnoString = request.getParameter("bno");
-		Integer bno = null;
-		if (bnoString != null) {
-			bno = Integer.parseInt(bnoString);
+		// 클라이언트로부터 전달된 goods_id 값을 가져옴
+		String goods_idString = request.getParameter("goods_id");
+		Integer goods_id = null;
+		if (goods_idString != null) {
+			goods_id = Integer.parseInt(goods_idString);
 		}
 		
-		// bno를 사용하여 작성자 정보 등을 가져오거나 필요한 처리를 수행한다.
+		// goods_id를 사용하여 작성자 정보 등을 가져오거나 필요한 처리를 수행한다.
 		member.setChat_no(chatService.getChatNo(chat_no));
-		member.setUserid(chatService.getMemberFromTable(bno));
+		member.setUserid(chatService.getMemberFromTable(goods_id));
 		member.setAuth_role("게시글 작성자");
-		member.setUsernm(chatService.getUserNameFromTable(bno));
+		member.setUsernm(chatService.getUserNameFromTable(goods_id));
 		logger.debug("DB에 저장되는 게시글 작성자 정보 : " + member);
 
 		// 채팅 멤버에 추가하는 작업을 수행한다.
@@ -150,7 +150,7 @@ public class ChattingController {
 
 	// 게시글에서 채팅하기 눌렀을 때 채팅방 생성
 	@ResponseBody
-	@RequestMapping(value = "read/joinChat", method = RequestMethod.POST)
+	@RequestMapping(value = "/goods/read/joinChat", method = RequestMethod.POST)
 	public String joinChat(@RequestBody ChatGroupVO chat, MemberVO vo, HttpSession session, Principal principal) {
 		String goPage = "";
 //		chat.setUserid((String) session.getAttribute("userid"));

@@ -137,7 +137,7 @@ $(function() {
                 // 채팅방 생성이 성공적으로 완료된 경우 추가 작업을 수행하는 Ajax 요청
                 $.ajax({
                     type: "post",
-                    url: "read/connectChat?goods_id=" + goods_id,
+                    url: "/goods/read/connectChat?goods_id=" + goods_id,
                     beforeSend : function(xhr) {
 						// CSRF 헤더 설정
 						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
