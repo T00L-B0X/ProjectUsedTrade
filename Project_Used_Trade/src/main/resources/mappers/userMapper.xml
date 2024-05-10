@@ -17,6 +17,7 @@
 		<result property="uphone" column="uphone"/>
 		<result property="regdate" column="regdate"/>
 		<result property="edtdat" column="edtdat"/>
+		<result property="uintro" column="uintro"/>
 		
 		<collection property="authList" resultMap="authMap"></collection>
 		<collection property="gradeList" resultMap="gradeMap"></collection>
@@ -71,12 +72,18 @@
 	</update>
 	
 	<select id="list" resultMap="userMap">
-		SELECT MEMBER.userid, userpw, usernm, ubirth, gender, uphone, uemail, enabled, auth, regdate, UGRADE.ugrade, UGRADE.feerage
+		SELECT MEMBER.userid, userpw, usernm, ubirth, gender, uphone, uemail, enabled, auth, regdate, edtdat, uintro, UGRADE.ugrade, UGRADE.feerage
 		FROM MEMBER
 		LEFT OUTER JOIN AUTH ON MEMBER.userid = AUTH.userid
 		LEFT OUTER JOIN UGRADE ON MEMBER.ugrade = UGRADE.ugrade
 		WHERE MEMBER.userid = #{userid};
 	</select>
+	
+	<update id="updateUser">
+		update MEMBER set userpw = #{userpw}, uphone=#{uphone}, uemail = #{uemail}, uintro = #{uintro}, edtdat = now()
+		where userid = #{userid}
+
+	</update>
 	
 
 	

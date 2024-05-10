@@ -39,7 +39,8 @@
 		<!--  접근 권한이 없을 때 보여지는 뷰 페이지 이동(redirect) -->
 		<security:access-denied-handler ref="customAccessDenied"/>
 		
-		<security:intercept-url pattern="/all" access="permitAll"/>
+		<security:intercept-url pattern="/user/home" access="permitAll"/>
+		<security:intercept-url pattern="/user/login" access="permitAll"/>
 		<security:intercept-url pattern="/member" access="hasRole('ROLE_MANAGER')"/>
 		<security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 		

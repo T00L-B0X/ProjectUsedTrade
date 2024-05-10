@@ -57,8 +57,8 @@
 
 	<h1>mypage.jsp</h1>
 
-	user = ${user}
-	<br>
+	user = ${user} <br>
+	
 
 
 
@@ -78,12 +78,13 @@
 		<div class="user-info">
 			<c:forEach var="grade" items="${user.gradeList}">
 			
-				<div id="grade">등급 : ${grade.grade}</div>
-				<div id="info-item">페이</div>
-				<div id="info-item">상품등록수</div>
-				<div id="info-item">판매수량</div>
-				<div id="info-item">구매수량</div>
-				<div id="info-item">소개글</div>
+				<div id="info-item">등급 : ${grade.ugrade}<br>
+				페이 <br>
+				상품등록수<br>
+				판매수량<br>
+				구매수량<br>
+				소개글 : ${user.uintro}<br>
+				</div>
 			</c:forEach>
 		</div>
 	</div>

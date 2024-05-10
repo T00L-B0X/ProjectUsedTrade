@@ -23,5 +23,6 @@ public interface UserDAO {
 	
 	public UserVO read(String userid) throws Exception;
 	
+	public UserVO updateUser(UserVO vo) throws Exception;
 	
 }
