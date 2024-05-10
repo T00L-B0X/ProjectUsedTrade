@@ -151,9 +151,10 @@ public class ChattingController {
 	// 게시글에서 채팅하기 눌렀을 때 채팅방 생성
 	@ResponseBody
 	@RequestMapping(value = "read/joinChat", method = RequestMethod.POST)
-	public String joinChat(@RequestBody ChatGroupVO chat, MemberVO vo, HttpSession session) {
+	public String joinChat(@RequestBody ChatGroupVO chat, MemberVO vo, HttpSession session, Principal principal) {
 		String goPage = "";
-		chat.setUserid((String) session.getAttribute("userid"));
+//		chat.setUserid((String) session.getAttribute("userid"));
+		chat.setUserid(principal.getName());
 		int result = chatService.insertChat(chat);
 		if (result > 0) {
 			goPage = "redirect:/read";
