@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.user.AuthVO;
 import com.itwillbs.user.MemberVO;
@@ -96,28 +97,18 @@ public class UserController {
 	 */
 	
 	@RequestMapping(value = "/home",method = RequestMethod.GET)
-	public String main(Model model, Principal principal) throws Exception {
+
+	public String main(HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
 		
-		/*
-		 * // 현재 사용자의 인증 정보 가져오기 Authentication authentication =
-		 * SecurityContextHolder.getContext().getAuthentication();
-		 * 
-		 * // 사용자 이름 가져오기 String username = authentication.getName();
-		 * 
-		 * BoardVO result = bService.read(id);
-		 * 
-		 * // 모델에 사용자 이름 추가하기 model.addAttribute("username", username);
-		 * model.addAttribute("result", result);
-		 */
-		
+	
 		String userid = principal.getName();
-        MemberVO vo = bService.read(userid);
-        model.addAttribute("user", vo);
-		
-		
-        // home.jsp로 이동
-        return "/user/home";
+
+		UserVO vo = bService.read(userid); 
+    session.setAttribute("user", vo);
+
+    return "/user/home";
+
 		
 	}
 	 
@@ -159,14 +150,17 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
-	public String findPwPOST(String userid, String uemail, Model model, MemberVO vo) throws Exception {
+
+	public String findPwPOST(String userid, String uemail, Model model, UserVO vo,RedirectAttributes attr) throws Exception {
+
 		logger.debug("findPwPOST() 호출");
 		logger.debug("id:" + userid);
 		logger.debug("email:" + uemail);
 
 		
-		  MemberVO result = bService.boardPwFind(vo);		  
-		  model.addAttribute("result", result);
+		UserVO result = bService.boardPwFind(vo);		  
+		//model.addAttribute("result", result);
+
 		 
 		
 		 // 사용자가 존재하는 경우에만 처리
@@ -190,28 +184,16 @@ public class UserController {
 	        mailService.sendMail(uemail, "임시 비밀번호 발급 안내", sb.toString());
 	        
 	        // 비밀번호 변경 후 메시지를 모델에 추가
-	        model.addAttribute("message", "임시 비밀번호가 이메일로 발송되었습니다. 새로운 비밀번호로 로그인해주세요.");
-	        
-	        return "/user/login";
-	        
+	        attr.addFlashAttribute("message", "임시 비밀번호가 이메일로 발송되었습니다. 새로운 비밀번호로 로그인해주세요.");
+
 	    } else {
 	        // 사용자가 존재하지 않는 경우에는 메시지를 모델에 추가
-	        model.addAttribute("message", "입력한 정보와 일치하는 사용자가 없습니다.");
-	        return "/user/findpw";
+	    	 attr.addFlashAttribute("message", "입력한 정보와 일치하는 사용자가 없습니다.");
 	    }
+	    return "redirect:/user/login";
 
 	}
 
-	/*
-	 * @RequestMapping(value = "/all", method = RequestMethod.GET) public void
-	 * doAll() { logger.info(" doAll() 호출"); }
-	 * 
-	 * @RequestMapping(value = "/member", method = RequestMethod.GET) public void
-	 * doMember() { logger.info(" doMember() 호출"); }
-	 * 
-	 * @RequestMapping(value = "/admin", method = RequestMethod.GET) public void
-	 * doAdmin() { logger.info(" doAdmin() 호출"); }
-	 */
 
 	@RequestMapping(value = "accessError", method = RequestMethod.GET)
 	public void accessDenied(Authentication auth) throws Exception {
@@ -240,23 +222,36 @@ public class UserController {
 	 * logger.debug("admin annotation only"); }
 	 */
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@RequestMapping(value = "/mypage",method = RequestMethod.GET)
-	public void mypage(Principal principal,Model model) throws Exception {
+	public void mypage() throws Exception {
 		logger.debug("mypage() 호출");
-		
-		String userid = principal.getName();
-        MemberVO vo = bService.read(userid);
-        model.addAttribute("user", vo);
-		
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@RequestMapping(value = "/modify",method = RequestMethod.GET)
 	public void modify(Principal principal,Model model) throws Exception{
 		logger.debug("modify() 호출");
 		
 		String userid = principal.getName();
-        MemberVO vo = bService.read(userid);
-        model.addAttribute("user", vo);
+
+		UserVO vo = bService.read(userid); 
+    model.addAttribute("user", vo);
+
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@RequestMapping(value = "/modify",method = RequestMethod.POST)
+	public String modifyPOST(UserVO vo,Model model,String userid,String userpw) throws Exception{
+		logger.debug("modifyPOST() 호출");
+		logger.debug("userid:"+userid);
+		logger.debug("userpw:"+userpw);
+		
+		vo.setUserpw(pwEncoder.encode(vo.getUserpw()));
+		
+		bService.updateUser(vo);
+		
+		return "redirect:/user/login";
 		
 	}
 	

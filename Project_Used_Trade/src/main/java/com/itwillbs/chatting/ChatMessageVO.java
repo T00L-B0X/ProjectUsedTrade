@@ -11,19 +11,19 @@ public class ChatMessageVO {
 	private String message_content;
 	private String message_regdat;
 	private String userid;
-	private String user_name;
+	private String usernm;
 	private int unread_count;
 	
 	// DB에 없는 필요한 변수
 	private String type;
+	
+	
 
-	
-	
 	@Override
 	public String toString() {
 		return "ChatMessageVO [message_id=" + message_id + ", chat_no=" + chat_no + ", message_content="
-				+ message_content + ", message_regdate=" + message_regdat + ", userid=" + userid + ", user_name="
-				+ user_name + ", unread_count=" + unread_count + ", type=" + type + "]";
+				+ message_content + ", message_regdat=" + message_regdat + ", userid=" + userid + ", usernm=" + usernm
+				+ ", unread_count=" + unread_count + ", type=" + type + "]";
 	}
 
 	public int getMessage_id() {
@@ -54,7 +54,7 @@ public class ChatMessageVO {
 		return message_regdat;
 	}
 
-	public void setMessage_regdatt(String message_regdat) {
+	public void setMessage_regdat(String message_regdat) {
 		this.message_regdat = message_regdat;
 	}
 
@@ -66,12 +66,12 @@ public class ChatMessageVO {
 		this.userid = userid;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public String getUsernm() {
+		return usernm;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUsernm(String usernm) {
+		this.usernm = usernm;
 	}
 
 	public int getUnread_count() {
@@ -89,6 +89,9 @@ public class ChatMessageVO {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	
+	
 	
 	
 }

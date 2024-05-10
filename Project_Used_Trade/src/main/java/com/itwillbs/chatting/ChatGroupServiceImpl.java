@@ -41,7 +41,7 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 		List<MemberVO> userList = chatDao.getUserList(userid);
 		Map<String, Object> map = new HashMap<String, Object>();
 		for (MemberVO user : userList) {
-			map.put("sender_name", chat.getUser_name());
+			map.put("sender_name", chat.getUsernm());
 			map.put("userid", user.getUserid());
 			map.put("chat_no", chat.getChat_no());
 			
@@ -69,13 +69,13 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 	}
 
 	@Override
-	public String getMemberFromTable(int bno) {
-		return chatDao.getMemberFromTable(bno);
+	public String getMemberFromTable(int goods_id) {
+		return chatDao.getMemberFromTable(goods_id);
 	}
 
 	@Override
-	public String getUserNameFromTable(int bno) {
-		return chatDao.getUserNameFromTable(bno);
+	public String getUserNameFromTable(int goods_id) {
+		return chatDao.getUserNameFromTable(goods_id);
 	}
 
 	@Override

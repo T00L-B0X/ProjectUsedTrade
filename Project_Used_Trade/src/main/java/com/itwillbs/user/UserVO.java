@@ -16,7 +16,15 @@ public class UserVO {
 	private String uphone;
 	private Timestamp regdate;
 	private Timestamp edtdat;
+	private String uintro;
 	
+	
+	public String getUintro() {
+		return uintro;
+	}
+	public void setUintro(String uintro) {
+		this.uintro = uintro;
+	}
 	private List<AuthVO> authList;
 	private List<UGradeVO> gradeList;
 	public String getUserid() {
@@ -89,8 +97,10 @@ public class UserVO {
 	public String toString() {
 		return "UserVO [userid=" + userid + ", userpw=" + userpw + ", uemail=" + uemail + ", usernm=" + usernm
 				+ ", ubirth=" + ubirth + ", gender=" + gender + ", uphone=" + uphone + ", regdate=" + regdate
-				+ ", edtdat=" + edtdat + ", authList=" + authList + ", gradeList=" + gradeList + "]";
+				+ ", edtdat=" + edtdat + ", uintro=" + uintro + ", authList=" + authList + ", gradeList=" + gradeList
+				+ "]";
 	}
+	
 	
 	
 	

@@ -81,10 +81,18 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public MemberVO read(String userid) throws Exception {
-		// TODO Auto-generated method stub
+	public UserVO read(String userid) throws Exception {
+		logger.debug("read(String userid) 호출");
+
 		return bDao.read(userid);
 		
+	}
+
+	@Override
+	public UserVO updateUser(UserVO vo) throws Exception {
+		logger.debug("updatePw(String userid)호출");
+		
+		return bDao.updateUser(vo);
 	}
 	
 	

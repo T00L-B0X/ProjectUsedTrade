@@ -13,8 +13,10 @@
 
 	<h1>home.jsp</h1>
 
-	user = ${user}
-
+ 	user = ${user} <br> 
+ 	${userid }
+	
+	
 	<div>
 	<a href="http://localhost:8088/user/login">로그인창</a>
 	
