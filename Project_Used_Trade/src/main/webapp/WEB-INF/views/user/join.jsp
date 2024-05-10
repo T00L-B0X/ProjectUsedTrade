@@ -91,7 +91,7 @@
             $('.idchk').css({'display': 'none'});
             
             // AJAX 요청을 동기적으로 처리
-            var isValidId = false;
+//             var isValidId = false;
             
             $.ajax({
                 url: '/ConfirmId',
@@ -100,7 +100,7 @@
          		},
                 data: { userid : userid },
                 type: 'post',
-                async: false, // 동기적으로 설정
+//                 async: false, // 동기적으로 설정
                 success: function(cnt) {
                     if (cnt != 1 && userid.length > 0) {
                         $('.id_ok').css({"display":"block"});

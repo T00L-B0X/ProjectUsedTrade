@@ -84,6 +84,13 @@ public class UserDAOImpl implements UserDAO{
 		
 		return sqlSession.selectOne(NAMESPACE+".list", userid);
 	}
+
+	@Override
+	public UserVO updateUser(UserVO vo) throws Exception {
+		logger.debug("userChesckPw(String userid) 호출");
+		
+		return sqlSession.selectOne(NAMESPACE+".updateUser", vo);
+	}
 	
 	
 	

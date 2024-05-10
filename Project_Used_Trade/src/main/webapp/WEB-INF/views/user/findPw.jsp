@@ -16,10 +16,12 @@
 			아이디 : <input type="text" name="userid"> <br>
 			이메일 : <input type="text" name="uemail"> <br>
 			
+			
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-			<input type="submit" value="비밀번호 찾기">
+			<input type="submit" value="비밀번호 찾기" id="click">
 		</form>
 	</fieldset>
+	
 	
 
 

@@ -1,12 +1,16 @@
 package com.itwillbs.user;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,16 +32,18 @@ public class UserRestController {
 	@Inject
 	private MailService mailService;
 	
+	@Autowired
+	private PasswordEncoder pwEncoder;
 	
 	@PostMapping("/ConfirmId")
     public ResponseEntity<Integer> confirmId(@RequestParam("userid") String userid) throws Exception {
+		
         int cnt = bService.boardIdCheck(userid);
         return ResponseEntity.ok().body(cnt);
     }
 	
 	@PostMapping("/sendEmail")
 	public ResponseEntity<String> sendEmail(@RequestParam("uemail") String uemail) throws Exception{
-		logger.debug("email:"+uemail);
 		
 		System.out.println("!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
@@ -69,6 +75,57 @@ public class UserRestController {
 
 	    // 성공 응답 반환
 	    return ResponseEntity.ok().body(pw);
+	}
+	
+	
+	@PostMapping(value = "/checkPw")
+	public ResponseEntity<Integer> checkPw(@RequestParam("nowpw") String nowpw, HttpServletRequest request) throws Exception{
+		
+		System.out.println("nowpw:"+nowpw);
+		
+		
+		UserVO vo = (UserVO) request.getSession().getAttribute("user");
+		
+		System.out.println("vo:"+vo);
+		String pw = vo.getUserpw();
+		
+		System.out.println("pw:" + pw);
+		
+		boolean pwchk = pwEncoder.matches(nowpw, pw);
+		System.out.println("pwchk:"+pwchk);
+		
+		int result = pwchk ? 1 : 0;
+		
+		System.out.println("result:"+result);
+		
+
+		
+		return ResponseEntity.ok().body(result);
+	}
+	
+	@PostMapping(value = "/updatePw")
+	public ResponseEntity<Integer> updatePw(@RequestParam("newpw") String newpw, HttpServletRequest request) throws Exception{
+		
+		System.out.println("newpw:"+newpw);
+		
+		UserVO vo = (UserVO) request.getSession().getAttribute("user");
+		
+		System.out.println("vo:"+vo);
+		String pw = vo.getUserpw();
+		
+		System.out.println("pw:" + pw);
+		
+		boolean pwchk = pwEncoder.matches(newpw, pw);
+		System.out.println("pwchk:"+pwchk);
+		
+		int result = pwchk ? 1 : 0;
+		
+		System.out.println("result:"+result);
+		
+		
+		
+		return ResponseEntity.ok().body(result);
+		
 	}
 	
 }

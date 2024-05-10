@@ -25,6 +25,13 @@
 		<level value="debug" />
 	</logger>
 	
+	<logger name="com.itwillbs.user">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.security">
+		<level value="debug" />
+	</logger>
 	
 	<logger name="com.itwillbs.user">
 		<level value="debug" />
