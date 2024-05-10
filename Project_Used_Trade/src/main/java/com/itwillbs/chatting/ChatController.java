@@ -50,9 +50,9 @@ public class ChatController {
 	@ResponseBody
 	@RequestMapping(value = "chathome/chatList.do", method = RequestMethod.POST)
 	public ResponseEntity<List<ChatGroupVO>> getChatList(Model model, Principal principal, MemberVO vo, HttpSession session) throws Exception {
-	//	MemberVO user = (MemberVO) session.getAttribute("user");
-	//	String userid = user.getUserid();
-		String userid = vo.getUserid();
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		String userid = user.getUserid();
+//		String userid = vo.getUserid();
 //		MemberVO user = userService.read(userid);
 //		model.addAttribute("user", user);
 		

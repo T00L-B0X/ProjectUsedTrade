@@ -7,8 +7,7 @@
 <h2> 사용자 정보 : ${user }</h2>
 <h2> userid : ${user.userid }</h2>
 <h2> 페이지에 저장된 모든 Session : ${sessionScope }</h2>
-
-<h2> userid : ${userid }</h2>
+<h2> chatlist : ${chatList }</h2>
 <div style="margin-left: 20px;">
 		<h2>채팅방 생성</h2>
 		<form method="post">
