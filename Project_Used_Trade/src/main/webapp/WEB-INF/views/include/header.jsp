@@ -164,14 +164,14 @@
 										+ res[i].alarm_prefix);
 								console.log("res[i].alarm_cdate : "
 										+ res[i].alarm_cdate);
-// 								msg += `<li><a style='color: black;' class='dropdown-item' id='${'${res[i].alarm_no}'}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
+								
+								// 백틱 사용시 에러
+								// msg += `<li><a style='color: black;' class='dropdown-item' id='${'${res[i].alarm_no}'}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
 								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='chatting'>" + res[i].alarm_prefix + "<br>" + res[i].alarm_cdate + "</a></li>";
 
 							}
-							console.log(msg);
 							$("#toast").html(msg);
 							$("#alarm").attr("style", "color:red;");
-							alert(msg);
 						} else {
 							$("#toast")
 									.html(

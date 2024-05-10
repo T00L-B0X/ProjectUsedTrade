@@ -40,14 +40,6 @@ ${sessionScope }
 var csrfHeaderName = "${_csrf.headerName}";
 var csrfTokenValue = "${_csrf.token}";
 
-$.ajax({
-    url: './ConfirmId',
-		beforeSend : function(xhr){
-			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		},
-    data: { id: id },
-})
-
 
 let roomId; // roomId 초기화 입장 버튼 누르면 id 들어오게 설계
 

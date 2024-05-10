@@ -48,8 +48,11 @@
 		</table>	
 	</div>
 <script type="text/javascript">
+
 $(function(){
 	var	joinBtn = $(".joinBtn");
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	joinBtn.on("click", function(){
 		var chat_no = $(this).attr("id");
@@ -63,6 +66,10 @@ $(function(){
 		$.ajax({
 			type : "post",
 			url : "chatting/joinChat",
+			beforeSend : function(xhr) {
+				// CSRF 헤더 설정
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			data : JSON.stringify(ChatObject),
 			contentType : "application/json; charset=utf-8",
 			success : function(res){
