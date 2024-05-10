@@ -243,7 +243,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			}
 			
 			// 메세지에 이름, 아이디, 내용을 담는다
-			TextMessage textMessage = new TextMessage(chatMessage.getUser_name() + "," + chatMessage.getUserid() +
+			TextMessage textMessage = new TextMessage(chatMessage.getUsernm() + "," + chatMessage.getUserid() +
 					"," + chatMessage.getMessage_content() + "," + formattedDateTime + "," + 
 					(chatMessage.getUnread_count()-sessionCount)); 
 			

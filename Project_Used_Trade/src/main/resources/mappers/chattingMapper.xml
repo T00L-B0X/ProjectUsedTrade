@@ -98,14 +98,14 @@
 	
 	<!-- 해당 유저의 안읽은 메시지 개수 -->
 	<select id = "getChatCnt" parameterType="string" resultType = "int">
-		SELECT COALESCE(SUM(msg_count), 0) AS cnt FROM chatmember
+		SELECT COALESCE(SUM(msg_count), 0) AS cnt FROM CHATMEMBER
     	WHERE userid = #{userid}
 	</select>
 	
 	<!-- 채팅방 인원수 가져오기 -->
 	<select id = "getMemberCount" parameterType="int" resultType = "int">
 		select count(*) as cnt
-		from chatmember
+		from CHATMEMBER
 		where chat_no = #{chat_no}
 	</select>
 	

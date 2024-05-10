@@ -6,12 +6,14 @@
 <h1> 채팅방 </h1>
 <h2> 사용자 정보 : ${user }</h2>
 <h2> userid : ${user.userid }</h2>
+<h2> userid(sessionScope) : ${sessionScope.user.userid }</h2>
+<h2> userid(sessionScope) : ${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }</h2>
 
 <div style="margin-left: 20px;">
 		<h2>채팅방 생성</h2>
 		<form method="post">
 			채팅방 제목 : <input id="chat_title" type="text" name="chat_title">
-			<input type="hidden" name="userid" value="${sessionScope.user.userid }">
+			<input type="hidden" name="userid" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
 			<input type="hidden" name="usernm" value="${sessionScope.user.usernm }">
 			<input type = "hidden" name="${_csrf.parameterName }" value = "${_csrf.token }">
 			<input id="subBtn" type="button" value="생성하기">

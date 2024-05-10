@@ -18,8 +18,6 @@ public class ChatGroupVO {
 	// DB에는 없음 채팅방장 설정을 위한 변수
 	private String auth_role;
 	private int msgCount;
-	
-	
 	public int getChat_no() {
 		return chat_no;
 	}
@@ -68,6 +66,9 @@ public class ChatGroupVO {
 		return "ChatGroupVO [chat_no=" + chat_no + ", chat_title=" + chat_title + ", userid=" + userid + ", chat_date="
 				+ chat_date + ", usernm=" + usernm + ", auth_role=" + auth_role + ", msgCount=" + msgCount + "]";
 	}
+	
+	
+	
 	
 	
 	

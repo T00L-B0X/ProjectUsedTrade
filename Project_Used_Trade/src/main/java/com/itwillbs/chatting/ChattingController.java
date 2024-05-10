@@ -45,7 +45,7 @@ public class ChattingController {
 	//		MemberVO memberVO = userService.read(userid);
 	//		model.addAttribute("user", memberVO);
 		
-		String userid = (String)session.getAttribute("userid");
+		String userid = principal.getName();
 		model.addAttribute("chatList", list);
 
 		logger.debug("chatList : " + list);
@@ -56,9 +56,11 @@ public class ChattingController {
 
 	// 채팅방 생성
 	@RequestMapping(value = "chatting", method = RequestMethod.POST)
-	public String insertChat(ChatGroupVO chat, MemberVO vo, HttpSession session) {
+	public String insertChat(Principal principal ,ChatGroupVO chat, MemberVO vo, HttpSession session) {
+		logger.debug("생성자 아이디 : " + session.getAttribute("userid"));
 		String goPage = "";
-		chat.setUserid((String) session.getAttribute("userid"));
+		chat.setUserid(principal.getName());
+//		chat.setUserid((String) session.getAttribute("userid"));
 //		chat.setUserid(vo.getUserid());
 		int result = chatService.insertChat(chat);
 		if (result > 0) {

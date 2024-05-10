@@ -183,9 +183,16 @@
 	}
 
 	function getChatCnt() {
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
 		$.ajax({
+			
 			type : "post",
 			url : "/getChatCnt.do",
+			beforeSend : function(xhr) {
+				// CSRF 헤더 설정
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			data : {
 				"userid" : "${sessionScope.user.userid}"
 			},
