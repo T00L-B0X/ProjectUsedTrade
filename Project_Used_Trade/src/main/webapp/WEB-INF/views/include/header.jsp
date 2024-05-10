@@ -136,14 +136,14 @@
   getAlarm();
   
   //3초마다 반복 실행
-//   setInterval(() => {
-// 	  getAlarm();
-// 	}, 3000);
+  setInterval(() => {
+	  getAlarm();
+	}, 3000);
   
   function getAlarm(){
 	$.ajax({
 		type : "post",
-		url : "/chatting/getAlarmInfo",
+		url : "/getAlarmInfo",
 		contentType : "application/json; charset=utf-8",
 		success : function(res){
 			if(res.length > 0){

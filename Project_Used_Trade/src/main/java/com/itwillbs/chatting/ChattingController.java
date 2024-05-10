@@ -41,11 +41,11 @@ public class ChattingController {
 		List<ChatGroupVO> list = chatService.getChatGroupList();
 		
 		// model.addAttribute에 session에 있는 사용자 정보 저장
-		String userid = principal.getName();
-		MemberVO memberVO = userService.read(userid);
-		model.addAttribute("user", memberVO);
+	//		String userid = principal.getName();
+	//		MemberVO memberVO = userService.read(userid);
+	//		model.addAttribute("user", memberVO);
 		
-
+		String userid = (String)session.getAttribute("userid");
 		model.addAttribute("chatList", list);
 
 		logger.debug("chatList : " + list);
@@ -58,8 +58,8 @@ public class ChattingController {
 	@RequestMapping(value = "chatting", method = RequestMethod.POST)
 	public String insertChat(ChatGroupVO chat, MemberVO vo, HttpSession session) {
 		String goPage = "";
-		// chat.setUserid((String) session.getAttribute("userid"));
-		chat.setUserid(vo.getUserid());
+		chat.setUserid((String) session.getAttribute("userid"));
+//		chat.setUserid(vo.getUserid());
 		int result = chatService.insertChat(chat);
 		if (result > 0) {
 			goPage = "redirect:/chatting";
@@ -72,7 +72,7 @@ public class ChattingController {
 
 	// 해당 유저의 안읽은 알람 정보 가져오기
 	@ResponseBody
-	@PostMapping("/chatting/getAlarmInfo")
+	@PostMapping("/getAlarmInfo")
 	public List<AlarmVO> getAlarmInfo(HttpSession session) {
 		MemberVO memberVO = (MemberVO) session.getAttribute("user");
 
