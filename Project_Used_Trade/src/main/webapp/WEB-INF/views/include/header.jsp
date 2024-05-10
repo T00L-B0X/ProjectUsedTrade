@@ -31,7 +31,7 @@
 <link href="/resources/css/tiny-slider.css" rel="stylesheet">
 <link href="/resources/css/style.css" rel="stylesheet">
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-<link href="/resources/css/test.css" rel="stylesheet">
+<!-- <link href="/resources/css/test.css" rel="stylesheet"> -->
 <title>Furni Free Bootstrap 5 Template for Furniture and
 	Interior Design Websites by Untree.co</title>
 <style>
@@ -167,7 +167,7 @@
 								
 								// 백틱 사용시 에러
 								// msg += `<li><a style='color: black;' class='dropdown-item' id='${'${res[i].alarm_no}'}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
-								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='chatting'>" + res[i].alarm_prefix + "<br>" + res[i].alarm_cdate + "</a></li>";
+								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='http://localhost:8088/chatting'>" + res[i].alarm_prefix + "<br>" + res[i].alarm_cdate + "</a></li>";
 
 							}
 							$("#toast").html(msg);
@@ -209,6 +209,8 @@
 	}
 
 	$(document).on("click", "#toast a", function() {
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
 		var alarm_no = $(this).attr("id");
 		$.ajax({
 			type : "post",
@@ -216,6 +218,10 @@
 				"alarm_no" : alarm_no
 			},
 			url : "/chatting/deleteAlarm",
+			beforeSend : function(xhr) {
+				// CSRF 헤더 설정
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			// 			contentType : "application/json; charset=utf-8", // 이렇게 설정하면 JSON.stringify()로 js를 JSON문자열로 변환해서 보내야함
 			success : function(res) {
 				if (res == "SUCCESS") {
