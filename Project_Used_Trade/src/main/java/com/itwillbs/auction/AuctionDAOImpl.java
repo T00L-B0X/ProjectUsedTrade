@@ -1,5 +1,7 @@
 package com.itwillbs.auction;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -28,6 +30,29 @@ public class AuctionDAOImpl implements AuctionDAO {
 	@Override
 	public int insertRecord(AuctionRecordVO arvo) {
 		return sqlSession.insert(NAMESPACE+".insertRecord", arvo);
+	}
+	@Override
+	public int selectBidCount(int goods_id) {
+		logger.debug(" getBidCount(int goods_id) ");
+		return sqlSession.selectOne(NAMESPACE+".selectBidCount", goods_id);
+	}
+	@Override
+	public List<AuctionRecordVO> selectRecordList(int goods_id) {
+		logger.debug(" List<AuctionRecordVO> selectRecordList(int goods_id) ");
+		return sqlSession.selectList(NAMESPACE+".selectAuctionRecord", goods_id);
+	}
+	@Override
+	public int selectInstantPrice(int goods_id) {
+		logger.debug(" selectInstantPrice(int goods_id) ");
+		return sqlSession.selectOne(NAMESPACE+".selectInstantPrice", goods_id);
+	}
+	@Override
+	public void updateAuctionStatus(int goods_id) {
+		sqlSession.update(NAMESPACE+".updateAuctionStatus", goods_id);		
+	}
+	@Override
+	public int updateAuStatusEnd(int goods_id) {
+		return sqlSession.update(NAMESPACE+".updateAuStatusEnd", goods_id);
 	}
 	
 	

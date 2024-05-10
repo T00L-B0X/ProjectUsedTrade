@@ -36,36 +36,36 @@
 	</select>
 	
 	<insert id="insertImageInfo" parameterType="GoodsImgVO">
-		insert into Goods_Img(goods_id,goods_img)
+		insert into GOODS_IMG(goods_id,goods_img)
 		values(#{goods_id}, #{goods_img})
 	</insert>
 	
 	<insert id="insertGoodsInfo" parameterType="GoodsVO">
 		insert into 
-		Goods(goods_id, userid, category, goods_title, status, goods_info, goods_repimg, start_price, instant_price, area,transact_type,auction_time)
+		GOODS(goods_id, userid, category, goods_title, status, goods_info, goods_repimg, start_price, instant_price, area,transact_type,auction_time)
 		values(#{goods_id}, #{userid}, #{category}, #{goods_title}, #{status}, #{goods_info}, #{goods_repimg}, #{start_price}, ${instant_price}, #{area}, #{transact_type}, #{auction_time})
 	</insert>
 	
 	<select id="selectImgList" parameterType="integer" resultType="String">
-		select goods_img
-		from goods_img
+		select GOODS_IMG
+		from GOODS_IMG
 		where goods_id = #{goods_id}
 	</select>
 	
 	<select id="selectRegdate" parameterType="integer" resultType="java.sql.Timestamp">
 		select regdate
-		from goods
+		from GOODS
 		where goods_id = #{goods_id}
 	</select>
 	
 	<update id="updateCurrentPrice" parameterType="GoodsVO">
-		update goods set current_price = #{current_price}
+		update GOODS set current_price = #{current_price}
 		where goods_id = #{goods_id}
 	</update>
 	
 	<select id="selectNowPrice" parameterType="Int" resultType="Int">
 		select current_price
-		from goods
+		from GOODS
 		where goods_id = #{goods_id}
 	</select>
 </mapper>

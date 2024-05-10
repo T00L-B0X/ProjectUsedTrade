@@ -199,35 +199,40 @@ $(document).ready(function(){
     // 카테고리 선택 안한 경우
     $("#goods_submit").click(function(e){
     	var selectedCategory = document.getElementById('selectCate').value;
+    	var inputedStartPrice = parseInt(document.querySelector("#inputStartPrice").value);
+       	var inputedInstantPrice = parseInt(document.querySelector("#inputInstantPrice").value);
+    	
     	if (!selectedCategory) {
             // 선택된 옵션의 값이 없는 경우
             alert('카테고리를 선택해주세요.');
-            event.preventDefault(); // 폼 제출을 막음
-        }else{
-        	var inputedStartPrice = document.querySelector("#inputStartPrice").value;
-        	var inputedInstantPrice = document.querySelector("#inputInstantPrice").value;
-        	if(inputedStartPrice%100 != 0){
-        		alert('경매시작가는 100원단위로 입력해주세요.');
-        		e.preventDefault();
-        		return false;
-        	}else{
-        		if(inputedInstantPrice%100 != 0){
-            		alert('즉시구매가는 100원단위로 입력해주세요.');
-            		e.preventDefault();
-            		return false;
-        		}
-        	}
-        	if(inputedStartPrice > inputedInstantPrice){
-        		alert('경매시작가는 즉시구매가보다 적은 금액을 입력해주세요');
-        		e.preventDefault();
-        		return false;
-        	}
-        	if(inputedStartPrice < 3000){
-        		alert('경매시작가는 최소 3000원이상 입력해주세요.');
-        		e.preventDefault();
-        		return false;
-        	}
+            e.preventDefault(); // 폼 제출을 막음
+            return false;
         }
+    	
+       	if(inputedStartPrice%100 != 0){
+       		alert('경매시작가는 100원단위로 입력해주세요.');
+       		e.preventDefault();
+       		return false;
+       	}
+       	
+       	if(inputedStartPrice < 3000){
+       		alert('경매시작가는 3000원이상의 금액을 입력해주세요.');
+       		e.preventDefault();
+       		return false;
+       	}
+       	
+       	if(inputedInstantPrice%100 != 0){
+       		alert('즉시구매가는 100원단위로 입력해주세요.');
+       		e.preventDefault();
+       		return false;
+   		}
+   		
+		if(inputedStartPrice > inputedInstantPrice){
+       		alert('경매시작가는 즉시구매가 이하의 금액을 입력해주세요');
+       		e.preventDefault();
+       		return false;
+		}
+    		
     });
     
     
@@ -240,6 +245,7 @@ $(document).ready(function(){
 	<h2>판매 글 등록</h2><br>
 	<form role="form" method="post" enctype="multipart/form-data">
 	<div id="registerForm">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<div class="photo-upload-container">
 	    	<!-- 대표 사진 업로드 영역 -->
 		    <div class="main-photo-upload">
