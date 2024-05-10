@@ -141,26 +141,35 @@
 // 	  getAlarm();
 // 	}, 3000);
   
-  function getAlarm(){
-	$.ajax({
-		type : "post",
-		url : "chatting/getAlarmInfo",
-		contentType : "application/json; charset=utf-8",
-		success : function(res){
-			if(res.length > 0){
-				var msg = "";
-				for(var i = 0; i < res.length; i++){
-					msg += `<li><a style='color: black;'class='dropdown-item' id='\${res[i].alarm_no}'href='chatting' >\${res[i].alarm_prefix}<br>\${res[i].alarm_cdate}</a></li>`
-				}
-				$("#toast").html(msg);
-				$("#alarm").attr("style", "color:red;");
-			}else{
-				$("#toast").html(`<li style='margin-left:20px;'>알람이 없습니다.</li>`);
-				$("#alarm").attr("style", "");
-			}
-		}
-	})
+function getAlarm(){
+    // CSRF 토큰 가져오기
+    var csrfHeaderName = "${_csrf.headerName}";
+    var csrfTokenValue = "${_csrf.token}";
+
+    $.ajax({
+        type : "post",
+        url : "/chatting/getAlarmInfo",
+        beforeSend: function(xhr) {
+            // CSRF 헤더 설정
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+        },
+        contentType : "application/json; charset=utf-8",
+        success : function(res){
+            if(res.length > 0){
+                var msg = "";
+                for(var i = 0; i < res.length; i++){
+                    msg += `<li><a style='color: black;' class='dropdown-item' id='${res[i].alarm_no}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
+                }
+                $("#toast").html(msg);
+                $("#alarm").attr("style", "color:red;");
+            }else{
+                $("#toast").html(`<li style='margin-left:20px;'>알람이 없습니다.</li>`);
+                $("#alarm").attr("style", "");
+            }
+        }
+    });
 }
+
   
   
   function getChatCnt(){
