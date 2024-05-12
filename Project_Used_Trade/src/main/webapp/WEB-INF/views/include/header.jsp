@@ -235,7 +235,6 @@
 </head>
 
 <body>
-	data : ${data}
 	<!-- Start Header/Navigation -->
 	<nav
 		class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"

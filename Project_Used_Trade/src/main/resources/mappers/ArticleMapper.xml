@@ -3,4 +3,42 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.itwillbs.mapper.ArticleMapper"></mapper>
+<mapper namespace="com.itwillbs.mapper.ArticleMapper">
+
+	<select id="selectAno" resultType="int">
+		SELECT IFNULL(MAX(ANUMBER), 0) + 1 AS next_id FROM ARTICLE
+	</select>
+	
+	<insert id="insertArticle">
+		INSERT INTO ARTICLE (ANUMBER, CATEGRY, LOCATNS, ARTITLE, USERID, CONTENT, EWRITER)
+		VALUES (#{anumber}, #{categry}, #{locatns}, #{artitle}, #{userid}, #{content}, #{ewriter})
+	</insert>
+	
+	<select id="selectArticle" resultType="ArticleVO">
+		SELECT *
+		FROM ARTICLE
+		WHERE ANUMBER=#{anumber}
+	</select>
+	
+	<select id="checkLike" resultType="int">
+		SELECT COUNT(USERID)
+		FROM LIKECNT
+		WHERE ANUMBER=#{anumber} and USERID=#{userid}
+	</select>
+	
+	<insert id="insertLike">
+		INSERT INTO LIKECNT (USERID, ANUMBER)
+		VALUES (#{userid}, #{anumber})
+	</insert>
+	
+	<delete id="deleteLike">
+		DELETE FROM LIKECNT
+		WHERE ANUMBER=#{anumber} and USERID=#{userid}
+	</delete>
+	
+	<update id="updateArticle">
+		UPDATE ARTICLE SET LOCATNS=#{locatns}, ARTITLE=#{artitle}, CONTENT=#{content}, EWRITER=#{userid}, EDTDATE=NOW()
+		WHERE ANUMBER=#{anumber}
+	</update>
+
+</mapper>

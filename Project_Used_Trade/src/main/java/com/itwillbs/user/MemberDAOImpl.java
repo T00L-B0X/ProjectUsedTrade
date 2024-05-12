@@ -13,9 +13,9 @@ import com.itwillbs.user.AuthVO;
 import com.itwillbs.user.MemberVO;
 
 @Repository
-public class UserDAOImpl implements UserDAO{
+public class MemberDAOImpl implements MemberDAO{
 
-	private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(MemberDAOImpl.class);
 	
 	@Inject
 	private SqlSession sqlSession;
@@ -86,7 +86,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public UserVO updateUser(UserVO vo) throws Exception {
+	public MemberVO updateUser(MemberVO vo) throws Exception {
 		logger.debug("userChesckPw(String userid) 호출");
 		
 		return sqlSession.selectOne(NAMESPACE+".updateUser", vo);

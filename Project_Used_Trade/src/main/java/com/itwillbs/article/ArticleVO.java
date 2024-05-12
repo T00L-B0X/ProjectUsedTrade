@@ -7,121 +7,121 @@ import org.apache.ibatis.type.Alias;
 @Alias("ArticleVO")
 public class ArticleVO {
 
-	private int ANUMBER;
-	private String CATEGRY;
-	private String LOCATNS;
-	private String ARTITLE;
-	private String USERID;
-	private String CONTENT;
-	private Timestamp REGDATE;
-	private String EWRITER;
-	private Timestamp EDTDATE;
-	private int VIEWCNT;
-	private int LIKECNT;
-	private String DELETED;
+	private int anumber;
+	private String categry;
+	private String locatns;
+	private String artitle;
+	private String userid;
+	private String content;
+	private Timestamp regdate;
+	private String ewriter;
+	private Timestamp edtdate;
+	private int viewcnt;
+	private int likecnt;
+	private String deleted;
 
-	public int getANUMBER() {
-		return ANUMBER;
+	public int getAnumber() {
+		return anumber;
 	}
 
-	public void setANUMBER(int aNUMBER) {
-		ANUMBER = aNUMBER;
+	public void setAnumber(int anumber) {
+		this.anumber = anumber;
 	}
 
-	public String getCATEGRY() {
-		return CATEGRY;
+	public String getCategry() {
+		return categry;
 	}
 
-	public void setCATEGRY(String cATEGRY) {
-		CATEGRY = cATEGRY;
+	public void setCategry(String categry) {
+		this.categry = categry;
 	}
 
-	public String getLOCATNS() {
-		return LOCATNS;
+	public String getLocatns() {
+		return locatns;
 	}
 
-	public void setLOCATNS(String lOCATNS) {
-		LOCATNS = lOCATNS;
+	public void setLocatns(String locatns) {
+		this.locatns = locatns;
 	}
 
-	public String getARTITLE() {
-		return ARTITLE;
+	public String getArtitle() {
+		return artitle;
 	}
 
-	public void setARTITLE(String aRTITLE) {
-		ARTITLE = aRTITLE;
+	public void setArtitle(String artitle) {
+		this.artitle = artitle;
 	}
 
-	public String getUSERID() {
-		return USERID;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setUSERID(String uSERID) {
-		USERID = uSERID;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
-	public String getCONTENT() {
-		return CONTENT;
+	public String getContent() {
+		return content;
 	}
 
-	public void setCONTENT(String cONTENT) {
-		CONTENT = cONTENT;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public Timestamp getREGDATE() {
-		return REGDATE;
+	public Timestamp getRegdate() {
+		return regdate;
 	}
 
-	public void setREGDATE(Timestamp rEGDATE) {
-		REGDATE = rEGDATE;
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
 	}
 
-	public String getEWRITER() {
-		return EWRITER;
+	public String getEwriter() {
+		return ewriter;
 	}
 
-	public void setEWRITER(String eWRITER) {
-		EWRITER = eWRITER;
+	public void setEwriter(String ewriter) {
+		this.ewriter = ewriter;
 	}
 
-	public Timestamp getEDTDATE() {
-		return EDTDATE;
+	public Timestamp getEdtdate() {
+		return edtdate;
 	}
 
-	public void setEDTDATE(Timestamp eDTDATE) {
-		EDTDATE = eDTDATE;
+	public void setEdtdate(Timestamp edtdate) {
+		this.edtdate = edtdate;
 	}
 
-	public int getVIEWCNT() {
-		return VIEWCNT;
+	public int getViewcnt() {
+		return viewcnt;
 	}
 
-	public void setVIEWCNT(int vIEWCNT) {
-		VIEWCNT = vIEWCNT;
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
 	}
 
-	public int getLIKECNT() {
-		return LIKECNT;
+	public int getLikecnt() {
+		return likecnt;
 	}
 
-	public void setLIKECNT(int lIKECNT) {
-		LIKECNT = lIKECNT;
+	public void setLikecnt(int likecnt) {
+		this.likecnt = likecnt;
 	}
 
-	public String getDELETED() {
-		return DELETED;
+	public String getDeleted() {
+		return deleted;
 	}
 
-	public void setDELETED(String dELETED) {
-		DELETED = dELETED;
+	public void setDeleted(String deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override
 	public String toString() {
-		return "ArticleVO [ANUMBER=" + ANUMBER + ", CATEGRY=" + CATEGRY + ", LOCATNS=" + LOCATNS + ", ARTITLE="
-				+ ARTITLE + ", USERID=" + USERID + ", CONTENT=" + CONTENT + ", REGDATE=" + REGDATE + ", EWRITER="
-				+ EWRITER + ", EDTDATE=" + EDTDATE + ", VIEWCNT=" + VIEWCNT + ", LIKECNT=" + LIKECNT + ", DELETED="
-				+ DELETED + "]";
+		return "ArticleVO [anumber=" + anumber + ", categry=" + categry + ", locatns=" + locatns + ", artitle="
+				+ artitle + ", userid=" + userid + ", content=" + content + ", regdate=" + regdate + ", ewriter="
+				+ ewriter + ", edtdate=" + edtdate + ", viewcnt=" + viewcnt + ", likecnt=" + likecnt + ", deleted="
+				+ deleted + "]";
 	}
 
 }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.alarm.AlarmVO;
 import com.itwillbs.user.MemberVO;
-import com.itwillbs.user.UserService;
+import com.itwillbs.user.MemberService;
 @Controller
 public class ChattingController {
 
@@ -29,7 +29,7 @@ public class ChattingController {
 	private ChatGroupService chatService;
 	
 	@Inject
-	private UserService userService;
+	private MemberService userService;
 
 	@Inject
 	private ChatService service;

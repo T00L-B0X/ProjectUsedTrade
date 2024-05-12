@@ -5,7 +5,7 @@ import java.util.List;
 import com.itwillbs.user.AuthVO;
 import com.itwillbs.user.MemberVO;
 
-public interface UserDAO {
+public interface MemberDAO {
 
 	public void joinBoard(MemberVO vo) throws Exception;
 	
@@ -23,6 +23,6 @@ public interface UserDAO {
 	
 	public MemberVO read(String userid) throws Exception;
 	
-	public UserVO updateUser(UserVO vo) throws Exception;
+	public MemberVO updateUser(MemberVO vo) throws Exception;
 	
 }
