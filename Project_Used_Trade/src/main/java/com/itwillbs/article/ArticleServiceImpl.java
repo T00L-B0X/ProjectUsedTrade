@@ -1,5 +1,7 @@
 package com.itwillbs.article;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -49,6 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public int like(LikecntVO lvo) throws Exception {
 		logger.debug("like(LikecntVO lvo) 호출");
+		// logger.debug("@@@@@@@"+artDAO.insertLike(lvo));
 
 		return artDAO.insertLike(lvo);
 	}
@@ -58,6 +61,33 @@ public class ArticleServiceImpl implements ArticleService {
 		logger.debug("dislike(LikecntVO lvo) 호출");
 
 		return artDAO.deleteLike(lvo);
+	}
+
+	@Override
+	public List<ArticleVO> getArticleList() throws Exception {
+		logger.debug("getArticleList() 호출");
+
+		return artDAO.selectArticleList();
+	}
+
+	@Override
+	public List<ArticleVO> getNotiList5() throws Exception {
+		logger.debug("getNotiList5() 호출");
+
+		return artDAO.selectNotiList5();
+	}
+
+	@Override
+	public ArticleVO getAds() throws Exception {
+		logger.debug("getAds() 호출");
+		return artDAO.selectAds();
+	}
+
+	@Override
+	public int deleteArticle(ArticleVO avo) throws Exception {
+		logger.debug("deleteArticle(ArticleVO avo) 호출");
+
+		return artDAO.deleteArticle(avo);
 	}
 
 }

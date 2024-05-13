@@ -38,31 +38,60 @@
 <style>
 .container {
 	display: flex;
-	width: 1300px;
+	width: 900px;
 	margin-top: 20px;
 }
 
-.chatList, .chatRoom {
-	border: 1px solid black;
-	height: 682px;
-	padding-top: 5px
+.chatList {
+/* 	height: 682px; */
+	padding-top: 5px;
+	margin: auto;
+	height: 700px; 
+	overflow-y: auto;
 }
+
+.chatRoom {
+	border: 1px solid black;
+/* 	height: 682px; */
+	padding-top: 5px;
+	margin: auto;    
+}
+
+
+
 /* .chatList{flex:2} */
 /* .chatRoom{flex:3} */
+
+
 .room {
-	border: 1px solid black;
+	margin: 20px;
+	background-color : #666;
 	height: 70px;
 	padding-top: 20px;
+	border-radius: 0.5em;
+	box-shadow: 0px 1px 10px rgb(147 141 201 / 50%), 0px 10px 15px rgb(147 141 201 / 30%);
+	transition: all 0.4s;
 }
+
+.room:hover {
+	box-shadow: 5px 5px 15px rgb(147 141 201), -5px -5px 15px #525252;
+}
+
+
 
 .roomTitle {
 	height: 30px;
+}
+
+.chatMiddle ul {
+	color: white;
 }
 
 .chatMiddle {
 	height: 450px;
 	border: 1px solid black;
 	overflow: auto;
+	background-color: #444;
 }
 
 .display-none {
@@ -72,6 +101,10 @@
 .right {
 	text-align: right;
 	margin-right: 45px;
+}
+
+.right .message .msg {
+	background-color: tan;
 }
 
 .chatMiddle li {
@@ -91,7 +124,7 @@
 .message .msg {
 	padding: 5px;
 	border: 1px solid rgb(99, 99, 102);
-	color: rgb(99, 99, 102);
+	color: white;
 }
 
 .message .cnt {
@@ -169,7 +202,7 @@
 
 								// 백틱 사용시 에러
 								// msg += `<li><a style='color: black;' class='dropdown-item' id='${'${res[i].alarm_no}'}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
-								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='http://localhost:8088/chatting'>"
+								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='http://localhost:8088/chathome'>"
 										+ res[i].alarm_prefix
 										+ "<br>"
 										+ res[i].alarm_cdate + "</a></li>";
@@ -276,7 +309,7 @@
 	>
 
 		<div class="container">
-			<a class="navbar-brand" href="/">홈으로<span>.</span></a>
+			<a class="navbar-brand" href="/">중고 팔아다오<span>.</span></a>
 
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
@@ -288,8 +321,7 @@
 
 			<div class="collapse navbar-collapse" id="navbarsFurni">
 				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-					<li class="nav-item "><a class="nav-link" href="#">Home</a></li>
-					<li><a class="nav-link" href="#">Shop</a></li>
+					<li class="nav-item "><a class="nav-link" href="/">Home</a></li>
 					<li><a class="nav-link" href="/goods/goodsMain">팔아요</a></li>
 					<li><a class="nav-link" href="/article/list">소통해요</a></li>
 					<li><a class="nav-link" href="/chatting">구해요</a></li>

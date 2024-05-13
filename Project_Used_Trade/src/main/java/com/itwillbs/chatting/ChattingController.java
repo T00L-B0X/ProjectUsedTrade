@@ -83,18 +83,6 @@ public class ChattingController {
 		return data;
 	}
 	
-//	public List<AlarmVO> getAlarmInfo(HttpSession session) {
-//		MemberVO memberVO = (MemberVO) session.getAttribute("user");
-//
-//		List<AlarmVO> data = chatService.getAlarmInfo(memberVO.getUserid());
-//		logger.debug(" 알람 데이터 : " + data);
-//
-//		return data;
-//	}
-	
-	
-	
-
 	// 읽은 알람 삭제하기
 	@ResponseBody
 	@PostMapping("/chatting/deleteAlarm")

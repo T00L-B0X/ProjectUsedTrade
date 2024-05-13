@@ -3,27 +3,23 @@
 	pageEncoding="UTF-8"%>
 <%@ include file = "../include/header.jsp" %>
 
-<h1> 채팅방 </h1>
-<h2> 사용자 정보 : ${user }</h2>
-<h2> userid : ${user.userid }</h2>
-<h2> userid(sessionScope) : ${sessionScope.user.userid }</h2>
-<h2> userid(sessionScope) : ${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }</h2>
 
 <div style="margin-left: 20px;">
-		<h2>채팅방 생성</h2>
-		<form method="post">
+		<h2>구해요</h2>
+		<form method="post" style = "margin-left: 525px;">
 			채팅방 제목 : <input id="chat_title" type="text" name="chat_title">
 			<input type="hidden" name="userid" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
 			<input type="hidden" name="usernm" value="${sessionScope.user.usernm }">
+			<input type="hidden" name="chat_type" value = 0>
 			<input type = "hidden" name="${_csrf.parameterName }" value = "${_csrf.token }">
 			<input id="subBtn" type="button" value="생성하기">
 		</form>
 	</div>
 	<hr>
 	<div>
-		<table border="1">
+		<table border="1" style = "display: flex; justify-content: center; align-items: center; width: 800px; margin: auto; margin-bottom: 30px;">
 			<tr>
-				<td align="center" width="80">번호</td>
+				<td align="center" width="80">글번호</td>
 				<td align="center" width="100">작성자</td>
 				<td align="center" width="320">제목</td>
 				<td align="center" width="180">작성일</td>

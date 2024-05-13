@@ -8,7 +8,8 @@
   	<!-- 채팅 게시글 list 가져오기 -->
 	<select id="getChatGroupList" resultType="ChatGroupVO">
 		SELECT * FROM CHATGROUP
-		ORDER BY CHAT_NO DESC
+		WHERE CHAT_TYPE = 0
+		ORDER BY CHAT_NO DESC;
 	</select>
 	
 	<!-- 자신을 뺀 모든 유저 리스트 가져오기 -->
@@ -18,14 +19,14 @@
 	
 	<!-- 채팅 게시글 등록 시 Alarm 테이블에도 등록 -->
 	<insert id = "insertAlarm" parameterType="String">
-		INSERT INTO ALARM (userid, alarm_type, alarm_cdate, alarm_prefix, chat_No) 
-		VALUES (#{userid}, 'new_chat', NOW(), '${sender_name}님의 게시글 등록', #{chat_no});
+		INSERT INTO ALARM (userid, alarm_type, alarm_cdate, alarm_prefix, chat_No, chat_type) 
+		VALUES (#{userid}, 'new_chat', NOW(), '${sender_name}님의 채팅', #{chat_no}, #{chat_type});
 	</insert>
 	
 	<!-- 채팅 게시글 등록 쿼리 -->
 	<insert id="insertChat" parameterType="ChatGroupVO" useGeneratedKeys="true" keyProperty="chat_no">
-	    INSERT INTO CHATGROUP (chat_title, userid, chat_date, usernm)
-	    VALUES (#{chat_title}, #{userid}, NOW(), #{usernm})
+	    INSERT INTO CHATGROUP (chat_title, userid, chat_date, usernm, chat_type)
+	    VALUES (#{chat_title}, #{userid}, NOW(), #{usernm}, #{chat_type})
 	</insert>
 	
 	<!-- 채팅 멤버 추가 쿼리 -->
@@ -36,13 +37,19 @@
 	
 	<!-- 해당 아이디에 대한 안읽은 alarm 리스트 가져오기 -->
 	<select id = "getAlarmInfo" parameterType="String" resultType="AlarmVO">
-		SELECT * FROM ALARM WHERE userid = #{userid}
+		SELECT * FROM ALARM WHERE userid = #{userid} and chat_type = 1
 	</select>	
 	
 	<!-- 읽은 알람 지우기 쿼리 -->
 	<delete id = "deleteAlarm" parameterType = "int">
 		DELETE FROM ALARM WHERE ALARM_NO = #{alarm_no}
 	</delete>
+	
+	<!-- 모든 알람 지우기 쿼리 -->
+	<delete id = "deleteAllAlarm" parameterType="String">
+		DELETE FROM ALARM WHERE USERID = #{userid}
+	</delete>
+	
 	
 	<!-- 채팅 가입하기 쿼리 -->
 	<insert id = "joinChatGroup" parameterType="ChatMemberVO">
@@ -166,6 +173,24 @@
 	ON
 	MEMBER.USERID = GOODS.USERID
 	WHERE GOODS.GOODS_ID = #{goods_id}
+	</select>
+	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (userid) -->
+	<select id = "getMemberFromArticle" resultType = "String">
+		SELECT MEMBER.USERID
+		FROM MEMBER
+		INNER JOIN ARTICLE
+		ON MEMBER.USERID = ARTICLE.USERID
+		WHERE ARTICLE.ANUMBER=#{anumber}
+	</select>
+	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (usernm) -->
+	<select id = "getUserNameFromArticle" resultType = "String">
+		SELECT MEMBER.USERNM
+		FROM MEMBER
+		INNER JOIN ARTICLE
+		ON MEMBER.USERID=ARTICLE.USERID
+		WHERE ARTICLE.ANUMBER=#{anumber}
 	</select>
 	
 	

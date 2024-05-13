@@ -156,7 +156,8 @@ $(function() {
             "userid" : "${goodsVO.userid}",
             "usernm" : "${user.usernm}",
             "chat_title" : "${goodsVO.goods_title}",
-            "auth_role" : "채팅인원"
+            "auth_role" : "채팅인원",
+            "chat_type" : 1,
         };
 
         console.log(ChatObject);

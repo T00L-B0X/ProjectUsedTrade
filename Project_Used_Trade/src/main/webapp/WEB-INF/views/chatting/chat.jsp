@@ -4,13 +4,9 @@
 %>
 <%@ include file="../include/header.jsp"%>
 
-${sessionScope }
-<h3>userid = ${sessionScope.user.userid }</h3>
-<h3>usernm = ${sessionScope.user.usernm }</h3>
-<h1>로그인 유저 정보 : ${user }</h1>
 
 
-<div class="container">
+<div class="container" style = "margin: auto; margin-bottom: 100px;">
 	<div class="chatList">
 		<!-- 채팅방리스트 동적 처리 -->
 	</div>
@@ -60,9 +56,9 @@ ${sessionScope }
 							console.log(res.length);
 							console.log(res[i].usernm);
 							room += "<div class='room'>";
-							room += "    <div class='name' style='display: inline; padding-left: 20px;'>"
+							room += "    <div class='name' style='display: inline; padding-left: 20px; color: white;'>"
 									+ res[i].usernm + "</div>";
-							room += "    <div class='title' style='display: inline; padding-left: 10px;'>"
+							room += "    <div class='title' style='display: inline; padding-left: 10px; color: white;'>"
 									+ res[i].chat_title + "</div>";
 							room += "    <button class='enter' style='margin-right: 10px;' id='"
 									+ res[i].chat_no

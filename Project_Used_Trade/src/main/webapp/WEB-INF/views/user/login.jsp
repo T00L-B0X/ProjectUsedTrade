@@ -84,6 +84,7 @@
     </style>
 </head>
 <body>
+
     <script type="text/javascript">
         const message = '${message}';
         
@@ -97,7 +98,7 @@
             <fieldset>
                 <legend>로그인</legend>
                 <form action="/login" method="POST">
-                    아이디 : <input type="text" name="username" id="id"> <br>
+                    아이디 : <input type="text" name="username" id="id" autofocus="autofocus"> <br>
                     비밀번호 : <input type="password" name="password"> <br>
 <!--                     <input type="checkbox" name="remember-me">아이디 기억하기 -->
                     <br>
@@ -114,6 +115,7 @@
             </span>
         </div>
     </div>
+
 
     <%@ include file="../include/footer.jsp" %>
 </body>
