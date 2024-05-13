@@ -7,16 +7,31 @@ public class AlarmVO {
 	private String alarm_cdate;
 	private String alarm_prefix;
 	private int chat_no;
+	private int chat_type;
 	
 	
+	
+
+
+
 	
 	
 	@Override
 	public String toString() {
 		return "AlarmVO [alarm_no=" + alarm_no + ", userId=" + userId + ", alarm_type=" + alarm_type + ", alarm_cdate="
-				+ alarm_cdate + ", alarm_prefix=" + alarm_prefix + ", chat_no=" + chat_no + "]";
+				+ alarm_cdate + ", alarm_prefix=" + alarm_prefix + ", chat_no=" + chat_no + ", chat_type=" + chat_type
+				+ "]";
+	}
+
+
+	public int getChat_type() {
+		return chat_type;
 	}
 	
+	
+	public void setChat_type(int chat_type) {
+		this.chat_type = chat_type;
+	}
 	
 	public int getAlarm_no() {
 		return alarm_no;

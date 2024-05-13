@@ -54,15 +54,10 @@
 	border: 1px solid black;
 /* 	height: 682px; */
 	padding-top: 5px;
-	margin: auto;
-	opacity: 0;
-    transition: opacity 0.5s ease; /* 투명도가 변하는 것을 부드럽게 처리 */
-    
+	margin: auto;    
 }
 
-.chatRoom.visible {
-    opacity: 1;
-}
+
 
 /* .chatList{flex:2} */
 /* .chatRoom{flex:3} */
@@ -106,6 +101,10 @@
 .right {
 	text-align: right;
 	margin-right: 45px;
+}
+
+.right .message .msg {
+	background-color: tan;
 }
 
 .chatMiddle li {
@@ -203,7 +202,7 @@
 
 								// 백틱 사용시 에러
 								// msg += `<li><a style='color: black;' class='dropdown-item' id='${'${res[i].alarm_no}'}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
-								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='http://localhost:8088/chatting'>"
+								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='http://localhost:8088/chathome'>"
 										+ res[i].alarm_prefix
 										+ "<br>"
 										+ res[i].alarm_cdate + "</a></li>";
