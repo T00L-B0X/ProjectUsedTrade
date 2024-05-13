@@ -290,8 +290,8 @@
 				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
 					<li class="nav-item "><a class="nav-link" href="#">Home</a></li>
 					<li><a class="nav-link" href="#">Shop</a></li>
-					<li><a class="nav-link" href="#">About us</a></li>
 					<li><a class="nav-link" href="/goods/goodsMain">팔아요</a></li>
+					<li><a class="nav-link" href="/article/list">소통해요</a></li>
 					<li><a class="nav-link" href="/chatting">구해요</a></li>
 					<li><a class="nav-link" href="/chathome">채팅창</a>
 						<div class="chatCnt chat-none"></div></li>

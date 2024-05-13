@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import com.itwillbs.user.MemberVO;
  * Handles requests for the application home page.
  */
 @Controller
+@EnableAsync
 public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -28,12 +30,11 @@ public class HomeController {
 	private MemberService mService;
 		
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-
-	public String main(HttpSession session, Principal principal) throws Exception {
+	public String main(MemberVO vo, HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
+		String path = "/main";
 
-		return "/main";
-
+		return path;
 	}
 
 }

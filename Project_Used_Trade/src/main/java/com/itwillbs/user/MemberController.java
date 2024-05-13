@@ -94,10 +94,10 @@ public class MemberController {
 
 		String userid = principal.getName();
 
-		MemberVO vo = bService.read(userid);
+		MemberVO vo = bService.read(userid);	
 		session.setAttribute("user", vo);
 
-		return "/user/home";
+		return "/main";
 
 	}
 
