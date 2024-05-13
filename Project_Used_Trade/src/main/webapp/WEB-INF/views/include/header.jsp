@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -135,16 +136,17 @@
 	getAlarm();
 
 	//3초마다 반복 실행
-  setInterval(() => {
-	  getAlarm();
-	}, 3000);
+	//   setInterval(() => {
+	// 	  getAlarm();
+	// 	}, 3000);
 
 	function getAlarm() {
 		// CSRF 토큰 가져오기
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
 
-		$.ajax({
+		$
+				.ajax({
 					type : "post",
 					url : "/chatting/getAlarmInfo",
 					beforeSend : function(xhr) {
@@ -164,10 +166,13 @@
 										+ res[i].alarm_prefix);
 								console.log("res[i].alarm_cdate : "
 										+ res[i].alarm_cdate);
-								
+
 								// 백틱 사용시 에러
 								// msg += `<li><a style='color: black;' class='dropdown-item' id='${'${res[i].alarm_no}'}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
-								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='http://localhost:8088/chatting'>" + res[i].alarm_prefix + "<br>" + res[i].alarm_cdate + "</a></li>";
+								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='http://localhost:8088/chatting'>"
+										+ res[i].alarm_prefix
+										+ "<br>"
+										+ res[i].alarm_cdate + "</a></li>";
 
 							}
 							$("#toast").html(msg);
@@ -186,7 +191,7 @@
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
 		$.ajax({
-			
+
 			type : "post",
 			url : "/getChatCnt.do",
 			beforeSend : function(xhr) {
@@ -231,6 +236,35 @@
 		})
 	})
 	// ------------------------------------alarm 에 대한 script 끝----------------------------------------------------------------
+	
+	
+	// ------------------------------------header 로그아웃 실행 script------------------------------------
+	// 페이지 로드 후 실행
+	document.addEventListener('DOMContentLoaded', function() {
+		// 로그아웃 링크 클릭 시
+		document.getElementById('logout-link').addEventListener('click',
+				function(event) {
+
+					event.preventDefault();
+
+					// CSRF 토큰 가져오기
+					var csrfParameterName = "${_csrf.parameterName}";
+					var csrfToken = "${_csrf.token}";
+
+					var form = document.createElement('form');
+					form.setAttribute('method', 'post');
+					form.setAttribute('action', '/customLogout'); // 로그아웃 주소
+
+					var csrfInput = document.createElement('input');
+					csrfInput.setAttribute('type', 'hidden');
+					csrfInput.setAttribute('name', csrfParameterName);
+					csrfInput.setAttribute('value', csrfToken);
+					form.appendChild(csrfInput);
+
+					document.body.appendChild(form);
+					form.submit();
+				});
+	});
 </script>
 </head>
 
@@ -256,28 +290,31 @@
 				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
 					<li class="nav-item "><a class="nav-link" href="#">Home</a></li>
 					<li><a class="nav-link" href="#">Shop</a></li>
-					<li><a class="nav-link" href="#">About us</a></li>
-					<li><a class="nav-link" href="#">Services</a></li>
+					<li><a class="nav-link" href="/goods/goodsMain">팔아요</a></li>
+					<li><a class="nav-link" href="/article/list">소통해요</a></li>
 					<li><a class="nav-link" href="/chatting">구해요</a></li>
 					<li><a class="nav-link" href="/chathome">채팅창</a>
 						<div class="chatCnt chat-none"></div></li>
 				</ul>
 
 				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-					<li><a class="nav-link" href="#"><img
-							src="/resources/images/user.svg"
-						></a></li>
-					<li><a class="nav-link" href="#"><img
-							src="/resources/images/cart.svg"
-						></a></li>
-
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" id="alarm" role="button"
-						data-bs-toggle="dropdown"
-					>알림</a>
+					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="alarm" role="button"
+						data-bs-toggle="dropdown">알림</a>
 						<ul class="dropdown-menu" id="toast">
 							<!-- 동적 처리 -->
-						</ul>
+						</ul> 
+						<c:choose>
+							<c:when test="${empty user}">
+								<li><a class="nav-link" href="/user/login">로그인</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a id="logout-link" class="nav-link" href="/user/login">로그아웃</a></li>
+								<li><a class="nav-link"
+									href="http://localhost:8088/user/mypage">
+									<img src="/resources/images/user.svg" style="padding-left: 10px; margin-left: 10px;"></a>
+								</li>
+							</c:otherwise>
+						</c:choose>
 				</ul>
 
 			</div>
