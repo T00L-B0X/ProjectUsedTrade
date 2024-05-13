@@ -84,12 +84,12 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 
 	@Override
 	public String getMemberFromArticle(Integer anumber) {
-		return chatDao.getMemberFromTable(anumber);
+		return chatDao.getMemberFromArticle(anumber);
 	}
 
 	@Override
 	public String getUserNameFromArticle(Integer anumber) {
-		return chatDao.getUserNameFromTable(anumber);
+		return chatDao.getUserNameFromArticle(anumber);
 	}
 
 }
