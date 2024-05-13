@@ -10,6 +10,7 @@
 			채팅방 제목 : <input id="chat_title" type="text" name="chat_title">
 			<input type="hidden" name="userid" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
 			<input type="hidden" name="usernm" value="${sessionScope.user.usernm }">
+			<input type="hidden" name="chat_type" value = 0>
 			<input type = "hidden" name="${_csrf.parameterName }" value = "${_csrf.token }">
 			<input id="subBtn" type="button" value="생성하기">
 		</form>

@@ -38,7 +38,7 @@
 <style>
 .container {
 	display: flex;
-	width: 1300px;
+	width: 900px;
 	margin-top: 20px;
 }
 
@@ -55,6 +55,13 @@
 /* 	height: 682px; */
 	padding-top: 5px;
 	margin: auto;
+	opacity: 0;
+    transition: opacity 0.5s ease; /* 투명도가 변하는 것을 부드럽게 처리 */
+    
+}
+
+.chatRoom.visible {
+    opacity: 1;
 }
 
 /* .chatList{flex:2} */
