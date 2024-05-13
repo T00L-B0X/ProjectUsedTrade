@@ -25,7 +25,7 @@
             <li>${notice.anumber}</li>
         </c:forEach>
     </ul>
-    
+       
     <h2>동네소식</h2>
     <ul>
         <c:set var="adCount" value="0" />
