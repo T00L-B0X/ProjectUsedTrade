@@ -4,56 +4,118 @@
     <%@include file="../include/header.jsp" %>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>회원 정보 수정</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+        }
+
+        .a {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .a {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-	<h1>modify.jsp</h1>
-	
-	${user} <br>
-	
+<div class="a">
+    <h1>회원 정보 수정</h1>
 
-	<form action="" method="POST">
-	
-		이름 : <input type="text" name="usernm" value="${user.usernm}" readonly="readonly"> <br>
-		아이디 : <input type="text" name="userid" value="${user.userid}" id="userid" readonly="readonly"> <br>
-		
-		현재비밀번호 : <input type="text" id="nowpw" required="required"> <br>
-			<span class="pwchk1" style="color : red; display: none;">비밀번호가 틀립니다.</span>
-			
-			
-		새비밀번호 : <input type="text" name="userpw" id="newpw"> <br>
-			<span class="pwchk" style="color : red; display: none;">8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</span>
-			<span class="samepw" style="color: red; display: none;">현재 비밀번호와 동일합니다.</span>
-			
-		생년월일 : <input type="text" name="ubirth" value="${user.ubirth}" readonly="readonly"> <br>
-		성별 : <input type="text" name="gender" value="${user.gender}" readonly="readonly"><br>
-		
-		휴대폰 번호 : <input type="text" name="uphone" value="${user.uphone}" id="newphone"> <br>
-			<span class="phoneNumberchk" style="color : red; display: none">숫자만 입력해주세요.</span>
-		
-		이메일 : <input type="text" name="uemail" value="${user.uemail}" id="email"> <br>
-			<!-- <button type="button" id="sendEmail">메일보내기</button>
-			<button type="button" id="sendEmail1" style="display: none">재전송</button><br> -->
-			<span class="emailchk" style="color: red; display: none">이메일 형식에 맞게 입력해 주세요.</span> 
-				
-			 <!--<input type="hidden" id="checkedEmail">
-		
-		인증코드 : <input type="text" id="checkEmail">
-			 <button type="button" id="confirmEmail">인증확인</button><br>
-			<span class="confirmE" style="color: green; display: none">인증성공</span>
-			<span class="confirmE1" style="color: red; display: none">인증번호를 확인해주세요</span> -->
-		
-		소개글 : <textarea rows="5" cols="20" name="uintro"></textarea> <br>
-		
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-		<input type="submit" value="수정하기">
-	
-	</form>
+    <form action="" method="POST">
+
+        <label for="usernm">이름</label>
+        <input type="text" id="usernm" name="usernm" value="${user.usernm}" readonly="readonly" style="background-color: #eee">
+
+        <label for="userid">아이디</label>
+        <input type="text" id="userid" name="userid" value="${user.userid}" readonly="readonly" style="background-color: #eee">
+
+        <label for="nowpw">현재 비밀번호</label>
+        <input type="password" id="nowpw" required>
+        <span class="error-message pwchk1" style="color : red; display: none;">비밀번호가 틀립니다.</span>
+
+        <label for="newpw">새 비밀번호</label>
+        <input type="password" id="newpw" name="userpw" required>
+        <span class="error-message pwchk" style="color : red; display: none;">8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</span>
+        <span class="error-message samepw" style="color: red; display: none;">현재 비밀번호와 동일합니다.</span>
+
+        <label for="ubirth">생년월일</label>
+        <input type="text" id="ubirth" name="ubirth" value="${user.ubirth}" readonly="readonly" style="background-color: #eee">
+
+        <label for="uphone">휴대폰 번호</label>
+        <input type="tel" id="uphone" name="uphone" value="${user.uphone}">
+        <span class="error-message phoneNumberchk" style="color : red; display: none;">숫자만 입력해주세요.</span>
+
+        <label for="uemail">이메일</label>
+        <input type="email" id="uemail" name="uemail" value="${user.uemail}">
+        <span class="error-message emailchk" style="color: red; display: none;">이메일 형식에 맞게 입력해 주세요.</span> <br>
+
+        <label for="uintro">소개글</label>
+        <textarea id="uintro" name="uintro" rows="5" cols="20"></textarea>
+
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+        <input type="submit" value="수정하기">
+    </form>
+</div>
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
