@@ -44,7 +44,7 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 			map.put("sender_name", chat.getUsernm());
 			map.put("userid", user.getUserid());
 			map.put("chat_no", chat.getChat_no());
-
+			map.put("chat_type", chat.getChat_type());
 			// alarm 테이블에 자신을 뺀 모든 유저에 대한 알림 추가
 			chatDao.insertAlarm(map);
 			logger.debug(" 알람 map.put : " + map);

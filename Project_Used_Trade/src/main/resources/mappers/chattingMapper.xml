@@ -19,8 +19,8 @@
 	
 	<!-- 채팅 게시글 등록 시 Alarm 테이블에도 등록 -->
 	<insert id = "insertAlarm" parameterType="String">
-		INSERT INTO ALARM (userid, alarm_type, alarm_cdate, alarm_prefix, chat_No) 
-		VALUES (#{userid}, 'new_chat', NOW(), '${sender_name}님의 게시글 등록', #{chat_no});
+		INSERT INTO ALARM (userid, alarm_type, alarm_cdate, alarm_prefix, chat_No, chat_type) 
+		VALUES (#{userid}, 'new_chat', NOW(), '${sender_name}님의 채팅', #{chat_no}, #{chat_type});
 	</insert>
 	
 	<!-- 채팅 게시글 등록 쿼리 -->
@@ -37,13 +37,19 @@
 	
 	<!-- 해당 아이디에 대한 안읽은 alarm 리스트 가져오기 -->
 	<select id = "getAlarmInfo" parameterType="String" resultType="AlarmVO">
-		SELECT * FROM ALARM WHERE userid = #{userid}
+		SELECT * FROM ALARM WHERE userid = #{userid} and chat_type = 1
 	</select>	
 	
 	<!-- 읽은 알람 지우기 쿼리 -->
 	<delete id = "deleteAlarm" parameterType = "int">
 		DELETE FROM ALARM WHERE ALARM_NO = #{alarm_no}
 	</delete>
+	
+	<!-- 모든 알람 지우기 쿼리 -->
+	<delete id = "deleteAllAlarm" parameterType="String">
+		DELETE FROM ALARM WHERE USERID = #{userid}
+	</delete>
+	
 	
 	<!-- 채팅 가입하기 쿼리 -->
 	<insert id = "joinChatGroup" parameterType="ChatMemberVO">
