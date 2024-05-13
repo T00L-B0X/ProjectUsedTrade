@@ -51,6 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public int like(LikecntVO lvo) throws Exception {
 		logger.debug("like(LikecntVO lvo) 호출");
+		// logger.debug("@@@@@@@"+artDAO.insertLike(lvo));
 
 		return artDAO.insertLike(lvo);
 	}
@@ -80,6 +81,13 @@ public class ArticleServiceImpl implements ArticleService {
 	public ArticleVO getAds() throws Exception {
 		logger.debug("getAds() 호출");
 		return artDAO.selectAds();
+	}
+
+	@Override
+	public int deleteArticle(ArticleVO avo) throws Exception {
+		logger.debug("deleteArticle(ArticleVO avo) 호출");
+
+		return artDAO.deleteArticle(avo);
 	}
 
 }

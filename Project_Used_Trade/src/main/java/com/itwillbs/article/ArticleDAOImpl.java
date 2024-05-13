@@ -91,4 +91,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 		return sqlSession.selectOne(NAMESPACE + ".selectAds");
 	}
 
+	@Override
+	public int deleteArticle(ArticleVO avo) throws Exception {
+		logger.debug("deleteArticle(ArticleVO avo) 호출");
+
+		return sqlSession.delete(NAMESPACE + ".deleteArticle", avo);
+	}
+
 }

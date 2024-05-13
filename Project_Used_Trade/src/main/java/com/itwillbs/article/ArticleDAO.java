@@ -24,4 +24,6 @@ public interface ArticleDAO {
 
 	public ArticleVO selectAds() throws Exception;
 
+	public int deleteArticle(ArticleVO avo) throws Exception;
+
 }

@@ -19,10 +19,9 @@
 	            "userid" : `${articleVO.userid}`,
 	            "usernm" : `${memberVO.usernm}`,
 	            "chat_title" : `${articleVO.artitle}`,
-	            "auth_role" : "채팅인원"
+	            "auth_role" : "채팅인원",
+	            "chat_type" : 1
 	        };
-	        console.log(`${articleVO.userid}12312321`);
-	        console.log(`${memberVO.usernm}123213123`);
 	
 	        // 채팅방 생성 Ajax 요청
 	        $.ajax({
@@ -78,7 +77,7 @@
 				<button onclick="location.href=`/article/modify/${articleVO.anumber}`;">수정하기</button>
 				<button onclick="deleteArticle();">삭제하기</button>
 			</c:if>
-			<button id="joinBtn">실시간 채팅</button>
+			
 		</div>
 		<div class="writer">
 			<span>${articleVO.userid }</span>
@@ -91,6 +90,7 @@
 	
 	
 	<div class="like">
+	${like }
 		<c:if test="${like eq 1 }">
 			<button onclick="dislike()">하트</button>
 		</c:if>
@@ -99,9 +99,8 @@
 		</c:if>
 	</div>
 	
-	<button>목록으로</button>
-	<button>신고하기</button>
-	
+	<button onclick="location.href='/article/list';">목록으로</button>
+	<button id="joinBtn">실시간 채팅</button>
 	<div class="comment">
 		댓글 목록
 	</div>

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -84,18 +85,20 @@ public class ArticleController {
 		String path = "article/absence";
 
 		ArticleVO avo = aService.getArticle(anumber);
-
+		MemberVO mvo = null;
 		if (principal != null) {
 			String userid = principal.getName();
 
-			MemberVO mvo = mService.read(userid);
+			mvo = mService.read(userid);
 			model.addAttribute("memberVO", mvo);
 		}
 
 		if (avo != null && avo.getDeleted().equals("0")) {
 			LikecntVO lvo = new LikecntVO();
-			lvo.setUserid(avo.getUserid());
+			lvo.setUserid(mvo.getUserid());
 			lvo.setAnumber(avo.getAnumber());
+			logger.debug("lvo : " + lvo);
+			logger.debug("lvo : " + lvo);
 
 			model.addAttribute("like", aService.checkLike(lvo));
 			model.addAttribute("articleVO", avo);
@@ -107,6 +110,7 @@ public class ArticleController {
 	}
 
 	@PostMapping("/like")
+	@ResponseBody
 	public void like(@RequestBody LikecntVO lvo) throws Exception {
 		logger.debug("ArticleController - like - POST 호출");
 		logger.debug("lvo: " + lvo);
@@ -115,6 +119,7 @@ public class ArticleController {
 	}
 
 	@DeleteMapping("/dislike")
+	@ResponseBody
 	public void dislike(@RequestBody LikecntVO lvo) throws Exception {
 		logger.debug("ArticleController - dislike - DELETE 호출");
 
@@ -162,6 +167,21 @@ public class ArticleController {
 		return ano;
 	}
 
+	@PatchMapping("/delete/{anumber}")
+	public ResponseEntity<Integer> deleteArticle(@RequestBody ArticleVO avo) throws Exception {
+		logger.debug("ArticleController - deleteArticle - PATCH 호출");
+
+		ResponseEntity<Integer> ano = ResponseEntity.badRequest().build();
+		
+		int result = aService.deleteArticle(avo);
+
+		if (result == 1) {
+			ano = ResponseEntity.ok().body(avo.getAnumber());
+		}
+
+		return ano;
+	}
+
 	// http://localhost:8088/article/list
 	@GetMapping("/list")
 	public void getArticleList(Principal principal, Model model) throws Exception {
@@ -183,11 +203,12 @@ public class ArticleController {
 
 	@ResponseBody
 	@RequestMapping(value = "/connectChat/{anumber}", method = RequestMethod.POST)
-	public ResponseEntity<String> connectChat(@PathVariable("anumber") int anumber, ChatMemberVO member, HttpServletRequest request) {
+	public ResponseEntity<String> connectChat(@PathVariable("anumber") int anumber, ChatMemberVO member,
+			HttpServletRequest request) {
 		int chat_no = 0;
 
 		logger.debug("anumber: " + anumber);
-		
+
 		// goods_id를 사용하여 작성자 정보 등을 가져오거나 필요한 처리를 수행한다.
 		member.setChat_no(chatService.getChatNo(chat_no));
 		logger.debug("dsfafasd@@@@@@@@@@@@@: " + chatService.getMemberFromArticle(anumber));

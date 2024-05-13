@@ -22,4 +22,6 @@ public interface ArticleService {
 
 	public ArticleVO getAds() throws Exception;
 
+	public int deleteArticle(ArticleVO avo) throws Exception;
+
 }

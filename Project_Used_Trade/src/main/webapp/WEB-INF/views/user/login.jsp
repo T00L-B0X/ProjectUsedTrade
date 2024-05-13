@@ -29,7 +29,7 @@
 		<legend>로그인</legend>
 		<form action="/login" method="POST">
 		
-			아이디 : <input type="text" name="username" id="id"> <br>
+			아이디 : <input type="text" name="username" id="id" autofocus="autofocus"> <br>
 			비밀번호 : <input type="password" name="password"> <br>
 			
 			

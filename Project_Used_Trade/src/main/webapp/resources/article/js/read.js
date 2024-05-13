@@ -44,11 +44,13 @@ function like() {
 	
 	xhr.send(data);
 	
+	console.log("like@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	console.log(xhr);
 	xhr.onload = () => {
 		if (xhr.status === 200) {
-		} else {
 			location.reload(true);
-			// alert('내용을 확인해주세요.\n지속적으로 반복한다면 관리자에게 문의해주세요.');
+		} else {
+			alert('내용을 확인해주세요.\n지속적으로 반복한다면 관리자에게 문의해주세요.');
 		}
 	};
 }
@@ -70,11 +72,14 @@ function dislike() {
 	
 	xhr.send(data);
 	
+	console.log("dislike@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	console.log(xhr);
 	xhr.onload = () => {
 		if (xhr.status === 200) {
-		} else {
 			location.reload(true);
-			// alert('내용을 확인해주세요.\n지속적으로 반복한다면 관리자에게 문의해주세요.');
+
+		} else {
+			alert('내용을 확인해주세요.\n지속적으로 반복한다면 관리자에게 문의해주세요.');
 		}
 	};
 }
