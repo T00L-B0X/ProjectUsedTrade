@@ -31,8 +31,7 @@ import com.itwillbs.pay.PayVO;
 import com.itwillbs.user.AuthVO;
 import com.itwillbs.user.MemberVO;
 import com.itwillbs.user.PasswordGenerator;
-import com.itwillbs.user.UserDAO;
-import com.itwillbs.user.UserService;
+import com.itwillbs.user.MemberService;
 import com.itwillbs.user.MailService;
 
 @Controller
@@ -41,7 +40,7 @@ import com.itwillbs.user.MailService;
 public class UserController {
 
 	@Inject
-	private UserService bService;
+	private MemberService bService;
 	
 	@Inject 
 	private PayService pService;
@@ -52,7 +51,7 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	// http://localhost:8088/user/login
-	
+
 	@Autowired
 	private PasswordEncoder pwEncoder;
 
@@ -63,11 +62,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String joinPOST(MemberVO vo, AuthVO avo, String userpw, String userid) throws Exception{
+	public String joinPOST(MemberVO vo, AuthVO avo, String userpw, String userid) throws Exception {
 		logger.debug("joinPOST()");
-		logger.debug("id==>"+userid);
-		logger.debug("pw"+userpw);
-		logger.debug("vo==>"+vo);
+		logger.debug("id==>" + userid);
+		logger.debug("pw" + userpw);
+		logger.debug("vo==>" + vo);
 		
 		vo.setUserpw(pwEncoder.encode(vo.getUserpw()));
 
@@ -79,7 +78,7 @@ public class UserController {
 		
 		// Pay_ID 생성 (시간 정보를 섞어서 만듬)
         Calendar today = Calendar.getInstance();
-        int year = today.get(Calendar.YEAR); // 연도
+        //int year = today.get(Calendar.YEAR); // 연도
         int month = today.get(Calendar.MONTH) + 1; // 월
         int day = today.get(Calendar.DAY_OF_MONTH); // 일
         int hours = today.get(Calendar.HOUR_OF_DAY); // 시
@@ -87,8 +86,9 @@ public class UserController {
         int seconds = today.get(Calendar.SECOND); // 초
 
         // 시간 요소를 적절한 자릿수로 변환하여 조합
-        long uniquePayId = year * 10000000000L + month * 100000000 + day * 1000000 + hours * 10000 + minutes * 100 + seconds;
-
+        //long uniquePayId = year * 10000000000L + month * 100000000 + day * 1000000 + hours * 10000 + minutes * 100 + seconds;
+        int uniquePayId = month * 100000000 + day * 1000000 + hours * 10000 + minutes * 100 + seconds;
+    
         String uniquePayIdStr = String.valueOf(uniquePayId);
         
         // 배열에 넣어 섞는 과정
@@ -116,15 +116,14 @@ public class UserController {
 	}
 
 	@GetMapping("/login")
-	public String loginForm(@RequestParam(value = "error", required = false) String error, 
-				@RequestParam(value = "exception", required = false) String exception,
-				Model model) {
+	public String loginForm(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "exception", required = false) String exception, Model model) {
+    
 		model.addAttribute("error", error);
 		model.addAttribute("exception", exception);
 		return "/user/login";
 	}
 
-	
 	/*
 	 * @RequestMapping(value = "/login",method = RequestMethod.POST) public String
 	 * loginPOST(String id,String pw,BoardVO vo,HttpSession session)throws Exception
@@ -137,22 +136,21 @@ public class UserController {
 	 * session.setAttribute("result", result); return "redirect:/"; }else { return
 	 * "login"; } }
 	 */
-	
-	@RequestMapping(value = "/home",method = RequestMethod.GET)
-
+  
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+  
 	public String main(HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
-		
+
 		String userid = principal.getName();
 
-		MemberVO vo = bService.read(userid); 
-		
-	    session.setAttribute("user", vo);
-	
-	    return "/user/home";
+		MemberVO vo = bService.read(userid);	
+		session.setAttribute("user", vo);
+
+		return "/main";
 
 	}
-	 
+
 	@RequestMapping(value = "/findId", method = RequestMethod.GET)
 	public void findId() throws Exception {
 		logger.debug("findId() 호출");
@@ -192,62 +190,59 @@ public class UserController {
 
 	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
 
-	public String findPwPOST(String userid, String uemail, Model model, MemberVO vo, RedirectAttributes attr) throws Exception {
+	public String findPwPOST(String userid, String uemail, Model model, MemberVO vo, RedirectAttributes attr)
+			throws Exception {
 
 		logger.debug("findPwPOST() 호출");
 		logger.debug("id:" + userid);
 		logger.debug("email:" + uemail);
 
-		
-		MemberVO result = bService.boardPwFind(vo);		  
-		//model.addAttribute("result", result);
+		MemberVO result = bService.boardPwFind(vo);
+		// model.addAttribute("result", result);
 
-		 
-		
-		 // 사용자가 존재하는 경우에만 처리
-	    if (result != null) {
-	        // 임시 비밀번호 생성
-	        String temporaryPassword = PasswordGenerator.generateRandomPassword();
-	        // 암호화된 임시 비밀번호 생성
-	        String pw = pwEncoder.encode(temporaryPassword);
-	        // 사용자의 비밀번호를 암호화된 임시 비밀번호로 변경
-	        result.setUserpw(pw);
-	        // 변경된 비밀번호를 데이터베이스에 업데이트
-	        bService.updatePw(result);
-	        
-	        // 이메일로 임시 비밀번호 보내기
-	        StringBuffer sb = new StringBuffer();
-	        sb.append(" <html><head></head><body> ");
-	        sb.append(" <h1> 안녕하세요 *** 입니다. </h1> ");
-	        sb.append(" <p>임시 비밀번호: " + temporaryPassword + "</p> ");
-	        sb.append(" </body></html> ");
-	        
-	        mailService.sendMail(uemail, "임시 비밀번호 발급 안내", sb.toString());
-	        
-	        // 비밀번호 변경 후 메시지를 모델에 추가
-	        attr.addFlashAttribute("message", "임시 비밀번호가 이메일로 발송되었습니다. 새로운 비밀번호로 로그인해주세요.");
+		// 사용자가 존재하는 경우에만 처리
+		if (result != null) {
+			// 임시 비밀번호 생성
+			String temporaryPassword = PasswordGenerator.generateRandomPassword();
+			// 암호화된 임시 비밀번호 생성
+			String pw = pwEncoder.encode(temporaryPassword);
+			// 사용자의 비밀번호를 암호화된 임시 비밀번호로 변경
+			result.setUserpw(pw);
+			// 변경된 비밀번호를 데이터베이스에 업데이트
+			bService.updatePw(result);
 
-	    } else {
-	        // 사용자가 존재하지 않는 경우에는 메시지를 모델에 추가
-	    	 attr.addFlashAttribute("message", "입력한 정보와 일치하는 사용자가 없습니다.");
-	    }
-	    return "redirect:/user/login";
+			// 이메일로 임시 비밀번호 보내기
+			StringBuffer sb = new StringBuffer();
+			sb.append(" <html><head></head><body> ");
+			sb.append(" <h1> 안녕하세요 *** 입니다. </h1> ");
+			sb.append(" <p>임시 비밀번호: " + temporaryPassword + "</p> ");
+			sb.append(" </body></html> ");
+
+			mailService.sendMail(uemail, "임시 비밀번호 발급 안내", sb.toString());
+
+			// 비밀번호 변경 후 메시지를 모델에 추가
+			attr.addFlashAttribute("message", "임시 비밀번호가 이메일로 발송되었습니다. 새로운 비밀번호로 로그인해주세요.");
+
+		} else {
+			// 사용자가 존재하지 않는 경우에는 메시지를 모델에 추가
+			attr.addFlashAttribute("message", "입력한 정보와 일치하는 사용자가 없습니다.");
+		}
+		return "redirect:/user/login";
 
 	}
-
 
 	@RequestMapping(value = "accessError", method = RequestMethod.GET)
 	public void accessDenied(Authentication auth) throws Exception {
 		logger.debug("accessDenied() 호출");
 		logger.debug("접근 권한없는 접근이 발생");
-		logger.debug("auth:"+auth);
+		logger.debug("auth:" + auth);
 	}
 
 	/*
 	 * @RequestMapping(value = "/user/logout", method = RequestMethod.GET) public
 	 * void logout() throws Exception { logger.debug("logout() 호출"); }
 	 */
-	
+
 	/*
 	 * @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
 	 * 
@@ -262,38 +257,38 @@ public class UserController {
 	 * @GetMapping(value = "/annoAdmin") public void doAdmin2() {
 	 * logger.debug("admin annotation only"); }
 	 */
-	
+
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	@RequestMapping(value = "/mypage",method = RequestMethod.GET)
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public void mypage() throws Exception {
 		logger.debug("mypage() 호출");
 	}
-	
+
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	@RequestMapping(value = "/modify",method = RequestMethod.GET)
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public void modify(Principal principal, Model model) throws Exception {
 		logger.debug("modify() 호출");
-		
+
 		String userid = principal.getName();
 
-		MemberVO vo = bService.read(userid); 
+		MemberVO vo = bService.read(userid);
 		model.addAttribute("user", vo);
 
 	}
-	
+
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	@RequestMapping(value = "/modify",method = RequestMethod.POST)
-	public String modifyPOST(MemberVO vo,Model model,String userid,String userpw) throws Exception{
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modifyPOST(MemberVO vo, Model model, String userid, String userpw) throws Exception {
 		logger.debug("modifyPOST() 호출");
-		logger.debug("userid:"+userid);
-		logger.debug("userpw:"+userpw);
-		
+		logger.debug("userid:" + userid);
+		logger.debug("userpw:" + userpw);
+
 		vo.setUserpw(pwEncoder.encode(vo.getUserpw()));
-		
+
 		bService.updateUser(vo);
-		
+
 		return "redirect:/user/login";
-		
+
 	}
-	
+
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.itwillbs.user.AuthVO;
 import com.itwillbs.user.MemberVO;
 
-public interface UserService {
+public interface MemberService {
 	
 	public void boardJoin(MemberVO vo) throws Exception;
 	
@@ -23,7 +23,7 @@ public interface UserService {
 	
 	public MemberVO read(String userid) throws Exception;
 	
-	public UserVO updateUser(UserVO vo) throws Exception;
+	public MemberVO updateUser(MemberVO vo) throws Exception;
 	
 	
 	

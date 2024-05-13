@@ -27,7 +27,7 @@ import com.itwillbs.auction.AuctionRecordVO;
 import com.itwillbs.auction.AuctionService;
 import com.itwillbs.auction.AuctionVO;
 import com.itwillbs.user.MemberVO;
-import com.itwillbs.user.UserService;
+import com.itwillbs.user.MemberService;
 
 import java.io.File;
 import java.io.FileInputStream;

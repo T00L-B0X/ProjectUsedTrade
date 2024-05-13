@@ -30,5 +30,9 @@ public interface ChatGroupDAO {
 	
 	public String getUserNameFromTable(int goods_id);
 	
+	public String getMemberFromArticle(Integer anumber);
+	
+	public String getUserNameFromArticle(Integer anumber);
+	
 
 }

@@ -10,7 +10,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
-    <title>네이버 로그인</title>
+    <title>홈페이지 로그인</title>
     
     
 </head>
@@ -29,7 +29,7 @@
 		<legend>로그인</legend>
 		<form action="/login" method="POST">
 		
-			아이디 : <input type="text" name="username" id="id"> <br>
+			아이디 : <input type="text" name="username" id="id" autofocus="autofocus"> <br>
 			비밀번호 : <input type="password" name="password"> <br>
 			
 			

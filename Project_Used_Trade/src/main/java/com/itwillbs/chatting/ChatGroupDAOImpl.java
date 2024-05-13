@@ -12,11 +12,11 @@ import com.itwillbs.alarm.AlarmVO;
 import com.itwillbs.user.MemberVO;
 
 @Repository("ChatGroupDAO")
-public class ChatGroupDAOImpl implements ChatGroupDAO{
-	
+public class ChatGroupDAOImpl implements ChatGroupDAO {
+
 	@Inject
 	private SqlSessionTemplate sqlSession;
-	
+
 	private static final String NAMESPACE = "com.itwillbs.mapper.ChattingMapper";
 
 	// 채팅방 조회
@@ -77,5 +77,14 @@ public class ChatGroupDAOImpl implements ChatGroupDAO{
 		return sqlSession.selectOne(NAMESPACE + ".getChatNo", chat_no);
 	}
 
+	@Override
+	public String getMemberFromArticle(Integer anumber) {
+		return sqlSession.selectOne(NAMESPACE + ".getMemberFromArticle", anumber);
+	}
+
+	@Override
+	public String getUserNameFromArticle(Integer anumber) {
+		return sqlSession.selectOne(NAMESPACE + ".getUserNameFromArticle", anumber);
+	}
 
 }
