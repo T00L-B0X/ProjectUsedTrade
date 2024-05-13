@@ -192,5 +192,20 @@ public class PayController {
 		
 		return "payRefundSuccess";
 	}
+	
+	// 충전완료 GET
+	// http://localhost:8088/pay/payRefundSuccess
+	@RequestMapping(value = "/payRefundSuccess", method = RequestMethod.GET)
+	public void payRefundSuccessGET(Principal principal, Model model) throws Exception {
+		logger.debug("payRefundSuccessGET() 실행");
+		logger.debug("/payRefundSuccess.jsp 뷰 연결");
+		
+		//String id = (String) session.getAttribute("id");
+		String id = principal.getName();
+		logger.debug(" id : "+id);
+		
+		PayVO pResultVO = pService.memberPay(id);
+		model.addAttribute("pResultVO", pResultVO);
+	}
 
 }
