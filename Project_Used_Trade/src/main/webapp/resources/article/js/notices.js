@@ -1,22 +1,22 @@
-function modifyArticle() {
+function insertNotices() {
 	const csrfToken = document.getElementById('csrfToken').value;
 	
-	const anumber = document.getElementById('anumber').value;
 	const locatns = document.getElementById('locatns').value;
+	const categry = document.getElementById('categry').value;
 	const artitle = document.getElementById('artitle').value;
 	const userid = document.getElementById('userid').value;
 	const content = editor.getHTML();
 	
 	const xhr = new XMLHttpRequest();
-	xhr.open('PUT', '/article/modify/' + anumber);
+	xhr.open('POST', '/article/notices');
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 	
 	const data = JSON.stringify({
-		anumber : anumber,
 		locatns : locatns,
+		categry : categry,
 		artitle : artitle,
-		ewriter : userid,
+		userid : userid,
 		content : content,
 	});
 	

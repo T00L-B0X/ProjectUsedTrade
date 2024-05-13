@@ -20,6 +20,8 @@ public interface ArticleDAO {
 
 	public List<ArticleVO> selectArticleList() throws Exception;
 
+	public List<ArticleVO> selectNotiList() throws Exception;
+	
 	public List<ArticleVO> selectNotiList5() throws Exception;
 
 	public ArticleVO selectAds() throws Exception;

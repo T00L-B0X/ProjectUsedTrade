@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="/resources/article/css/articles.css" />
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-<script type="text/javascript" src="/resources/article/js/articles.js"></script>
+<script type="text/javascript" src="/resources/article/js/notices.js"></script>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -42,7 +42,7 @@
 	</script>
 	
 	<p id="noti">소통해요 게시판을 이용해주셔서 감사합니다.</p>
-	<button class="insert" onclick="insertArticle();">작성하기</button>
+	<button class="insert" onclick="insertNotices();">작성하기</button>
 	<button class="cancel" onclick="history.back()">취소하기</button>
 </section>
 

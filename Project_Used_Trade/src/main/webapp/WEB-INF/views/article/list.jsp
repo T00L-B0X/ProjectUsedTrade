@@ -20,10 +20,11 @@
 </script>
 
 <section>
+	<a href="/article/notilist">공지리스트</a>
 	<h2>공지사항</h2>
     <ul>
         <c:forEach items="${NotiList5}" var="notice">
-            <li>${notice.anumber}</li>
+            <li><a href="/article/articles/${notice.anumber}">${notice.anumber}</a></li>
         </c:forEach>
     </ul>
 

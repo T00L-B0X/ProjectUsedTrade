@@ -78,6 +78,13 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
+	public List<ArticleVO> selectNotiList() throws Exception {
+		logger.debug("selectNotiList() 호출");
+		
+		return sqlSession.selectList(NAMESPACE + ".selectNotiList");
+	}
+	
+	@Override
 	public List<ArticleVO> selectNotiList5() throws Exception {
 		logger.debug("selectNotiList5() 호출");
 

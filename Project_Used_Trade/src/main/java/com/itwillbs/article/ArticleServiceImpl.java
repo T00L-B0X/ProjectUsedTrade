@@ -21,7 +21,6 @@ public class ArticleServiceImpl implements ArticleService {
 		logger.debug("addTopic(ArticleVO vo) 호출");
 
 		avo.setAnumber(artDAO.selectAno());
-		avo.setCategry("동네 소식");
 		avo.setEwriter(avo.getUserid());
 
 		return artDAO.insertArticle(avo);
@@ -68,6 +67,13 @@ public class ArticleServiceImpl implements ArticleService {
 		logger.debug("getArticleList() 호출");
 
 		return artDAO.selectArticleList();
+	}
+	
+	@Override
+	public List<ArticleVO> getNotiList() throws Exception {
+		logger.debug("getNotiList() 호출");
+		
+		return artDAO.selectNotiList();
 	}
 
 	@Override

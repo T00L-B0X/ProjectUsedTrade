@@ -37,7 +37,7 @@
 	</delete>
 	
 	<update id="updateArticle">
-		UPDATE ARTICLE SET LOCATNS=#{locatns}, ARTITLE=#{artitle}, CONTENT=#{content}, EWRITER=#{userid}, EDTDATE=NOW()
+		UPDATE ARTICLE SET LOCATNS=#{locatns}, ARTITLE=#{artitle}, CONTENT=#{content}, EWRITER=#{ewriter}, EDTDATE=NOW()
 		WHERE ANUMBER=#{anumber}
 	</update>
 	
@@ -51,7 +51,7 @@
 	<select id="selectNotiList" resultType="ArticleVO">
 		SELECT *
 		FROM ARTICLE
-		WHERE DELETED='0' and CATEGRY='공지'
+		WHERE DELETED='0' and (CATEGRY='공지' OR CATEGRY='광고')
 		ORDER BY ANUMBER DESC
 	</select>
 	

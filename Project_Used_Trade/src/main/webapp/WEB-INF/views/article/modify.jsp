@@ -8,9 +8,10 @@
 <%@ include file="../include/header.jsp"%>
 
 <section>
+	${memberVO }
 	<input type="hidden" id="csrfToken" value="${_csrf.token }">
 	<input type="hidden" id="anumber" value="${articleVO.anumber }">
-	<input type="hidden" id="userid" value="${articleVO.userid }">
+	<input type="hidden" id="userid" value="${memberVO.userid }">
 	<input type="text" id="artitle" name="artitle" value="${articleVO.artitle }" placeholder="제목을 입력해주세요." required="required" />
 	
 	<select id="locatns" name="locatns">

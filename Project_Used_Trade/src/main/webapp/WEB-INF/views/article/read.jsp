@@ -73,7 +73,7 @@
 			<span class="artitle">${articleVO.artitle }</span>
 			<span class="locatns">지역: ${articleVO.locatns }</span>
 			<span class="cnt">조회수: ${articleVO.viewcnt } 좋아요: ${articleVO.likecnt }</span>
-			<c:if test="${memberVO.userid eq articleVO.userid or fn:contains(memberVO.authList[0].auth, 'ROLE_ADMIN')}">
+			<c:if test="${not empty memberVO and (memberVO.userid eq articleVO.userid or fn:contains(memberVO.authList[0].auth, 'ROLE_ADMIN'))}">
 				<button onclick="location.href=`/article/modify/${articleVO.anumber}`;">수정하기</button>
 				<button onclick="deleteArticle();">삭제하기</button>
 			</c:if>

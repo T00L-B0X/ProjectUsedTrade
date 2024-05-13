@@ -18,6 +18,8 @@ public interface ArticleService {
 
 	public List<ArticleVO> getArticleList() throws Exception;
 
+	public List<ArticleVO> getNotiList() throws Exception;
+
 	public List<ArticleVO> getNotiList5() throws Exception;
 
 	public ArticleVO getAds() throws Exception;

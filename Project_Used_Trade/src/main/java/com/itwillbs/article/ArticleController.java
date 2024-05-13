@@ -70,6 +70,7 @@ public class ArticleController {
 
 		ResponseEntity<Integer> ano = ResponseEntity.badRequest().build();
 
+		avo.setCategry("동네 소식");
 		int result = aService.addArticle(avo);
 
 		if (result == 1) {
@@ -127,6 +128,7 @@ public class ArticleController {
 		aService.dislike(lvo);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN') or #principal.getName() == #avo.getUserid()")
 	@GetMapping("/modify/{anumber}")
 	public String modifyArticle(@PathVariable("anumber") int anumber, Principal principal, Model model)
 			throws Exception {
@@ -136,21 +138,21 @@ public class ArticleController {
 
 		if (principal != null) {
 			String userid = principal.getName();
-
+			
 			MemberVO mvo = mService.read(userid);
+			model.addAttribute("memberVO", mvo);
 
 			ArticleVO avo = aService.getArticle(anumber);
 
 			if (avo != null && avo.getDeleted().equals("0")) {
-				if (mvo.getUserid().equals(avo.getUserid())) {
-					model.addAttribute("articleVO", avo);
+				model.addAttribute("articleVO", avo);
 
-					path = "/article/modify";
-				}
+				path = "/article/modify";
 			}
 		}
 
 		return path;
+
 	}
 
 	@PutMapping("/modify/{anumber}")
@@ -173,7 +175,7 @@ public class ArticleController {
 		logger.debug("ArticleController - deleteArticle - PATCH 호출");
 
 		ResponseEntity<Integer> ano = ResponseEntity.badRequest().build();
-		
+
 		int result = aService.deleteArticle(avo);
 
 		if (result == 1) {
@@ -246,11 +248,55 @@ public class ArticleController {
 		}
 		return goPage;
 	}
-	
+
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("notices")
-	public void addNotices() {
-		
+	public String addNotices(Principal principal, Model model) throws Exception {
+		logger.debug("ArticleController - addNotices - GET 호출");
+
+		String path = "/user/login";
+
+		if (principal != null) {
+			String userid = principal.getName();
+
+			MemberVO mvo = mService.read(userid);
+			model.addAttribute("memberVO", mvo);
+
+			path = "/article/articles";
+		}
+
+		return path;
 	}
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PostMapping("notices")
+	public ResponseEntity<Integer> addNotices(@RequestBody ArticleVO avo) throws Exception {
+		logger.debug("ArticleController - addNotices - POST 호출");
+
+		ResponseEntity<Integer> ano = ResponseEntity.badRequest().build();
+
+		int result = aService.addArticle(avo);
+
+		if (result == 1) {
+			ano = ResponseEntity.ok().body(avo.getAnumber());
+		}
+
+		return ano;
+	}
+	
+	// http://localhost:8088/article/notilist
+		@GetMapping("/notilist")
+		public void getNotiList(Principal principal, Model model) throws Exception {
+			logger.debug("ArticleController - getArticleList - GET 호출");
+
+			if (principal != null) {
+				String userid = principal.getName();
+
+				MemberVO mvo = mService.read(userid);
+				model.addAttribute("memberVO", mvo);
+			}
+
+			model.addAttribute("NotiList", aService.getNotiList());
+		}
 
 }
