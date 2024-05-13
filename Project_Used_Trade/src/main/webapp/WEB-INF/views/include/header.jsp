@@ -310,7 +310,7 @@
 	>
 
 		<div class="container">
-			<a class="navbar-brand" href="/">홈으로<span>.</span></a>
+			<a class="navbar-brand" href="/">중고 팔아다오<span>.</span></a>
 
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
@@ -322,8 +322,7 @@
 
 			<div class="collapse navbar-collapse" id="navbarsFurni">
 				<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-					<li class="nav-item "><a class="nav-link" href="#">Home</a></li>
-					<li><a class="nav-link" href="#">Shop</a></li>
+					<li class="nav-item "><a class="nav-link" href="/">Home</a></li>
 					<li><a class="nav-link" href="/goods/goodsMain">팔아요</a></li>
 					<li><a class="nav-link" href="/article/list">소통해요</a></li>
 					<li><a class="nav-link" href="/chatting">구해요</a></li>

@@ -1,7 +1,9 @@
 package com.itwillbs.user;
 
 import java.security.Principal;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -10,17 +12,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.itwillbs.pay.PayService;
+import com.itwillbs.pay.PayVO;
 import com.itwillbs.user.AuthVO;
 import com.itwillbs.user.MemberVO;
 import com.itwillbs.user.PasswordGenerator;
@@ -30,15 +37,18 @@ import com.itwillbs.user.MailService;
 @Controller
 @EnableAsync
 @RequestMapping(value = "/user/*")
-public class MemberController {
+public class UserController {
 
 	@Inject
 	private MemberService bService;
-
+	
+	@Inject 
+	private PayService pService;
+	
 	@Inject
 	private MailService mailService;
 
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	// http://localhost:8088/user/login
 
@@ -57,11 +67,50 @@ public class MemberController {
 		logger.debug("id==>" + userid);
 		logger.debug("pw" + userpw);
 		logger.debug("vo==>" + vo);
-
+		
 		vo.setUserpw(pwEncoder.encode(vo.getUserpw()));
 
 		bService.boardJoin(vo);
 		bService.boardAuthJoin(avo);
+		
+		//pvo.setUSERID(vo.getUserid());
+		//logger.debug(pvo.toString());
+		
+		// Pay_ID 생성 (시간 정보를 섞어서 만듬)
+        Calendar today = Calendar.getInstance();
+        //int year = today.get(Calendar.YEAR); // 연도
+        int month = today.get(Calendar.MONTH) + 1; // 월
+        int day = today.get(Calendar.DAY_OF_MONTH); // 일
+        int hours = today.get(Calendar.HOUR_OF_DAY); // 시
+        int minutes = today.get(Calendar.MINUTE); // 분
+        int seconds = today.get(Calendar.SECOND); // 초
+
+        // 시간 요소를 적절한 자릿수로 변환하여 조합
+        //long uniquePayId = year * 10000000000L + month * 100000000 + day * 1000000 + hours * 10000 + minutes * 100 + seconds;
+        int uniquePayId = month * 100000000 + day * 1000000 + hours * 10000 + minutes * 100 + seconds;
+    
+        String uniquePayIdStr = String.valueOf(uniquePayId);
+        
+        // 배열에 넣어 섞는 과정
+        char[] charArray = uniquePayIdStr.toCharArray();
+        
+        Random random = new Random();
+        for (int i = charArray.length - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            char temp = charArray[i];
+            charArray[i] = charArray[j];
+            charArray[j] = temp;
+        }
+        
+        int shuffledPayId = Integer.parseInt(new String(charArray));
+        
+		PayVO pvo = new PayVO();
+		
+		pvo.setUSERID(userid);
+		pvo.setPAY_BALANCE(0);
+		pvo.setPAY_ID(shuffledPayId);
+
+		pService.insertMemberPay(pvo);
 
 		return "redirect:/user/login";
 	}
@@ -69,6 +118,7 @@ public class MemberController {
 	@GetMapping("/login")
 	public String loginForm(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "exception", required = false) String exception, Model model) {
+    
 		model.addAttribute("error", error);
 		model.addAttribute("exception", exception);
 		return "/user/login";
@@ -86,9 +136,9 @@ public class MemberController {
 	 * session.setAttribute("result", result); return "redirect:/"; }else { return
 	 * "login"; } }
 	 */
-
+  
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-
+  
 	public String main(HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
 

@@ -2,14 +2,14 @@ package com.itwillbs.pay;
 
 public class PayVO {
 	private String USERID;
-	private String PAYID;
+	private int PAY_ID;
 	private int PAY_BALANCE;
 	
 	public String getUSERID() {
 		return USERID;
 	}
-	public String getPAYID() {
-		return PAYID;
+	public int getPAY_ID() {
+		return PAY_ID;
 	}
 	public int getPAY_BALANCE() {
 		return PAY_BALANCE;
@@ -17,8 +17,8 @@ public class PayVO {
 	public void setUSERID(String uSERID) {
 		USERID = uSERID;
 	}
-	public void setPAYID(String pAYID) {
-		PAYID = pAYID;
+	public void setPAY_ID(int pAY_ID) {
+		PAY_ID = pAY_ID;
 	}
 	public void setPAY_BALANCE(int pAY_BALANCE) {
 		PAY_BALANCE = pAY_BALANCE;
@@ -26,7 +26,7 @@ public class PayVO {
 	
 	@Override
 	public String toString() {
-		return "PayVO [USERID=" + USERID + ", PAYID=" + PAYID + ", PAY_BALANCE=" + PAY_BALANCE + "]";
+		return "PayVO [USERID=" + USERID + ", PAY_ID=" + PAY_ID + ", PAY_BALANCE=" + PAY_BALANCE + "]";
 	}
 	
 }

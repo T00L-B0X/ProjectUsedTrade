@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.itwillbs.user.MemberVO;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 
@@ -21,15 +20,12 @@ public class PayServiceImpl implements PayService {
 	private static final Logger logger = LoggerFactory.getLogger(PayServiceImpl.class);
 	
 	@Override
-	public MemberVO memberLogin(MemberVO vo) {
-		logger.debug(" loginMember(MemberVO vo) 실행 ");
-		logger.debug(" DAO 로그인 처리 동작 호출 ");
+	public void insertMemberPay(PayVO pvo) throws Exception {
+		logger.debug(" insertMemberPay(PayVO pvo) 실행 ");
 		
-		MemberVO resultVO = pdao.loginMember(vo);
+		pdao.memberPayInsert(pvo);
 		
-		return resultVO;
 	}
-	
 	
 	@Override
 	public PayVO memberPay(String uid) throws Exception {
@@ -40,9 +36,8 @@ public class PayServiceImpl implements PayService {
 		return pResultVO;
 	}
 
-
 	@Override
-	public void insertPayInfo(PayInfoVO pivo, HttpSession session) throws Exception {
+	public void insertPayInfo(PayInfoVO pivo) throws Exception {
 		logger.debug(" insertPayInfo(PayInfoVO pivo) 실행! ");
 		
 		pdao.payInfoInsert(pivo);
@@ -81,14 +76,12 @@ public class PayServiceImpl implements PayService {
 		pdao.payUpdate(pivo);
 	}
 
-
 	@Override
-	public void insertPayInfoRefund(PayInfoVO pivo, HttpSession session) throws Exception {
+	public void insertPayInfoRefund(PayInfoVO pivo) throws Exception {
 		logger.debug(" insertPayInfoRefund(PayInfoVO pivo) 실행! ");
 		
 		pdao.payInfoRefundInsert(pivo);
 	}
-
 
 	@Override
 	public void updatePayRefund(PayInfoVO pivo) throws Exception {
