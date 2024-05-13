@@ -1,7 +1,9 @@
 package com.itwillbs.user;
 
 import java.security.Principal;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.itwillbs.pay.PayService;
+import com.itwillbs.pay.PayVO;
 import com.itwillbs.user.AuthVO;
 import com.itwillbs.user.MemberVO;
 import com.itwillbs.user.PasswordGenerator;
@@ -38,6 +42,9 @@ public class UserController {
 
 	@Inject
 	private UserService bService;
+	
+	@Inject 
+	private PayService pService;
 	
 	@Inject
 	private MailService mailService;
@@ -56,7 +63,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String joinPOST(MemberVO vo,AuthVO avo, String userpw,String userid) throws Exception{
+	public String joinPOST(MemberVO vo, AuthVO avo, String userpw, String userid) throws Exception{
 		logger.debug("joinPOST()");
 		logger.debug("id==>"+userid);
 		logger.debug("pw"+userpw);
@@ -64,11 +71,46 @@ public class UserController {
 		
 		vo.setUserpw(pwEncoder.encode(vo.getUserpw()));
 
-		
 		bService.boardJoin(vo);
 		bService.boardAuthJoin(avo);
 		
+		//pvo.setUSERID(vo.getUserid());
+		//logger.debug(pvo.toString());
 		
+		// Pay_ID 생성 (시간 정보를 섞어서 만듬)
+        Calendar today = Calendar.getInstance();
+        int year = today.get(Calendar.YEAR); // 연도
+        int month = today.get(Calendar.MONTH) + 1; // 월
+        int day = today.get(Calendar.DAY_OF_MONTH); // 일
+        int hours = today.get(Calendar.HOUR_OF_DAY); // 시
+        int minutes = today.get(Calendar.MINUTE); // 분
+        int seconds = today.get(Calendar.SECOND); // 초
+
+        // 시간 요소를 적절한 자릿수로 변환하여 조합
+        long uniquePayId = year * 10000000000L + month * 100000000 + day * 1000000 + hours * 10000 + minutes * 100 + seconds;
+
+        String uniquePayIdStr = String.valueOf(uniquePayId);
+        
+        // 배열에 넣어 섞는 과정
+        char[] charArray = uniquePayIdStr.toCharArray();
+        
+        Random random = new Random();
+        for (int i = charArray.length - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            char temp = charArray[i];
+            charArray[i] = charArray[j];
+            charArray[j] = temp;
+        }
+        
+        int shuffledPayId = Integer.parseInt(new String(charArray));
+        
+		PayVO pvo = new PayVO();
+		
+		pvo.setUSERID(userid);
+		pvo.setPAY_BALANCE(0);
+		pvo.setPAY_ID(shuffledPayId);
+
+		pService.insertMemberPay(pvo);
 
 		return "redirect:/user/login";
 	}
@@ -101,15 +143,14 @@ public class UserController {
 	public String main(HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
 		
-	
 		String userid = principal.getName();
 
-		UserVO vo = bService.read(userid); 
-    session.setAttribute("user", vo);
-
-    return "/user/home";
-
+		MemberVO vo = bService.read(userid); 
 		
+	    session.setAttribute("user", vo);
+	
+	    return "/user/home";
+
 	}
 	 
 	@RequestMapping(value = "/findId", method = RequestMethod.GET)
@@ -151,14 +192,14 @@ public class UserController {
 
 	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
 
-	public String findPwPOST(String userid, String uemail, Model model, UserVO vo,RedirectAttributes attr) throws Exception {
+	public String findPwPOST(String userid, String uemail, Model model, MemberVO vo, RedirectAttributes attr) throws Exception {
 
 		logger.debug("findPwPOST() 호출");
 		logger.debug("id:" + userid);
 		logger.debug("email:" + uemail);
 
 		
-		UserVO result = bService.boardPwFind(vo);		  
+		MemberVO result = bService.boardPwFind(vo);		  
 		//model.addAttribute("result", result);
 
 		 
@@ -230,19 +271,19 @@ public class UserController {
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@RequestMapping(value = "/modify",method = RequestMethod.GET)
-	public void modify(Principal principal,Model model) throws Exception{
+	public void modify(Principal principal, Model model) throws Exception {
 		logger.debug("modify() 호출");
 		
 		String userid = principal.getName();
 
-		UserVO vo = bService.read(userid); 
-    model.addAttribute("user", vo);
+		MemberVO vo = bService.read(userid); 
+		model.addAttribute("user", vo);
 
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@RequestMapping(value = "/modify",method = RequestMethod.POST)
-	public String modifyPOST(UserVO vo,Model model,String userid,String userpw) throws Exception{
+	public String modifyPOST(MemberVO vo,Model model,String userid,String userpw) throws Exception{
 		logger.debug("modifyPOST() 호출");
 		logger.debug("userid:"+userid);
 		logger.debug("userpw:"+userpw);

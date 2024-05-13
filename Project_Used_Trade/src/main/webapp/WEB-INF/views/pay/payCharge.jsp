@@ -81,15 +81,19 @@
     	// 선택된 결제 방법을 저장
     	var selectedOption = document.querySelector('input[name="inlineRadioOptions"]:checked').value;
     	
+        var PAY_ID = "${pResultVO.PAY_ID}";
     	var USERID = "${pResultVO.USERID}";
+    	
+		var csrfHeaderName = "${_csrf.headerName}";
+	    var csrfTokenValue = "${_csrf.token}";
         
         IMP.request_pay(
             {
-                pg: "html5_inicis",						// pg파라미터 값(KG이니시스)
+                pg: "html5_inicis",								// pg파라미터 값(KG이니시스)
                 pay_method: selectedOption,				// 결제 방법
                 merchant_uid: "IMP"+makeMerchantUid,	// 주문번호(결제고유번호)
-                name: "페이 충전 테스트",				// 상품명
-                amount: selectedValue,					// 결제 금액
+                name: "페이 충전 테스트",					// 상품명
+                amount: selectedValue,						// 결제 금액
   				buyer_email: "pbg736837@gmail.com",
   				buyer_name: "홍길동",
   				buyer_tel: "010-1234-5678",
@@ -105,13 +109,13 @@
                     var msg = '페이 충전이 완료되었습니다.';
                     var result = {
 							"imp_uid" : rsp.imp_uid,						// 포트원 결제 ID
-							"merchant_uid" : rsp.merchant_uid, 				// 결제 번호 (주문 고유 번호)
-							"PAY_ID" : USERID || makeMerchantUid,			// 페이 번호
+							"merchant_uid" : rsp.merchant_uid, 			// 결제 번호 (주문 고유 번호)
+							"PAY_ID" : PAY_ID,							// 페이 번호
 							"USER_ID" : USERID, 							// 회원 번호
 							"PAY_TYPE" : "충전",							// 페이 유형
-							"PAY_STATE" : "충전완료",						// 페이 처리상태
-							"PAY_AMOUNT" : rsp.paid_amount, 				// 결제 금액
-							"CHARGE_TYPE" : rsp.pay_method, 				// 결제 수단
+							"PAY_STATE" : "충전완료",					// 페이 처리상태
+							"PAY_AMOUNT" : rsp.paid_amount, 		// 결제 금액
+							"CHARGE_TYPE" : rsp.pay_method, 		// 결제 수단
                     }
                     
                     console.log(result);
@@ -122,8 +126,11 @@
                         type : 'POST',
                         contentType : 'application/json',
                         data : JSON.stringify(result),
+        				beforeSend : function(xhr) {
+        					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+        				},
                         success : function (res) {
-                        	alert("결제 및 결제 검증이 완료되었습니다.");
+                        	alert("충전 및 충전 검증이 완료되었습니다.");
                           	console.log(res);
                           	location.href = res;
                         },
@@ -136,7 +143,7 @@
                     
                 } else {
                 	console.log(rsp);
-                    alert("결제에 실패하였습니다. 에러 내용 : " + rsp.error_msg);
+                    alert("충전에 실패하였습니다. 에러 내용 : " + rsp.error_msg);
                 }
             }
         );

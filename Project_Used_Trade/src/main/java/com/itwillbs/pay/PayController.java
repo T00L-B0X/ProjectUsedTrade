@@ -1,6 +1,7 @@
 package com.itwillbs.pay;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -49,42 +50,15 @@ public class PayController {
         return iamportClientApi.paymentByImpUid(impUid);
     }
     
-    // http://localhost:8088/pay/login
-	// 로그인 GET
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public void loginGET() throws Exception {
-		logger.debug("loginGET() 실행");
-		logger.debug("/login.jsp 뷰 연결");
-		
-	}
-	
-	// 로그인 - POST
-	/*
-	 * @RequestMapping(value = "/login",method = RequestMethod.POST) public String
-	 * memberLoginPOST(MemberVO vo, HttpSession session) {
-	 * logger.debug(" login.jsp ->LoginPOST() 호출 ");
-	 * 
-	 * logger.debug(" 로그인 정보 vo : " + vo);
-	 * 
-	 * MemberVO resultVO = pService.memberLogin(vo);
-	 * 
-	 * String addr =""; if(resultVO == null) { logger.debug(" 로그인 실패! -> 다시 로그인 ");
-	 * addr = "/member/login"; } else { logger.debug(" 로그인 성공!! -> 페이 충전 페이지 이동 ");
-	 * 
-	 * session.setAttribute("id", resultVO.getUserid());
-	 * 
-	 * addr = "/pay/payCharge"; }
-	 * 
-	 * return "redirect:"+addr; }
-	 */
 	// http://localhost:8088/pay/payCharge
 	// 충전페이지 GET
 	@RequestMapping(value = "/payCharge", method = RequestMethod.GET)
-	public void PayChargeGET(HttpSession session, Model model) throws Exception {
+	public void PayChargeGET(Principal principal, Model model) throws Exception {
 		logger.debug("payChargeGET() 실행");
 		logger.debug("/payCharge.jsp 뷰 연결");
 		
-		String id = (String) session.getAttribute("id");
+		//String id = (String) session.getAttribute("id");
+		String id = principal.getName();
 		logger.debug(" id : "+id);
 		
 		PayVO pResultVO = pService.memberPay(id);
@@ -112,7 +86,7 @@ public class PayController {
 			PayInfoVO pivo = new PayInfoVO();
 			
 			//pivo.setPAY_ID(Integer.parseInt(result.get("PAY_ID")));
-			pivo.setPAY_ID(result.get("PAY_ID"));
+			pivo.setPAY_ID(Integer.parseInt(result.get("PAY_ID")));
 			pivo.setUSER_ID(result.get("USER_ID"));
 			pivo.setPAY_TYPE(result.get("PAY_TYPE"));
 			pivo.setPAY_STATE(result.get("PAY_STATE"));
@@ -144,11 +118,12 @@ public class PayController {
 	// 충전완료 GET
 	// http://localhost:8088/pay/payChargeSuccess
 	@RequestMapping(value = "/payChargeSuccess", method = RequestMethod.GET)
-	public void payChargeSuccessGET(HttpSession session, Model model) throws Exception {
+	public void payChargeSuccessGET(Principal principal, Model model) throws Exception {
 		logger.debug("payChargeSuccessGET() 실행");
 		logger.debug("/payChargeSuccess.jsp 뷰 연결");
 		
-		String id = (String) session.getAttribute("id");
+		//String id = (String) session.getAttribute("id");
+		String id = principal.getName();
 		logger.debug(" id : "+id);
 		
 		PayVO pResultVO = pService.memberPay(id);
@@ -162,11 +137,12 @@ public class PayController {
 	// 환불 GET
 	// http://localhost:8088/pay/payRefund
 	@RequestMapping(value = "/payRefund", method = RequestMethod.GET)
-	public void payRefundGET(HttpSession session, Model model) throws Exception {
+	public void payRefundGET(Principal principal, Model model) throws Exception {
 		logger.debug("payRefundGET() 실행");
 		logger.debug("/payRefund.jsp 뷰 연결");
 		
-		String id = (String) session.getAttribute("id");
+		//String id = (String) session.getAttribute("id");
+		String id = principal.getName();
 		logger.debug(" id : "+id);
 		
 		PayVO pResultVO = pService.memberPay(id);
@@ -178,11 +154,12 @@ public class PayController {
 	@ResponseBody
 	@RequestMapping(value = "/payRefund", method = RequestMethod.POST)
 	public String payRefundPOST(@RequestBody Map<String,String> result,
-			PayVO pvo, HttpSession session, Model model) throws Exception {
+			PayVO pvo, Principal principal, Model model) throws Exception {
 		
 		logger.debug("payRefundPOST() 실행");
 		
-		String id = (String) session.getAttribute("id");
+		//String id = (String) session.getAttribute("id");
+		String id = principal.getName();
 		
 		PayVO pResultVO = pService.memberPay(id);
 		
@@ -191,7 +168,7 @@ public class PayController {
 		try {     
 			PayInfoVO pivo = new PayInfoVO();
 			
-			pivo.setPAY_ID(pResultVO.getPAYID());
+			pivo.setPAY_ID(pResultVO.getPAY_ID());
 			pivo.setUSER_ID(id);
 			pivo.setPAY_TYPE(result.get("PAY_TYPE"));
 			pivo.setPAY_STATE(result.get("PAY_STATE"));
@@ -202,7 +179,7 @@ public class PayController {
 			
 			logger.debug(" PayInfoVO : " + pivo);
 			
-			pService.insertPayInfoRefund(pivo, session);
+			pService.insertPayInfoRefund(pivo);
 			
 			pService.updatePayRefund(pivo);
 	        
