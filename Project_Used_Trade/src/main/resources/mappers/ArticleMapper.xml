@@ -40,5 +40,35 @@
 		UPDATE ARTICLE SET LOCATNS=#{locatns}, ARTITLE=#{artitle}, CONTENT=#{content}, EWRITER=#{userid}, EDTDATE=NOW()
 		WHERE ANUMBER=#{anumber}
 	</update>
+	
+	<select id="selectArticleList" resultType="ArticleVO">
+		SELECT *
+		FROM ARTICLE
+		WHERE DELETED='0' and CATEGRY='동네 소식'
+		ORDER BY ANUMBER DESC
+	</select>
+	
+	<select id="selectNotiList" resultType="ArticleVO">
+		SELECT *
+		FROM ARTICLE
+		WHERE DELETED='0' and CATEGRY='공지'
+		ORDER BY ANUMBER DESC
+	</select>
+	
+	<select id="selectNotiList5" resultType="ArticleVO">
+	    SELECT *
+	    FROM ARTICLE
+	    WHERE DELETED='0' AND CATEGRY='공지'
+	    ORDER BY ANUMBER DESC
+	    LIMIT 5
+	</select>
+	
+	<select id="selectAds" resultType="ArticleVO">
+		SELECT * 
+		FROM ARTICLE 
+		WHERE CATEGRY = '광고' AND DELETED = '0' 
+		ORDER BY RAND() 
+		LIMIT 1;
+	</select>
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.itwillbs.article;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -66,6 +68,27 @@ public class ArticleDAOImpl implements ArticleDAO {
 		logger.debug("deleteLike(LikecntVO lvo) 호출");
 
 		return sqlSession.delete(NAMESPACE + ".deleteLike", lvo);
+	}
+
+	@Override
+	public List<ArticleVO> selectArticleList() throws Exception {
+		logger.debug("selectArticleList() 호출");
+
+		return sqlSession.selectList(NAMESPACE + ".selectArticleList");
+	}
+
+	@Override
+	public List<ArticleVO> selectNotiList5() throws Exception {
+		logger.debug("selectNotiList5() 호출");
+
+		return sqlSession.selectList(NAMESPACE + ".selectNotiList5");
+	}
+
+	@Override
+	public ArticleVO selectAds() throws Exception {
+		logger.debug("selectAds() 호출");
+
+		return sqlSession.selectOne(NAMESPACE + ".selectAds");
 	}
 
 }

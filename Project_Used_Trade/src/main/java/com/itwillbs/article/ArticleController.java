@@ -102,11 +102,11 @@ public class ArticleController {
 
 		aService.like(lvo);
 	}
-	
+
 	@DeleteMapping("/dislike")
 	public void dislike(@RequestBody LikecntVO lvo) throws Exception {
 		logger.debug("ArticleController - dislike - DELETE 호출");
-		
+
 		aService.dislike(lvo);
 	}
 
@@ -149,6 +149,25 @@ public class ArticleController {
 		}
 
 		return ano;
+	}
+
+	// http://localhost:8088/article/list
+	@GetMapping("/list")
+	public void getArticleList(Principal principal, Model model) throws Exception {
+		logger.debug("ArticleController - getArticleList - GET 호출");
+		
+		if (principal != null) {
+			String userid = principal.getName();
+
+			MemberVO mvo = mService.read(userid);
+			model.addAttribute("memberVO", mvo);
+		}
+		
+		model.addAttribute("NotiList5", aService.getNotiList5());
+		model.addAttribute("ArticleList", aService.getArticleList());
+		model.addAttribute("ad1", aService.getAds());
+		model.addAttribute("ad2", aService.getAds());
+		model.addAttribute("ad3", aService.getAds());
 	}
 
 }
