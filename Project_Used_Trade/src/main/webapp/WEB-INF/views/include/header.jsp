@@ -135,9 +135,9 @@
 	getAlarm();
 
 	//3초마다 반복 실행
-	//   setInterval(() => {
-	// 	  getAlarm();
-	// 	}, 3000);
+  setInterval(() => {
+	  getAlarm();
+	}, 3000);
 
 	function getAlarm() {
 		// CSRF 토큰 가져오기
