@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%@ include file="../include/header.jsp"%>
 
@@ -38,6 +39,11 @@
         </c:forEach>
     </ul>
     <button onclick="moveArticle();">글 쓰기</button>
+    <c:if test="${not empty memberVO}">
+	    <sec:authorize access="hasRole('ROLE_ADMIN')">
+	    	<button onclick="location.href='/article/notices';">공지 쓰기</button>
+		</sec:authorize>
+    </c:if>
 </section>
 
 <%@ include file="../include/footer.jsp"%>
