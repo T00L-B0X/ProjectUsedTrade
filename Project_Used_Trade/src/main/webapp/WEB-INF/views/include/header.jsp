@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -135,9 +136,9 @@
 	getAlarm();
 
 	//3초마다 반복 실행
-  setInterval(() => {
-	  getAlarm();
-	}, 3000);
+//   setInterval(() => {
+// 	  getAlarm();
+// 	}, 3000);
 
 	function getAlarm() {
 		// CSRF 토큰 가져오기
@@ -231,6 +232,8 @@
 		})
 	})
 	// ------------------------------------alarm 에 대한 script 끝----------------------------------------------------------------
+	
+	
 </script>
 </head>
 
@@ -264,17 +267,34 @@
 				</ul>
 
 				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-					<li><a class="nav-link" href="#"><img
-							src="/resources/images/user.svg"
-						></a></li>
-					<li><a class="nav-link" href="#"><img
-							src="/resources/images/cart.svg"
-						></a></li>
-
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="alarm" role="button"
 						data-bs-toggle="dropdown"
 					>알림</a>
+					
+				<c:choose>
+				    <c:when test="${empty user}">
+				        로그인 정보가 없는 경우
+				        <li><a class="nav-link" href="/chathome">로그인</a></li>
+				    </c:when>
+				    <c:otherwise>
+				        로그인 정보가 있는 경우
+				        <li><a class="nav-link" href="/chathome">로그아웃</a></li>
+				        <li><a class="nav-link" href="http://localhost:8088/user/mypage"><img src="/resources/images/user.svg" style="padding-left: 10px; margin-left : 10px;"></a></li>
+				    </c:otherwise>
+				</c:choose>
+					
+					
+<!-- 					<li><a class="nav-link" href="/chathome">로그인</a> -->
+<!-- 					<li><a class="nav-link" href="/chathome">로그아웃</a>					 -->
+<!-- 					<li><a class="nav-link" href="http://localhost:8088/user/mypage"><img -->
+<!-- 							src="/resources/images/user.svg" -->
+<!-- 						></a></li> -->
+<!-- 					<li><a class="nav-link" href="#"><img -->
+<!-- 							src="/resources/images/cart.svg" -->
+<!-- 						></a></li> -->
+
+					
 						<ul class="dropdown-menu" id="toast">
 							<!-- 동적 처리 -->
 						</ul>
