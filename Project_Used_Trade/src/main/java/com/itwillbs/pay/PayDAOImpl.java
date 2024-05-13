@@ -7,9 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.itwillbs.user.MemberVO;
-
-
 @Repository
 public class PayDAOImpl implements PayDAO {
 
@@ -21,12 +18,10 @@ public class PayDAOImpl implements PayDAO {
 	private static final String NAMESPACE = "com.itwillbs.mapper.PayMapper";
 	
 	@Override
-	public MemberVO loginMember(MemberVO vo) {
-		logger.debug(" loginMember(MemberVO vo) 호출 -> mapper 호출");
+	public void memberPayInsert(PayVO pvo) {
+		logger.debug(" memberPayInsert(PayVO pvo) 호출 -> mapper 호출");
 		
-		MemberVO resultVO = sqlSession.selectOne(NAMESPACE + ".loginMember", vo);
-		
-		return resultVO;
+		sqlSession.insert(NAMESPACE + ".insertMemberPay", pvo);
 	}
 	
 	@Override

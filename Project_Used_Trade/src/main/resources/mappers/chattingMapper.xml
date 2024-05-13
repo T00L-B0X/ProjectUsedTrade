@@ -175,6 +175,24 @@
 	WHERE GOODS.GOODS_ID = #{goods_id}
 	</select>
 	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (userid) -->
+	<select id = "getMemberFromArticle" resultType = "String">
+		SELECT MEMBER.USERID
+		FROM MEMBER
+		INNER JOIN ARTICLE
+		ON MEMBER.USERID = ARTICLE.USERID
+		WHERE ARTICLE.ANUMBER=#{anumber}
+	</select>
+	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (usernm) -->
+	<select id = "getUserNameFromArticle" resultType = "String">
+		SELECT MEMBER.USERNM
+		FROM MEMBER
+		INNER JOIN ARTICLE
+		ON MEMBER.USERID=ARTICLE.USERID
+		WHERE ARTICLE.ANUMBER=#{anumber}
+	</select>
+	
 	
 
 	
