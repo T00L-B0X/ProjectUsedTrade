@@ -4,13 +4,9 @@
 %>
 <%@ include file="../include/header.jsp"%>
 
-${sessionScope }
-<h3>userid = ${sessionScope.user.userid }</h3>
-<h3>usernm = ${sessionScope.user.usernm }</h3>
-<h1>로그인 유저 정보 : ${user }</h1>
 
 
-<div class="container">
+<div class="container" style = "margin: auto; margin-bottom: 100px;">
 	<div class="chatList">
 		<!-- 채팅방리스트 동적 처리 -->
 	</div>
@@ -60,9 +56,9 @@ ${sessionScope }
 							console.log(res.length);
 							console.log(res[i].usernm);
 							room += "<div class='room'>";
-							room += "    <div class='name' style='display: inline; padding-left: 20px;'>"
+							room += "    <div class='name' style='display: inline; padding-left: 20px; color: white;'>"
 									+ res[i].usernm + "</div>";
-							room += "    <div class='title' style='display: inline; padding-left: 10px;'>"
+							room += "    <div class='title' style='display: inline; padding-left: 10px; color: white;'>"
 									+ res[i].chat_title + "</div>";
 							room += "    <button class='enter' style='margin-right: 10px;' id='"
 									+ res[i].chat_no
@@ -96,23 +92,26 @@ ${sessionScope }
 
 	// 입장 버튼 누를때 onclick(this)으로 해당 함수 호출
 	function enterRoom(obj) {
-		// 입장하면 display-none 클래스 제거
-		$('.chatRoom').removeClass("display-none");
+    // 입장하면 display-none 클래스 제거
+    $('.chatRoom').removeClass("display-none");
 
-		// 	roomId = $(obj).attr("id"); // obj를 jQuery 객체로 변환해서 가져오기
-		roomId = obj.getAttribute("id") // javaScript 객체에서 id 속성값 가져오기
-		roomTitle = obj.value // 채팅방 제목 가져오기
-		// 방에 입장 시 해당 정보 서버에 전달
-		const roomData = {
-			"chat_no" : roomId,
-			"usernm" : "${sessionScope.user.usernm}",
-			"userid" : "${sessionScope.user.userid}",
-			"type" : "enter-room"
-		}
-		websocket.send(JSON.stringify(roomData));
+    roomId = obj.getAttribute("id"); // javaScript 객체에서 id 속성값 가져오기
+    roomTitle = obj.value; // 채팅방 제목 가져오기
 
-		chatMessageList();
-	}
+    // 방에 입장 시 해당 정보 서버에 전달
+    const roomData = {
+        "chat_no" : roomId,
+        "usernm" : "${sessionScope.user.usernm}",
+        "userid" : "${sessionScope.user.userid}",
+        "type" : "enter-room"
+    };
+
+    // 채팅방이 부드럽게 나타나도록 클래스 추가
+    $('.chatRoom').addClass("visible");
+
+    chatMessageList();
+}
+
 
 	// 채팅 메시지 가져오기
 	function chatMessageList() {

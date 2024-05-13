@@ -14,10 +14,20 @@ public class ChatGroupVO {
 	private String userid;
 	private String chat_date;
 	private String usernm;
+	private int chat_type;
 	
+
 	// DB에는 없음 채팅방장 설정을 위한 변수
 	private String auth_role;
 	private int msgCount;
+	
+	public int getChat_type() {
+		return chat_type;
+	}
+	public void setChat_type(int chat_type) {
+		this.chat_type = chat_type;
+	}
+	
 	public int getChat_no() {
 		return chat_no;
 	}
@@ -64,8 +74,11 @@ public class ChatGroupVO {
 	@Override
 	public String toString() {
 		return "ChatGroupVO [chat_no=" + chat_no + ", chat_title=" + chat_title + ", userid=" + userid + ", chat_date="
-				+ chat_date + ", usernm=" + usernm + ", auth_role=" + auth_role + ", msgCount=" + msgCount + "]";
+				+ chat_date + ", usernm=" + usernm + ", chat_type=" + chat_type + ", auth_role=" + auth_role
+				+ ", msgCount=" + msgCount + "]";
 	}
+	
+
 	
 	
 	

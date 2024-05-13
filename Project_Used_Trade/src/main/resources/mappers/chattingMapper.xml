@@ -8,7 +8,8 @@
   	<!-- 채팅 게시글 list 가져오기 -->
 	<select id="getChatGroupList" resultType="ChatGroupVO">
 		SELECT * FROM CHATGROUP
-		ORDER BY CHAT_NO DESC
+		WHERE CHAT_TYPE = 0
+		ORDER BY CHAT_NO DESC;
 	</select>
 	
 	<!-- 자신을 뺀 모든 유저 리스트 가져오기 -->
@@ -24,8 +25,8 @@
 	
 	<!-- 채팅 게시글 등록 쿼리 -->
 	<insert id="insertChat" parameterType="ChatGroupVO" useGeneratedKeys="true" keyProperty="chat_no">
-	    INSERT INTO CHATGROUP (chat_title, userid, chat_date, usernm)
-	    VALUES (#{chat_title}, #{userid}, NOW(), #{usernm})
+	    INSERT INTO CHATGROUP (chat_title, userid, chat_date, usernm, chat_type)
+	    VALUES (#{chat_title}, #{userid}, NOW(), #{usernm}, #{chat_type})
 	</insert>
 	
 	<!-- 채팅 멤버 추가 쿼리 -->
