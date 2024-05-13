@@ -32,11 +32,6 @@ public class HomeController {
 	public String main(HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
 
-//		String userid = principal.getName();
-//
-//		MemberVO vo = mService.read(userid);
-//		session.setAttribute("user", vo);
-
 		return "/main";
 
 	}

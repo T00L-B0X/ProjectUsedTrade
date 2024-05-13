@@ -33,16 +33,16 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		if(roleNames.contains("ROLE_ADMIN")) {
 			logger.debug("관리자 권한 로그인");
-			response.sendRedirect("/user/home");
+			response.sendRedirect("/");
 			return;
 		}
 		if(roleNames.contains("ROLE_MANAGER")) {
 			logger.debug("회원 권한 로그인");
-			response.sendRedirect("/user/home");
+			response.sendRedirect("/");
 			return;
 		}
 			logger.debug("권한이 없는(비회원) 로그인");
-			response.sendRedirect("/user/home");
+			response.sendRedirect("/");
 	
 	}
 
