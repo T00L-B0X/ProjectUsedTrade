@@ -10,7 +10,7 @@ public class PasswordGenerator {
     // 임시 비밀번호 생성 메서드
     public static String generateRandomPassword() {
         // 임시 비밀번호에 사용할 문자열
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
         
         // 임시 비밀번호를 담을 StringBuilder 생성
         StringBuilder password = new StringBuilder();

@@ -6,58 +6,73 @@
 <html>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
 <head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-
-	<h1>join.jsp</h1>
-
-	<fieldset>
-		<legend>회원가입</legend>
-		<form action="" method="POST" onsubmit="return checkAll()" id="myForm">
-			<input type="text" name="userid" placeholder="아이디" id="id" required="required"  autofocus="autofocus"> <br>
-				<span class="idchk" style="color: red; display: none;">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span>
-				<span class="id_ok" style="color: green; display: none;">사용 가능한 아이디 입니다.</span>
-				<span class="id_already" style="color: red; display: none;">중복된 아이디 입니다.</span>
-				
-			<input type="password" name="userpw" placeholder="비밀번호" id="pw" required="required"> <br>
-				<span class="pwchk" style="color : red; display: none;">8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</span>
-				
-			<input type="text" name="usernm"placeholder="이름" id="name" required="required"> <br>
-				<span class="namechk" style="color: red; display: none">한글, 영문 대/소문자를 사용해 주세요. (특수기호, 공백 사용 불가)</span>
-				
-			<input type="text" name="ubirth" placeholder="생년월일" id="birthday" required="required"> <br>
-				<span class="birthdaychk" style="color: red; display: none; ">생년월일은 8자리 숫자로 입력해 주세요.</span>
-			
-			<input type="radio" name="gender" value="남" >남
-			<input type="radio" name="gender" value="여" >여 <br>
-			
-			<input type="text" name="uphone" placeholder="휴대폰번호" id="phoneNumber" required="required"> <br>
-				<span class="phoneNumberchk" style="color : red; display: none">숫자만 입력해주세요.</span>
-			
-			<input type="email" name="uemail"placeholder="이메일" id="email" required="required"> 
-			<button type="button" id="sendEmail">메일보내기</button>
-			<button type="button" id="sendEmail1" style="display: none">재전송</button><br>
-				<span class="emailchk" style="color: red; display: none">이메일 형식에 맞게 입력해 주세요.</span>
-				
-				<input type="hidden" id="checkedEmail">
-				
-			<input type="text" id="checkEmail" placeholder="인증번호" required="required">
-			<button type="button" id="confirmEmail">인증확인</button><br>
-				<span class="confirmE" style="color: green; display: none">인증성공</span>
-				<span class="confirmE1" style="color: red; display: none">인증번호를 확인해주세요</span>
-			
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-			<input type="submit" value="회원가입">
-			
-			<a href="/user/login">로그인</a>
-			
-		</form>
-	</fieldset>
+    <div class="container mt-5">
+        <h1 class="text-center">회원가입</h1>
+        <form action="" method="POST" onsubmit="return checkAll()" id="myForm">
+            <div class="form-group">
+                <input type="text" name="userid" placeholder="아이디" id="id" required="required" autofocus="autofocus" class="form-control">
+                <small class="idchk" style="color: red; display: none;">5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</small>
+                <small class="id_ok" style="color: green; display: none;">사용 가능한 아이디 입니다.</small>
+                <small class="id_already" style="color: red; display: none;">중복된 아이디 입니다.</small>
+            </div>
+            <div class="form-group">
+                <input type="password" name="userpw" placeholder="비밀번호" id="pw" required="required" class="form-control">
+                <small class="pwchk" style="color : red; display: none;">8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</small>
+            </div>
+            <div class="form-group">
+                <input type="text" name="usernm" placeholder="이름" id="name" required="required" class="form-control">
+                <small class="namechk" style="color: red; display: none">한글, 영문 대/소문자를 사용해 주세요. (특수기호, 공백 사용 불가)</small>
+            </div>
+            <div class="form-group">
+                <input type="text" name="ubirth" placeholder="생년월일" id="birthday" required="required" class="form-control">
+                <small class="birthdaychk" style="color: red; display: none;">생년월일은 8자리 숫자로 입력해 주세요.</small>
+            </div>
+            <div class="form-group">
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="gender" value="남">남
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="gender" value="여">여
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="uphone" placeholder="휴대폰번호" id="phoneNumber" required="required" class="form-control">
+                <small class="phoneNumberchk" style="color : red; display: none">숫자만 입력해주세요.</small>
+            </div>
+            <div class="form-group">
+                <input type="email" name="uemail" placeholder="이메일" id="email" required="required" class="form-control">
+                <button type="button" id="sendEmail" class="btn btn-primary">메일보내기</button>
+                <button type="button" id="sendEmail1" style="display: none" class="btn btn-primary">재전송</button>
+                <small class="emailchk" style="color: red; display: none">이메일 형식에 맞게 입력해 주세요.</small>
+                <input type="hidden" id="checkedEmail">
+            </div>
+            <div class="form-group">
+                <input type="text" id="checkEmail" placeholder="인증번호" required="required" class="form-control">
+                <button type="button" id="confirmEmail" class="btn btn-primary">인증확인</button>
+                <p></p>
+                <small class="confirmE" style="color: green; display: none">인증성공</small>
+                <small class="confirmE1" style="color: red; display: none">인증번호를 확인해주세요</small>
+            </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+            <input type="submit" value="회원가입" class="btn btn-primary">
+            <a href="/user/login" class="btn btn-link">로그인 화면으로 이동</a>
+        </form>
+    </div>
 
 <script type="text/javascript">
     $(document).ready(function() {
