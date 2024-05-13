@@ -7,6 +7,63 @@
 
 <%@ include file="../include/header.jsp"%>
 
+<script type="text/javascript">
+	$(function() {
+	    var joinBtn = $("#joinBtn");
+	    joinBtn.on("click", function() {
+	        var chat_no = $(this).attr("id");
+	        var anumber = ${articleVO.anumber};
+	        var csrfHeaderName = `${_csrf.headerName}`;
+			var csrfTokenValue = `${_csrf.token}`;
+	        var ChatObject = {
+	            "userid" : `${articleVO.userid}`,
+	            "usernm" : `${memberVO.usernm}`,
+	            "chat_title" : `${articleVO.artitle}`,
+	            "auth_role" : "채팅인원"
+	        };
+	        console.log(`${articleVO.userid}12312321`);
+	        console.log(`${memberVO.usernm}123213123`);
+	
+	        // 채팅방 생성 Ajax 요청
+	        $.ajax({
+	            type: "post",
+	            url: "/article/joinChat",
+	            beforeSend : function(xhr) {
+					// CSRF 헤더 설정
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+	            data: JSON.stringify(ChatObject),
+	            contentType: "application/json; charset=utf-8",
+	            success: function(response) {
+	                // 채팅방 생성이 성공적으로 완료된 경우 추가 작업을 수행하는 Ajax 요청
+	                $.ajax({
+	                    type: "post",
+	                    url: "/article/connectChat/" + anumber,
+	                    beforeSend : function(xhr) {
+							// CSRF 헤더 설정
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
+	                    contentType: "application/json; charset=utf-8",
+	                    data: JSON.stringify(ChatObject),
+	                    success: function(response) {
+	                    	alert(" 채팅이 연결되었습니다. ")
+	                        // 성공적으로 처리된 경우의 동작
+	                    },
+	                    error: function(xhr, status, error) {
+	                        // 요청이 실패한 경우의 동작
+	                    }
+	                });
+	            },
+	            error: function(xhr, status, error) {
+	                // 채팅방 생성에 실패한 경우 처리
+	                console.error("채팅방 생성에 실패했습니다.");
+	                console.error(error);
+	            }
+	        });
+	    });
+	});
+</script>
+
 <section class="article">
 	<div class="head">
 		<div class="title">
@@ -21,6 +78,7 @@
 				<button onclick="location.href=`/article/modify/${articleVO.anumber}`;">수정하기</button>
 				<button onclick="deleteArticle();">삭제하기</button>
 			</c:if>
+			<button id="joinBtn">실시간 채팅</button>
 		</div>
 		<div class="writer">
 			<span>${articleVO.userid }</span>

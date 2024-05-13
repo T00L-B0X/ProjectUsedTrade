@@ -16,12 +16,12 @@ import com.itwillbs.user.MemberVO;
 
 @Service("ChatGroupService")
 public class ChatGroupServiceImpl implements ChatGroupService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ChatGroupServiceImpl.class);
-	
+
 	@Inject
 	private ChatGroupDAO chatDao;
-	
+
 	@Override
 	public List<ChatGroupVO> getChatGroupList() {
 		return chatDao.getChatGroupList();
@@ -31,11 +31,11 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 	public int insertChat(ChatGroupVO chat) {
 		// 채팅그룹 생성
 		int result = chatDao.insertChat(chat);
-		
+
 		chat.setAuth_role("방장");
 		// 방장 채팅 멤버에 추가
 		chatDao.addChatMember(chat);
-		
+
 		String userid = chat.getUserid();
 		// 자신을 뺀 모든 유저의 List를 가져옴
 		List<MemberVO> userList = chatDao.getUserList(userid);
@@ -44,8 +44,7 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 			map.put("sender_name", chat.getUsernm());
 			map.put("userid", user.getUserid());
 			map.put("chat_no", chat.getChat_no());
-			
-			
+
 			// alarm 테이블에 자신을 뺀 모든 유저에 대한 알림 추가
 			chatDao.insertAlarm(map);
 			logger.debug(" 알람 map.put : " + map);
@@ -82,6 +81,15 @@ public class ChatGroupServiceImpl implements ChatGroupService {
 	public int getChatNo(int chat_no) {
 		return chatDao.getChatNo(chat_no);
 	}
-	
+
+	@Override
+	public String getMemberFromArticle(Integer anumber) {
+		return chatDao.getMemberFromTable(anumber);
+	}
+
+	@Override
+	public String getUserNameFromArticle(Integer anumber) {
+		return chatDao.getUserNameFromTable(anumber);
+	}
 
 }

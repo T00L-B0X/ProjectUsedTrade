@@ -25,12 +25,12 @@
             <li>${notice.anumber}</li>
         </c:forEach>
     </ul>
-       
+
     <h2>동네소식</h2>
     <ul>
         <c:set var="adCount" value="0" />
         <c:forEach items="${ArticleList}" var="article" varStatus="loop">
-            <li>${article.anumber}</li>
+            <li><a href="/article/articles/${article.anumber}">${article.anumber}</a></li>
             <c:if test="${loop.index % 3 == 2 && adCount < 3}">
                 <li class="ad">${ad1.artitle} (광고)</li>
                 <c:set var="adCount" value="${adCount + 1}" />
