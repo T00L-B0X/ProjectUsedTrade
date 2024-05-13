@@ -3,7 +3,7 @@ package com.itwillbs.pay;
 import java.sql.Timestamp;
 
 public class PayInfoVO {
-	private String PAY_ID;
+	private int PAY_ID;
 	private String USER_ID;
 	private String PAY_TYPE;
 	private String PAY_STATE;
@@ -16,7 +16,7 @@ public class PayInfoVO {
 	private Timestamp REGDATE;
 	private Timestamp COMPLIDATE;
 	
-	public String getPAY_ID() {
+	public int getPAY_ID() {
 		return PAY_ID;
 	}
 	
@@ -64,7 +64,7 @@ public class PayInfoVO {
 		return COMPLIDATE;
 	}
 	
-	public void setPAY_ID(String pAY_ID) {
+	public void setPAY_ID(int pAY_ID) {
 		PAY_ID = pAY_ID;
 	}
 	

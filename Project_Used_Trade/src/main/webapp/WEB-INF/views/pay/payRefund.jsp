@@ -60,6 +60,12 @@
 	});
 
 	function refundPay() {
+        var PAY_ID = "${pResultVO.PAY_ID}";
+    	var USERID = "${pResultVO.USERID}";
+    	
+		var csrfHeaderName = "${_csrf.headerName}";
+	    var csrfTokenValue = "${_csrf.token}";
+	    
 		var result = {
 			"PAY_TYPE" : "환불", // 페이 유형
 			"PAY_STATE" : "환불신청", // 페이 처리상태
@@ -67,7 +73,6 @@
 			"BANK" : $("#bankName").val(),
 			"ACCOUNT" : $("#accountNumber").val(),
 			"ACCOUNT_HOLDER" : $("#accountHolder").val()
-
 		}
 
 		$.ajax({
@@ -75,6 +80,9 @@
 			type : 'POST',
 			contentType : 'application/json',
 			data : JSON.stringify(result),
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			success : function(res) {
 				alert("환불 신청이 완료되었습니다.");
 				console.log(res);

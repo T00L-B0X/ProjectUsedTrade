@@ -1,11 +1,9 @@
 package com.itwillbs.pay;
 
-import com.itwillbs.user.MemberVO;
-
 public interface PayDAO {
 	
-	// 로그인 처리 동작
-	public MemberVO loginMember(MemberVO vo);
+	// 페이 아이디 삽입 동작 (회원가입시 실행)
+	public void memberPayInsert(PayVO pvo);
 	
 	// 페이 조회
 	public PayVO getMemberPay(String uid);
