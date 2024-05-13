@@ -55,11 +55,12 @@
 			</props>
 		</property>
 	</bean>
-	
-	
+
 	<!-- 서비스 객체 주입 -->
 	<context:component-scan base-package="com.itwillbs.user"/>
 	
 	<bean id="preConfigMailSender" class="org.springframework.mail.SimpleMailMessage"/>
+	
+	
 	
 </beans>
