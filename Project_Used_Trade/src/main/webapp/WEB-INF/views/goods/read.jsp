@@ -23,7 +23,7 @@ grid-gap: 1rem;
 <script type="text/javascript">
 
 $(document).ready(function() {
-        // 디비에서 최신글부터 조회
+        // 디비에서 최신글부터 조회@
         var csrfHeaderName = "${_csrf.headerName}";
         var csrfTokenValue = "${_csrf.token}";
         var goods_id = ${goodsVO.goods_id};
