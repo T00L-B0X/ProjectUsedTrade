@@ -28,6 +28,12 @@ public class AuctionSerivceImpl implements AuctionService {
 		
 		return ADao.selectAuctionInfo(goods_id);
 	}
+	
+	@Override
+	public List<AuctionVO> sellInfo(String userid) {
+		
+		return ADao.sellInfo(userid);
+	}
 
 	@Override
 	public int insertRecord(AuctionRecordVO arvo) {
@@ -65,6 +71,7 @@ public class AuctionSerivceImpl implements AuctionService {
 		
 		return ADao.updateAuStatusEnd(goods_id);		
 	}
+	
 
 	
 	

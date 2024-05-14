@@ -81,7 +81,7 @@
                 이메일 : <input type="text" name="uemail"> <br>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <input type="submit" value="아이디 찾기">
-                 <button class="back-button" type="button" onclick="history.back()">뒤로가기</button>
+                <button class="back-button" type="button" onclick="history.back()">뒤로가기</button>
             </form>
         </fieldset>
     </div>

@@ -20,7 +20,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 50vh;
+            height: 59vh;
+            margin : 20px ;
         }
 
         .login-box {
@@ -102,10 +103,10 @@
                     비밀번호 : <input type="password" name="password"> <br>
 <!--                     <input type="checkbox" name="remember-me">아이디 기억하기 -->
                     <br>
-                    <a href="/user/findId">아이디 찾기</a> <a href="/user/findPw">비밀번호 찾기</a> 
+                    <input type="submit" value="로그인"> <a href="/user/join">회원가입</a> 
                     <br>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                    <input type="submit" value="로그인"> <a href="/user/join">회원가입</a>
+                    <a href="/user/findId">아이디 찾기</a> <a href="/user/findPw">비밀번호 찾기</a>
                 </form>
             </fieldset>
             <span> 

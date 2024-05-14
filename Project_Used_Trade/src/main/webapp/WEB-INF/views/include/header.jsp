@@ -38,7 +38,6 @@
 <style>
 .container {
 	display: flex;
-	width: 900px;
 	margin-top: 20px;
 }
 

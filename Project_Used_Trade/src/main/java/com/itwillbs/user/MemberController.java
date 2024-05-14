@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.itwillbs.auction.AuctionService;
+import com.itwillbs.auction.AuctionVO;
 import com.itwillbs.pay.PayService;
 import com.itwillbs.pay.PayVO;
 import com.itwillbs.user.AuthVO;
@@ -44,6 +46,9 @@ public class MemberController {
 
 	@Inject
 	private PayService pService;
+	
+	@Inject
+	private AuctionService aService;
 
 	@Inject
 	private MailService mailService;
@@ -137,9 +142,9 @@ public class MemberController {
 	 * session.setAttribute("result", result); return "redirect:/"; }else { return
 	 * "login"; } }
 	 */
-
+	
+	/*
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-
 	public String main(HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
 
@@ -147,10 +152,10 @@ public class MemberController {
 
 		MemberVO vo = bService.read(userid);
 		session.setAttribute("user", vo);
-
+		
 		return "/main";
-
 	}
+	*/
 
 	@RequestMapping(value = "/findId", method = RequestMethod.GET)
 	public void findId() throws Exception {
@@ -261,8 +266,38 @@ public class MemberController {
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public void mypage() throws Exception {
+	public void mypage(Principal principal, Model model) throws Exception {
 		logger.debug("mypage() 호출");
+		
+		String userid = principal.getName();
+		
+		PayVO pResultVO = pService.memberPay(userid);
+		List<AuctionVO> vo = aService.sellInfo(userid);
+		
+		logger.debug("userid:"+userid);
+		logger.debug("pResultVO:"+pResultVO);
+		logger.debug("vo:"+vo);
+		
+		int total = 0;
+		int sell = 0;
+
+		for (AuctionVO auctionVO : vo) {
+		    if (auctionVO.getAu_status() >= 0) {
+		        total++;
+		    }
+		    if (auctionVO.getAu_status() == 0) {
+		        sell++;
+		    } 
+		}
+
+		model.addAttribute("total", total);
+		model.addAttribute("sell", sell);
+		
+		
+		model.addAttribute("pResultVO", pResultVO);
+		model.addAttribute("vo", vo);
+		
+		
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
