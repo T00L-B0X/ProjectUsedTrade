@@ -19,7 +19,7 @@
 	
 	<!-- 결제시 차감 금액 저장 -->
 	<update id="updatePayDeduct">
-		update pay set PAY_BALANCE = PAY_BALANCE - #{PAYMENT_AMOUNT}
+		update PAY set PAY_BALANCE = PAY_BALANCE - #{PAYMENT_AMOUNT}
 		where USERID = #{USERID};
 	</update>
 	
@@ -38,7 +38,7 @@
 	
 	<!-- 결제 취소시 반환 금액 저장 -->
 	<update id="updatePayCancel">
-		update pay set PAY_BALANCE = PAY_BALANCE + #{PAYMENT_AMOUNT}
+		update PAY set PAY_BALANCE = PAY_BALANCE + #{PAYMENT_AMOUNT}
 		where USERID = #{USERID};
 	</update>
 

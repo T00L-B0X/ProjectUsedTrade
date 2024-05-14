@@ -21,13 +21,12 @@ grid-gap: 1rem;
 
 </style>
 <script type="text/javascript">
-
 $(document).ready(function() {
         // 디비에서 최신글부터 조회@
         var csrfHeaderName = "${_csrf.headerName}";
         var csrfTokenValue = "${_csrf.token}";
-        var goods_id = ${goodsVO.goods_id};
-        var au_status = ${avo.au_status};
+        var goods_id = "${goodsVO.goods_id}";
+        var au_status = "${avo.au_status}";
         $.ajax({
             url: "/goods/read/${goodsVO.goods_id}",
             method: "GET",
@@ -106,8 +105,7 @@ $(document).ready(function() {
             	        // 출력 포맷에 맞게 문자열 조합
             	        var remainingTime = remaindays + "일 " + remainhours + "시간 " + remainminutes + "분 " + remainseconds+ "초";
             	    }
-            	    
-            	    if(timeDiff > 0) {
+            	    if(timeDiff > 0 || au_status == 1) {
             	    	$('#bidEnd').hide();
             	    }
             	    
@@ -230,6 +228,7 @@ $(function() {
 </script>
 ${arvo }
 ${avo }
+${gvo }
 <div class="container">
     <div class="product-info">
 	    <div id="titleDate">
@@ -259,20 +258,13 @@ ${avo }
         <button id="likeGoods">관심 상품 등록 </button><br><br><br>        
         <button id="joinBtn">1:1 채팅</button><br><br>
         </sec:authorize>
-        
+        <c:if test="${avo.au_status == 1 && sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name eq goodsVO.userid}">
+    		<input id="bidEnd" type="button" value="경매 종료 하기">
+    		<div id="bidEndMessage"></div>
+    	</c:if>
         <c:if test="${avo.au_status == 0 && arvo.ar_userid eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}">
         	<button>결제하기</button>
         </c:if>
-        
-       
-        
-        
-        <c:if test="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name eq goodsVO.userid}">
-        	<c:if test="avo.au_status">
-    		<input id="bidEnd" type="button" value="경매 종료 하기">
-    		<div id="bidEndMessage"></div>
-    		</c:if>
-		</c:if>
         <h3>상품 설명</h3>
             <p>${goodsVO.goods_info}</p>
     </div>
