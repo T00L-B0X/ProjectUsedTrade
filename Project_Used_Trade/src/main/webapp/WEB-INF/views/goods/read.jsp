@@ -195,7 +195,6 @@ $(function() {
             type: "post",
             url: "read/joinChat",
             beforeSend : function(xhr) {
-				// CSRF 헤더 설정
 				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 			},
             data: JSON.stringify(ChatObject),
