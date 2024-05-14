@@ -20,4 +20,6 @@ public interface AuctionDAO {
 
 	public int updateAuStatusEnd(int goods_id);
 
+	public AuctionRecordVO selectBuyInfo(int goods_id);
+
 }

@@ -25,7 +25,8 @@ public class AuctionSerivceImpl implements AuctionService {
 
 	@Override
 	public AuctionVO getAuctionInfo(int goods_id) {
-		
+		logger.debug("getAuctionInfo(int goods_id)");
+		logger.debug("글번호"+goods_id);
 		return ADao.selectAuctionInfo(goods_id);
 	}
 
@@ -64,6 +65,12 @@ public class AuctionSerivceImpl implements AuctionService {
 	public int updateAuStatusEnd(int goods_id) {
 		
 		return ADao.updateAuStatusEnd(goods_id);		
+	}
+
+	@Override
+	public AuctionRecordVO getBuyInfo(int goods_id) {
+		
+		return ADao.selectBuyInfo(goods_id);
 	}
 
 	

@@ -72,6 +72,11 @@
     .file-label, .file-name {
         display: none;
     }
+    .registerDiv{
+    display:grid;
+	grid-template-columns: reapet(auto-fit, minmax(320px,1fr));
+	grid-gap: 1rem;
+    }
 </style>
 <script type ="text/javascript">
 // 메인 사진 미리보기
@@ -241,7 +246,7 @@ $(document).ready(function(){
 
 </script>
 
-<div class="container">
+<div class="container registerDiv">
 	<h2>판매 글 등록</h2><br>
 	<form role="form" method="post" enctype="multipart/form-data">
 	<div id="registerForm">
@@ -258,7 +263,7 @@ $(document).ready(function(){
 			        <button class="cancel-button">취소</button>
 			    </div>
 			</div>
-
+			<hr>
 			<!-- 추가 사진 업로드 영역 -->
 			<div class="additional-photo-upload">
 			    <h3>추가 사진 업로드 (최대 4장)</h3>

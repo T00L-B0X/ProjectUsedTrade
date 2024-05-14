@@ -9,12 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,12 +59,19 @@ public class GoodsController {
 			// 글정보 저장
 			GoodsVO gvo = gService.getGoodsInfo(goods_id);
 			AuctionVO avo = aService.getAuctionInfo(goods_id);
+			AuctionRecordVO arvo = aService.getBuyInfo(goods_id);
+			logger.debug("arvo : "+arvo);
+			model.addAttribute("arvo", arvo);
+			
 			
 			// 입찰 횟수
-			int bidCount = aService.getBidCount(goods_id);			
-			
+			int bidCount = aService.getBidCount(goods_id);
+			List<String> imgList = gService.getImgList(goods_id);
+			int imgCount = imgList.size();
+			//int imgCount = gService.get
 			model.addAttribute(gvo);
 			model.addAttribute("avo", avo);
+			model.addAttribute("imgCount", imgCount);
 			logger.debug("gvo : " + gvo);
 			
 			model.addAttribute("bidCount", bidCount);
