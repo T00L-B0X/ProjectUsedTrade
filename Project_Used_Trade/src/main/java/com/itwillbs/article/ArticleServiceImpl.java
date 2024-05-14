@@ -68,11 +68,11 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return artDAO.selectArticleList();
 	}
-	
+
 	@Override
 	public List<ArticleVO> getNotiList() throws Exception {
 		logger.debug("getNotiList() 호출");
-		
+
 		return artDAO.selectNotiList();
 	}
 
@@ -94,6 +94,39 @@ public class ArticleServiceImpl implements ArticleService {
 		logger.debug("deleteArticle(ArticleVO avo) 호출");
 
 		return artDAO.deleteArticle(avo);
+	}
+
+	@Override
+	public void addComment(CommentVO cvo) throws Exception {
+		logger.debug("addComment(CommentVO cvo) 호출");
+
+		cvo.setCnumber(artDAO.selectCno());
+		cvo.setEwriter(cvo.getUserid());		
+		
+		artDAO.insertComment(cvo);
+	}
+
+	@Override
+	public void modifyComment(CommentVO cvo) throws Exception {
+		logger.debug("modifyComment(CommentVO cvo) 호출");
+
+		artDAO.updateComment(cvo);
+
+	}
+
+	@Override
+	public void deleteComment(CommentVO cvo) throws Exception {
+		logger.debug("deleteComment(CommentVO cvo) 호출");
+
+		artDAO.deleteComment(cvo);
+
+	}
+
+	@Override
+	public List<CommentVO> getComment(Integer anumber) throws Exception {
+		logger.debug("getComment(Integer anumber) 호출");
+		
+		return artDAO.selectComment(anumber);
 	}
 
 }

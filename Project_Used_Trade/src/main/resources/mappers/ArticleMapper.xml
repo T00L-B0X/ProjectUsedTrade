@@ -72,8 +72,31 @@
 	</select>
 	
 	<update id="deleteArticle">
-		UPDATE ARTICLE SET DELETED='1'
+		UPDATE ARTICLE SET DELETED='1', EWRITER=#{ewriter}, EDTDATE=NOW()
 		WHERE ANUMBER=#{anumber}
 	</update>
+	
+	<select id="selectCno" resultType="int">
+		SELECT IFNULL(MAX(CNUMBER), 0) + 1 AS next_id FROM COMMENT
+	</select>
+	
+	<insert id="insertComment">
+		INSERT INTO COMMENT (CNUMBER, ANUMBER, PNUMBER, COMMLIV, USERID, CONTENT, EWRITER)
+		VALUES (#{cnumber}, #{anumber}, #{pnumber}, #{commliv}, #{userid}, #{content}, #{ewriter})
+	</insert>
+	
+	<update id="updateComment">
+		UPDATE COMMENT SET CONTENT=#{content}, EWRITER=#{ewriter}, EDTDATE=NOW() WHERE CNUMBER=#{cnumber}
+	</update>
+	
+	<update id="deleteComment">
+		UPDATE COMMENT SET DELETED='1', EWRITER=#{ewriter}, EDTDATE=NOW()
+		WHERE CNUMBER=#{cnumber}
+	</update>
+	
+	<select id="selectComment" resultType="CommentVO">
+		SELECT * FROM COMMENT
+		WHERE ANUMBER=#{anumber}
+	</select>
 
 </mapper>

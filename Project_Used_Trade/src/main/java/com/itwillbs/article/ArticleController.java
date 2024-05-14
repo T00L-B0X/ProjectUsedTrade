@@ -87,7 +87,7 @@ public class ArticleController {
 		String path = "article/absence";
 
 		MemberVO mvo = new MemberVO();
-		
+
 		ArticleVO avo = aService.getArticle(anumber);
 		if (principal != null) {
 			String userid = principal.getName();
@@ -100,11 +100,10 @@ public class ArticleController {
 			LikecntVO lvo = new LikecntVO();
 			lvo.setUserid(mvo.getUserid());
 			lvo.setAnumber(avo.getAnumber());
-			logger.debug("lvo : " + lvo);
-			logger.debug("lvo : " + lvo);
 
 			model.addAttribute("like", aService.checkLike(lvo));
 			model.addAttribute("articleVO", avo);
+			model.addAttribute("commentVO", aService.getComment(anumber));
 
 			path = "/article/read";
 		}
@@ -139,7 +138,7 @@ public class ArticleController {
 
 		if (principal != null) {
 			String userid = principal.getName();
-			
+
 			MemberVO mvo = mService.read(userid);
 			model.addAttribute("memberVO", mvo);
 
@@ -284,20 +283,40 @@ public class ArticleController {
 
 		return ano;
 	}
-	
+
 	// http://localhost:8088/article/notilist
-		@GetMapping("/notilist")
-		public void getNotiList(Principal principal, Model model) throws Exception {
-			logger.debug("ArticleController - getArticleList - GET 호출");
+	@GetMapping("/notilist")
+	public void getNotiList(Principal principal, Model model) throws Exception {
+		logger.debug("ArticleController - getArticleList - GET 호출");
 
-			if (principal != null) {
-				String userid = principal.getName();
+		if (principal != null) {
+			String userid = principal.getName();
 
-				MemberVO mvo = mService.read(userid);
-				model.addAttribute("memberVO", mvo);
-			}
-
-			model.addAttribute("NotiList", aService.getNotiList());
+			MemberVO mvo = mService.read(userid);
+			model.addAttribute("memberVO", mvo);
 		}
+
+		model.addAttribute("NotiList", aService.getNotiList());
+	}
+
+	@ResponseBody
+	@PostMapping("comment")
+	public void addComment(@RequestBody CommentVO cvo) throws Exception {
+		logger.debug("ArticleController - addComment - POST 호출");
+
+		logger.debug("cvo: " + cvo);
+
+		aService.addComment(cvo);
+	}
+
+	@ResponseBody
+	@PatchMapping("comment")
+	public void deleteComment(@RequestBody CommentVO cvo) throws Exception {
+		logger.debug("ArticleController - deleteComment - PUT 호출");
+
+		logger.debug("cvo: " + cvo);
+
+		aService.deleteComment(cvo);
+	}
 
 }

@@ -80,10 +80,10 @@ public class ArticleDAOImpl implements ArticleDAO {
 	@Override
 	public List<ArticleVO> selectNotiList() throws Exception {
 		logger.debug("selectNotiList() 호출");
-		
+
 		return sqlSession.selectList(NAMESPACE + ".selectNotiList");
 	}
-	
+
 	@Override
 	public List<ArticleVO> selectNotiList5() throws Exception {
 		logger.debug("selectNotiList5() 호출");
@@ -104,5 +104,43 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 		return sqlSession.delete(NAMESPACE + ".deleteArticle", avo);
 	}
+
+	@Override
+	public int selectCno() throws Exception {
+		logger.debug("selectCno() 호출");
+
+		return sqlSession.selectOne(NAMESPACE + ".selectCno");
+	}
+
+	@Override
+	public void insertComment(CommentVO cvo) throws Exception {
+		logger.debug("insertComment(CommentVO cvo) 호출");
+
+		sqlSession.insert(NAMESPACE + ".insertComment", cvo);
+	}
+
+	@Override
+	public void updateComment(CommentVO cvo) throws Exception {
+		logger.debug("updateComment(CommentVO cvo) 호출");
+
+		sqlSession.update(NAMESPACE + ".updateComment", cvo);
+
+	}
+
+	@Override
+	public void deleteComment(CommentVO cvo) throws Exception {
+		logger.debug("deleteComment(CommentVO cvo) 호출");
+
+		sqlSession.update(NAMESPACE + ".deleteComment", cvo);
+
+	}
+
+	@Override
+	public List<CommentVO> selectComment(Integer anumber) throws Exception {
+		logger.debug("selectComment(Integer anumber) 호출");
+		
+		return sqlSession.selectList(NAMESPACE + ".selectComment", anumber);
+	}
+
 
 }

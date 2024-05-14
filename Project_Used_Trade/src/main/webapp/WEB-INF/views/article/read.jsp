@@ -107,7 +107,12 @@
 	<button onclick="location.href='/article/list';">목록으로</button>
 	<button id="joinBtn">실시간 채팅</button>
 	<div class="comment">
-		댓글 목록
+		<textarea id="commentContent" rows="5" cols="100"></textarea>
+		<button onclick="addComment();">댓글 등록</button><hr>
+		
+		<c:forEach items="${commentVO }" var="comment">
+            <li>${comment.cnumber}</li>
+        </c:forEach>
 	</div>
 </section>
 

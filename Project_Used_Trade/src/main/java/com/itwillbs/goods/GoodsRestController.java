@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,6 +32,16 @@ public class GoodsRestController {
 		List<GoodsVO> goodsList = gService.getGoodsList();
 		
 		return new ResponseEntity<List<GoodsVO>>(goodsList,HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/glist", method = RequestMethod.GET)
+	public List<GoodsVO> gList() throws Exception{
+		logger.debug(" goodsList() 호출 ");
+		
+		List<GoodsVO> goodsList = gService.getGoodsList();
+		
+		return goodsList;
 	}
 	
 	@RequestMapping(value="/list/search", method = RequestMethod.GET)
