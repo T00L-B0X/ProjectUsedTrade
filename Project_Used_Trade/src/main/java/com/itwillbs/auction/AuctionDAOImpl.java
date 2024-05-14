@@ -25,6 +25,8 @@ public class AuctionDAOImpl implements AuctionDAO {
 	}
 	@Override
 	public AuctionVO selectAuctionInfo(int goods_id) {
+		logger.debug(" selectAuctionInfo(int goods_id) ");
+		logger.debug("글번호"+goods_id);
 		return sqlSession.selectOne(NAMESPACE+".selectAuctionInfo", goods_id);
 	}
 	@Override
@@ -58,6 +60,11 @@ public class AuctionDAOImpl implements AuctionDAO {
 	@Override
 	public int updateAuStatusEnd(int goods_id) {
 		return sqlSession.update(NAMESPACE+".updateAuStatusEnd", goods_id);
+	}
+	@Override
+	public AuctionRecordVO selectBuyInfo(int goods_id) {
+		
+		return sqlSession.selectOne(NAMESPACE+".selectBuyInfo",goods_id);
 	}
 	
 	

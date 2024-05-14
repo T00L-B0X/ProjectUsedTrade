@@ -43,7 +43,6 @@ public class AuctionRestController {
 	}
 	@RequestMapping(value = "/bidEnd/{goods_id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> endBid(@PathVariable("goods_id") int goods_id) throws Exception{
-		logger.debug("000");
 		int result = aService.updateAuStatusEnd(goods_id);
 		
 		if(result == 1) {

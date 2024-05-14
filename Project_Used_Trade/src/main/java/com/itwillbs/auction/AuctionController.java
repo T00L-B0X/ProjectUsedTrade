@@ -30,6 +30,7 @@ public class AuctionController {
 	public void bidGet(@RequestParam("goods_id") int goods_id,
 						Model model) throws Exception{
 		logger.debug(" bidGet() 호출 ");
+		logger.debug("글번호"+goods_id);
 		AuctionVO avo = aService.getAuctionInfo(goods_id);
 		model.addAttribute("avo", avo);
 		logger.debug("avo : " + avo);

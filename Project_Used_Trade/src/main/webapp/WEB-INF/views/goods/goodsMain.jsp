@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <style>
 	.searchKeyword{
 		display:flex;
@@ -29,11 +28,53 @@
 	    font-weight: bold; /* 활성화된 카테고리 텍스트 굵게 표시 */
 	    color: blue; /* 활성화된 카테고리 텍스트 색상 변경 */
 	}
-	li{
+	#cateList li{
 		display: inline;
 		padding-right: 20px;
 	}
 	
+	#goodsCard {
+    display: flex;
+    align-items: center; /* 요소들을 세로 중앙 정렬 */
+    max-width: 1200px;
+    max-height: 168px;
+	}
+	
+	#imgLink {
+	    max-width: 168px;
+	    max-height: 168px;
+	}
+	.col-md-9 {
+    flex: 1; /* 남은 공간 모두를 차지하도록 설정 */
+	}
+	.card-body {
+	    padding: 1rem;
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	}
+	
+	.card-title {
+	    margin-bottom: .75rem;
+	}
+	
+	.card-text {
+	    margin-bottom: .75rem;
+	}
+	
+	.goodsEnd {
+	    font-size: .875em;
+	}
+	#goodsBox {
+    display: flex;
+    flex-direction: column;
+	}
+	#searchKeyword {
+    text-align: right; /* 텍스트를 오른쪽으로 정렬 */
+	}
+	#registerBtn {
+    margin-right: 10px; /* 왼쪽으로 이동하고 10px의 간격을 부여합니다. */
+	}
 </style>
 
 <script type="text/javascript">
@@ -41,7 +82,7 @@ $(document).ready(function() {
     function appendCard(item) {
         // 새로운 card 생성
         var cardHtml = `
-        <div class="card mb-3" style="max-width: 1200px; max-height: 168px;">
+        <div id="goodsCard" class="card mb-3" style="max-width: 1200px; max-height: 168px;">
                 <div class="row g-0">
                     <div id="imgLink" class="col-md-3 d-flex justify-content-center align-items-center" style="max-width: 168px; max-height: 168px;">
                         <a><img class="goodsImg" target="_blank" style="max-width: 95%; height: 95%;" alt="..."></a>
@@ -279,28 +320,34 @@ $(document).ready(function() {
 });
 </script>
 	<div class="container">
-	<h2>경매 상품</h2>
-<h3> USER: ${user }</h3>
-		<ul>
-			<li><a href="#" class="cate-all">전체</a></li>
-			<li><a href="#" class="cate-link" data-category="패션">패션</a></li>
-			<li><a href="#" class="cate-link" data-category="뷰티">뷰티</a></li>
-			<li><a href="#" class="cate-link" data-category="전자제품">전자제품</a></li>
-			<li><a href="#" class="cate-link" data-category="리빙/생활">리빙/생활</a></li>
-			<li><a href="#" class="cate-link" data-category="출산/육아">출산/육아</a></li>
-			<li><a href="#" class="cate-link" data-category="반려동물용품">반려동물용품</a></li>
-			<li><a href="#" class="cate-link" data-category="레저/스포츠">레저/스포츠</a></li>
-			<li><a href="#" class="cate-link" data-category="도서/음반">도서/음반</a></li>
-			<li><a href="#" class="cate-link" data-category="문구">문구</a></li>
-			<li><a href="#" class="cate-link" data-category="티켓/쿠폰">티켓/쿠폰</a></li>
-			<li><a href="#" class="cate-link" data-category="공구/산업용품">공구/산업용품</a></li>
-		</ul>
+	<div id="goodsList">
+		<div class="pageTitle">
+		<h2>경매 상품</h2>
+		</div>
+		<div>
+			<ul id="cateList">
+				<li><a href="#" class="cate-all">전체</a></li>
+				<li><a href="#" class="cate-link" data-category="패션">패션</a></li>
+				<li><a href="#" class="cate-link" data-category="뷰티">뷰티</a></li>
+				<li><a href="#" class="cate-link" data-category="전자제품">전자제품</a></li>
+				<li><a href="#" class="cate-link" data-category="리빙/생활">리빙/생활</a></li>
+				<li><a href="#" class="cate-link" data-category="출산/육아">출산/육아</a></li>
+				<li><a href="#" class="cate-link" data-category="반려동물용품">반려동물용품</a></li>
+				<li><a href="#" class="cate-link" data-category="레저/스포츠">레저/스포츠</a></li>
+				<li><a href="#" class="cate-link" data-category="도서/음반">도서/음반</a></li>
+				<li><a href="#" class="cate-link" data-category="문구">문구</a></li>
+				<li><a href="#" class="cate-link" data-category="티켓/쿠폰">티켓/쿠폰</a></li>
+				<li><a href="#" class="cate-link" data-category="공구/산업용품">공구/산업용품</a></li>
+			</ul>
+		</div>
 		<div id="searchKeyword">
 			<input type="text" name="keyword" placeholder="검색"></input>
 			<input type="button" value="검색" id="btnSearch">
-			<button id="registerBtn" style="float: right; margin-right: 100px;">글 등록 하기</button>
+			<sec:authorize access="isAuthenticated()">
+			<button id="registerBtn" style="float: right; margin-left: 10px;">글 등록 하기</button>
+			</sec:authorize>
 		</div>
-			<h3>게시판 목록 조회(GET)</h3>
+	</div>
 	</div>
 	
 	<div class="container" id="goodsBox"></div>

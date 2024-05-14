@@ -41,4 +41,11 @@
 		update AUCTION set au_status = 0
 		where goods_id = #{goods_id}
 	</update>
+	<select id="selectBuyInfo" resultType="AuctionRecordVO">
+		select ar_no, goods_id, bid_time, bid_price,ar_userid
+		from AUCTION_RECORD
+		WHERE goods_id = #{goods_id}
+		ORDER BY bid_price DESC
+		LIMIT 1;
+	</select>
 </mapper>

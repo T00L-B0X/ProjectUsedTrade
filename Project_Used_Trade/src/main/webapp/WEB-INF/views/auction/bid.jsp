@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <style>
-	table tr {
+	#goodsInfoTable tr {
 	width: 50px;
+	}
+	#bidList {
+    display: flex; /* 요소들을 수직으로 정렬합니다. */
+    flex-direction: column; /* 요소들을 세로로 배치합니다. */
 	}
 </style>
 <script type="text/javascript">
@@ -32,6 +36,7 @@ $(document).ready(function() {
     
   	//즉시구매가보다 작거나 같아야하고 현재가보다 1000이상, 100원단위이어야함.
 	$('#bid_submit').click(function(e){
+		
 		if(instantPriceValue == currentBidValue){
 			alert("이미 낙찰된 경매입니다.");
 			location.reload(true);
@@ -88,10 +93,6 @@ $(document).ready(function() {
                 url: "/goods/${gvo.goods_id}",
                 method: "GET",
                 success: function(data) {
-                	alert(data);
-                    alert("글번호"+data.goods_id);
-                    alert("data.current_price"+data.current_price);
-                    alert("입력한 금액"+inputedBidPrice);
                     if (data.current_price == data.instant_price) {
                         alert('이미 낙찰된 경매입니다.');
                         e.preventDefault();
@@ -102,7 +103,6 @@ $(document).ready(function() {
                     } else {
                         console.log("현재db입찰가:" + parseInt(data.current_price));
                         console.log("입력값:" + inputedBidPrice);
-                        alert('값 확인');
                     }
                 },
                 error: function(xhr, status, error) {
@@ -180,19 +180,20 @@ $(document).ready(function() {
 
 
 <div class="container">
+	<div id=bidList>
 	<h1>경매입찰</h1><hr>
 	<%-- ${avo }<hr>
 	${gvo } --%>
 	<div>
 		<h3>상품정보</h3><hr>
-		<table border="1">
+		<table id="goodsInfoTable" class="table" style="border:1px solid ;">
 			<tr>
 				<td>제목</td>
 				<td>${avo.au_title }</td>
 			</tr>
 			<tr>
 				<td>판매자</td>
-				<td>${avo.userid }</td>
+				<td id="seller">${avo.userid }</td>
 			</tr>
 			<tr>
 				<td>경매 마감 일자</td>
@@ -212,7 +213,7 @@ $(document).ready(function() {
 	</div><hr>
 	<h3>입찰하기</h3><hr>
 	<div>
-	<table border="1">
+	<table class="table" style="border:1px solid ;" >
 			<tr>
 				<td>즉시 구매가</td>
 				<td><span id="instantPrice">${avo.instant_price }</span></td>
@@ -228,14 +229,25 @@ $(document).ready(function() {
 		</table>
 		<br>
 		<div id="auction_status_message"></div>
+		<!-- 로그인하지 않은 사용자는 입찰할 수 없음 -->
+		<sec:authorize access="isAuthenticated()">
+		<!-- 작성자는 입찰 할 수 없음 -->
+		<c:if test="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name ne goodsVO.userid}">
 		<form id="bidForm"role="form" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			입찰가 <input id="inputBidPrice" type="text" name="current_price" required/><br><br>
 			<button id="bid_submit" type="submit" onclick="location.href='/auction/bid?goods_id=${avo.goods_id}'">입찰하기</button>
 		</form>
+		</c:if>
+		</sec:authorize>
 		<br>
 			<p>* 현재입찰가보다 1000이상의 금액을 입력해주세요. </p>
 			<p>* 입찰자가 없을 때는 시작입찰가 이상의 금액으로 입찰할 수 있습니다.</p>
+			<p>* 즉시구매가로 입찰시 경매가 종료됩니다.</p>
+			
+			
+			<button onclick="location.href='/goods/read?goods_id=${avo.goods_id}'">돌아가기</button>
+	</div>
 	</div>
 </div>
 

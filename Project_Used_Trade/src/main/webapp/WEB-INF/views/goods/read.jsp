@@ -1,19 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 <style>
 #remainTime{
 color: red;
 }
+.details{
+display:grid;
+grid-template-columns: reapet(auto-fit, minmax(320px,1fr));
+grid-gap: 1rem;
+}
+.product-image{
+display:grid;
+grid-template-columns: reapet(auto-fit, minmax(320px,1fr));
+grid-gap: 1rem;
+}
+
 </style>
 <script type="text/javascript">
+
 $(document).ready(function() {
-        // 디비에서 최신글부터 조회
+        // 디비에서 최신글부터 조회@
         var csrfHeaderName = "${_csrf.headerName}";
-    	  var csrfTokenValue = "${_csrf.token}";
+        var csrfTokenValue = "${_csrf.token}";
         var goods_id = ${goodsVO.goods_id};
         var au_status = ${avo.au_status};
         $.ajax({
@@ -92,8 +104,11 @@ $(document).ready(function() {
             	        $('#bidButton').hide();            	        
             	    } else {
             	        // 출력 포맷에 맞게 문자열 조합
-            	        $('#bidEnd').hide();
             	        var remainingTime = remaindays + "일 " + remainhours + "시간 " + remainminutes + "분 " + remainseconds+ "초";
+            	    }
+            	    
+            	    if(timeDiff > 0) {
+            	    	$('#bidEnd').hide();
             	    }
             	    
             	    // 남은 시간 업데이트
@@ -127,7 +142,7 @@ $(document).ready(function() {
          		contentType : 'application/json; charset=UTF-8',
         		method: "PUT",
 				success : function(){
-					alert("경매가 종료되었습니다. 거래를 진행해주세요.");
+					alert("경매가 종료되었습니다.");
 					location.reload(true);
 				},
 				error : function(){
@@ -141,9 +156,21 @@ $(document).ready(function() {
             $('#bidEnd').hide();
             $('#bidEndMessage').text("경매가 종료되었습니다.");       
         }
-        	
         
+        var bxslider = document.querySelector('.bxslider');
+
+	     // 첫 번째 carousel-item은 이미 추가되어 있으므로 1부터 반복
+	     for (var i = 0; i <= ${imgCount}-1; i++) {
+	    	 var bxItem = '<div><img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo='+i+'"></div>';
+	    	 bxslider.innerHTML += bxItem;
+	     }
+	     $('.bxslider').bxSlider({
+	   	  adaptiveHeight: true,
+	   	  slideWidth: 600
+	   	 });
+
 });
+
 
 $(function() {
     var joinBtn = $("#joinBtn");
@@ -168,7 +195,6 @@ $(function() {
             type: "post",
             url: "read/joinChat",
             beforeSend : function(xhr) {
-				// CSRF 헤더 설정
 				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 			},
             data: JSON.stringify(ChatObject),
@@ -202,17 +228,15 @@ $(function() {
     });
 });
 </script>
-
+${arvo }
+${avo }
 <div class="container">
-    <hr><h3>제목 : ${goodsVO.goods_title}</h3><span id="regdate"></span><hr>
     <div class="product-info">
-        <div class="product-image">
-        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=0" alt="">
-        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=1" alt="">
-        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=2" alt="">
-        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=3" alt="">
-        	<img src="/displayImages?goods_id=${goodsVO.goods_id}&amp;imageNo=4" alt="">
-        </div>
+	    <div id="titleDate">
+	    <hr><h3>제목 : ${goodsVO.goods_title}</h3><span id="regdate"></span><hr>
+	    </div>
+	    <div class="bxslider">
+		</div>
         <div class="details">
             <hr>
             <h3>제품 상태 : ${goodsVO.status}</h3>
@@ -221,22 +245,36 @@ $(function() {
             <h3>시작가 : ${goodsVO.start_price}</h3>
             <h3>현재 입찰가 : ${goodsVO.current_price}</h3>
             <h3>입찰수 : ${bidCount }</h3>
-            <input type="button" value="경매 기록 보기" onclick="window.open('/goods/record?goods_id=${goodsVO.goods_id}','win2','scrollbars=yes width=650, height=700');return false"/>
             <h3>남은 경매 시간 : <span id="remainTime"></span></h3>
             <h3>종료시간 : <span id="endTime"></span></h3>
             <h3>즉시구매가 : ${goodsVO.instant_price }</h3>
-            <button id="likeGoods">관심 상품 등록 </button><br><br><br><button id="joinBtn">1:1 채팅</button><br><br>
+        </div>
+        <!-- 판매자와 로그인을 하지 않은 사람은 입찰할 수 없음 -->
+            <c:if test="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.isAuthenticated() and sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name != goodsVO.userid}">
             <input id="bidButton" type="button" value="입찰하기" onclick="location.href='/auction/bid?goods_id=${goodsVO.goods_id}'">
+            </c:if>
             <!-- 경매 종료 버튼은 판매자에게만 보임 -->
-            <c:if test="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name eq goodsVO.userid}">
+        <input type="button" value="경매 기록 보기" onclick="window.open('/goods/record?goods_id=${goodsVO.goods_id}','win2','scrollbars=yes width=650, height=700');return false"/><hr>
+        <sec:authorize access="isAuthenticated()">
+        <button id="likeGoods">관심 상품 등록 </button><br><br><br>        
+        <button id="joinBtn">1:1 채팅</button><br><br>
+        </sec:authorize>
+        
+        <c:if test="${avo.au_status == 0 && arvo.ar_userid eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}">
+        	<button>결제하기</button>
+        </c:if>
+        
+       
+        
+        
+        <c:if test="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name eq goodsVO.userid}">
+        	<c:if test="avo.au_status">
     		<input id="bidEnd" type="button" value="경매 종료 하기">
     		<div id="bidEndMessage"></div>
-			</c:if>
-			
-            <hr>
-            <h3>내용</h3>
+    		</c:if>
+		</c:if>
+        <h3>상품 설명</h3>
             <p>${goodsVO.goods_info}</p>
-        </div>
     </div>
 </div>
 

@@ -9,12 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,11 +50,10 @@ public class GoodsController {
 	private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 
 	// http://localhost:8088/goods/goodsMain
-	@RequestMapping(value = "/goods/goodsMain", method = RequestMethod.GET)
-	public void GoodsListGET() throws Exception {
-		logger.debug(" GoodsListGET() 호출 ");
-	}
-
+		@RequestMapping(value = "/goods/goodsMain", method = RequestMethod.GET)
+		public void GoodsListGET() throws Exception {
+			logger.debug(" GoodsListGET() 호출 ");
+		}
 	@RequestMapping(value = "/goods/read", method = RequestMethod.GET)
 	public void GoodsInfoGET(@RequestParam("goods_id") int goods_id, Model model) throws Exception {
 		logger.debug(" GoodsInfoGET() 호출 ");

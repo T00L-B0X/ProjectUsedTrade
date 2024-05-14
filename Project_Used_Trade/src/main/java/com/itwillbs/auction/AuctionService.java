@@ -21,4 +21,6 @@ public interface AuctionService {
 	public void updateAuctionStatus(int goods_id);
 
 	public int updateAuStatusEnd(int goods_id);
+
+	public AuctionRecordVO getBuyInfo(int goods_id);
 }
