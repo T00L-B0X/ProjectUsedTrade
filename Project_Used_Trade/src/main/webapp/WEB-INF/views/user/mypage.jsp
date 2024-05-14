@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@include file="../include/header.jsp"%>
 
@@ -12,9 +13,11 @@
 <style>
 /* 프로필 섹션 스타일 */
 .profile {
+	width : 1000px;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    margin : 10px auto;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 20px;
@@ -63,31 +66,47 @@
 .modify-link:hover {
     background-color: #0056b3; /* 호버 효과 색상 변경 */
 }
+
+.back-button {
+            background-color: #6c757d;
+            color: #fff;
+            width: 130px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+
 </style>
 </head>
 <body>
 
-<h1>My Page</h1>
 
-<!-- 유저 정보 출력 -->
+
+
 <div class="profile">
     <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAL0AyAMBIgACEQEDEQH/xAAaAAEAAwEBAQAAAAAAAAAAAAAAAgMFBAEH/8QALxABAAIBAgIIBAcBAAAAAAAAAAECAwQREjEUM0FSYXFyoSEyUbETIkKBkaLxY//EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD6cAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACdcWS/y0mf2BAXdFzdz3hC2LJT5qTH7AgAAAAAAAAAAAAAAAAAAAAsxYrZbbVjzn6I46TkvFa85amLHXHSK1/0FeLTY8fZxW+srgAABTl02PJ2cNvrDhy4rYrbWjyn6tRHLjrkpNbf4DJEslJx3mtucIgAAAAAAAAAAAAAAAA7dBj2rOSec/CHWr00bYKR4brAAAAAAAcmvx71jJHOPhLiampjfBePDdlgAAAAAAAAAAAAAAAA1cE74aemE3Pob8WLh7ay6AAAAAAAQzzthv6ZZTQ11+HFw9tpZ4AAAAAAAAAAAAAAAALdPl/CyRbs5S04mJiJid4ljujTaicX5bfGn2BoDyl63jesxMPQAACZiImZnaIeXvWkb2mIhwajUTl/LX4U+4IajL+Lkm3ZyhUAAAAAAAAAAAAAAAAAAc1lcOW3Klv4BGl7UneszE+C+usyR80RZDoubue8HRc3c94Bd07/n/ZC2syT8sRVDoubue8HRc3c94BXe9rzvaZmfFFd0XN3PeEbYctedLfwCsOQAAAAAAAAAAAAAC7T4LZp35VjnIK6Utknakby7MWjrHxyTv4Q6KUrjrw1jaEgRpStI2rWI8kgAAAAAABG9K3ja1Ynzc+XR1n44528JdQDJvS2OdrxtKLWvSuSvDaN4Z+owWwzvzrPKQUgAAAAAAAA9iN52jnILNPhnLfb9Mc5aVaxWIisbRCGDHGLHFe3tWAAAAAAAAAAAAAPLVi0TFo3iXoDM1GGcN9v0zylU1M+OMuOa9vYzJjadp5wDwAAAAAB0aKnFl4p5V+7naGhrth370g6AAAAAAAAAAAAAAAAGfracOXijlb7tBz66u+HfuyDPAAAAAAamnjbBTyZbVw9Tj9MAmAAAAAAAAAAAAAAAAr1Eb4L+SxDN1N/TIMoAAAAABq4epx+mGU1cPU4/TAJgAAAAAAAAAAAAAAAIZupv6ZTQzdTf0yDKAAAB/9k=" alt="Profile Image">
     <div class="user-info">
+    <h1>My Page</h1>
         <c:forEach var="grade" items="${user.gradeList}">
             <div id="info-item">
-                등급: ${grade.ugrade}<br>
-                페이<br>
-                상품 등록 수<br>
-                판매 수량<br>
-                구매 수량<br>
-                소개글: ${user.uintro}<br>
+                등급 : ${grade.ugrade} <br>
+                페이 : ${pResultVO.PAY_BALANCE}원 <br>
+                상품 등록 수 : <c:out value="${total}개" /> <br>
+                판매 수량 : <c:out value="${sell}개" /> <br>
+                소개글 : ${user.uintro}
             </div>
         </c:forEach>
+        <a href="/user/modify" class="modify-link">내 정보 수정</a>
+        <button class="back-button" type="button" onclick="history.back()">뒤로가기</button>
     </div>
+    
 </div>
 
-<!-- 내 정보 수정 링크 -->
-<a href="/user/modify" class="modify-link">내 정보 수정</a>
 
 <%@ include file="../include/footer.jsp"%>
 </body>

@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,13 +28,21 @@ public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	private MemberService mService;
+	@Inject
+	private MemberService bService;
 		
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String main(MemberVO vo, HttpSession session, Principal principal) throws Exception {
+	public String main(HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
 		String path = "/main";
+		
+		if(principal != null) {
+		String userid = principal.getName();
 
+		MemberVO vo = bService.read(userid);
+		session.setAttribute("user", vo);
+		}
+		
 		return path;
 	}
 
