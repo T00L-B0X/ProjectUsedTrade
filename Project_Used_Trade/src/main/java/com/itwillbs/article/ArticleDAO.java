@@ -21,11 +21,21 @@ public interface ArticleDAO {
 	public List<ArticleVO> selectArticleList() throws Exception;
 
 	public List<ArticleVO> selectNotiList() throws Exception;
-	
+
 	public List<ArticleVO> selectNotiList5() throws Exception;
 
 	public ArticleVO selectAds() throws Exception;
 
 	public int deleteArticle(ArticleVO avo) throws Exception;
+
+	public int selectCno() throws Exception;
+
+	public void insertComment(CommentVO cvo) throws Exception;
+	
+	public void updateComment(CommentVO cvo) throws Exception;
+	
+	public void deleteComment(CommentVO cvo) throws Exception;
+	
+	public List<CommentVO> selectComment(Integer anumber) throws Exception;
 
 }

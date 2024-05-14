@@ -7,6 +7,8 @@ public interface AuctionDAO {
 	public void insertAuctionInfo(AuctionVO avo);
 
 	public AuctionVO selectAuctionInfo(int goods_id);
+	
+	public List<AuctionVO> sellInfo(String userid);
 
 	public int insertRecord(AuctionRecordVO arvo);
 

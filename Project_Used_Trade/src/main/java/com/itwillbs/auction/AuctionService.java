@@ -7,6 +7,8 @@ public interface AuctionService {
 	public void insertAuctionInfo(AuctionVO avo);
 
 	public AuctionVO getAuctionInfo(int goods_id);
+	
+	public List<AuctionVO> sellInfo(String userid);
 
 	public int insertRecord(AuctionRecordVO arvo);
 

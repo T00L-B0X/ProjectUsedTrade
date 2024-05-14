@@ -26,4 +26,6 @@ public interface GoodsDAO {
 	public int updateCurrentPrice(GoodsVO gvo);
 
 	public int selectNowPrice(int goods_id);
+
+	public List<FakeVO> fakeVO();
 }

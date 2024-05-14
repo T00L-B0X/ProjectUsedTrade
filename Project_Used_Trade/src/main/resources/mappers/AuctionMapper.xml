@@ -13,6 +13,10 @@
 		select * from AUCTION
 		where goods_id = #{goods_id}
 	</select>
+	<select id="sellinfo" resultType="AuctionVO">
+		select * from AUCTION
+		where userid = #{userid}
+	</select>
 	<insert id="insertRecord" parameterType="AuctionRecordVO">
 		insert into AUCTION_RECORD(goods_id,bid_price,ar_userid)
 		values(#{goods_id}, #{bid_price}, #{ar_userid})

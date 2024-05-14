@@ -27,5 +27,6 @@ public interface GoodsService {
 
 	public int getNowPrice(int goods_id);
 
+	public List<FakeVO> fakeVO();
 
 }

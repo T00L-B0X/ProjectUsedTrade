@@ -43,7 +43,7 @@
             font-size: 16px;
         }
         input[type="submit"] {
-            width: 100%;
+            width: 40%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -54,6 +54,20 @@
         }
         input[type="submit"]:hover {
             background-color: #0056b3;
+        }
+        
+        .back-button {
+            background-color: #6c757d;
+            color: #fff;
+            width: 40%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
@@ -66,6 +80,7 @@
                 이메일 : <input type="text" name="uemail"> <br>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <input type="submit" value="비밀번호 찾기">
+                <button class="back-button" type="button" onclick="history.back()">뒤로가기</button>
             </form>
         </fieldset>
     </div>

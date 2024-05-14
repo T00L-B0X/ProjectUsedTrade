@@ -48,7 +48,7 @@
         }
 
         input[type="submit"] {
-            width: 100%;
+            width: 40%;
             padding: 12px;
             border: none;
             border-radius: 4px;
@@ -74,6 +74,21 @@
                 padding: 10px;
             }
         }
+        .back-button {
+            background-color: #6c757d;
+            color: #fff;
+            width: 40%;
+            padding: 10px;
+            height: 53px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        
     </style>
 </head>
 <body>
@@ -110,10 +125,11 @@
         <span class="error-message emailchk" style="color: red; display: none;">이메일 형식에 맞게 입력해 주세요.</span> <br>
 
         <label for="uintro">소개글</label>
-        <textarea id="uintro" name="uintro" rows="5" cols="20"></textarea>
+        <textarea id="uintro" name="uintro" rows="5" cols="20">${user.uintro}</textarea>
 
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <input type="submit" value="수정하기">
+        <button class="back-button" type="button" onclick="history.back()">뒤로가기</button>
     </form>
 </div>
 	

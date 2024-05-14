@@ -26,4 +26,12 @@ public interface ArticleService {
 
 	public int deleteArticle(ArticleVO avo) throws Exception;
 
+	public void addComment(CommentVO cvo) throws Exception;
+	
+	public void modifyComment(CommentVO cvo) throws Exception;
+	
+	public void deleteComment(CommentVO cvo) throws Exception;
+
+	public List<CommentVO> getComment(Integer anumber) throws Exception;
+	
 }

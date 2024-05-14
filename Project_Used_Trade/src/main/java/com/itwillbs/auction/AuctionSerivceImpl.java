@@ -29,6 +29,12 @@ public class AuctionSerivceImpl implements AuctionService {
 		logger.debug("글번호"+goods_id);
 		return ADao.selectAuctionInfo(goods_id);
 	}
+	
+	@Override
+	public List<AuctionVO> sellInfo(String userid) {
+		
+		return ADao.sellInfo(userid);
+	}
 
 	@Override
 	public int insertRecord(AuctionRecordVO arvo) {
@@ -66,6 +72,7 @@ public class AuctionSerivceImpl implements AuctionService {
 		
 		return ADao.updateAuStatusEnd(goods_id);		
 	}
+	
 
 	@Override
 	public AuctionRecordVO getBuyInfo(int goods_id) {

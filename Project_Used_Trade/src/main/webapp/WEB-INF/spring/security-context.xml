@@ -47,10 +47,10 @@
 		
 		<!-- 로그인 -->
 		<security:form-login 
-		login-page="/user/login"
 		authentication-success-handler-ref="customLoginSuccess"
 		authentication-failure-handler-ref = "userLoginFailHandler"/>
 		
+<!-- 		login-page="/user/login" -->
 <!-- 		username-parameter="id" -->
 <!-- 		password-parameter="pw" -->
 <!-- 		default-target-url="/user/home" -->
