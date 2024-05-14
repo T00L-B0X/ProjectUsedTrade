@@ -125,3 +125,32 @@ function addComment() {
 	};
 
 }
+
+function editComment(cnumber, content) {
+	const csrfToken = document.getElementById('csrfToken').value;
+	const userid = document.getElementById('userid').value;
+    var newContent = prompt("댓글을 수정하세요:", content);
+    if (newContent !== null) {
+        var xhr = new XMLHttpRequest();
+        var url = "comment";
+        xhr.open("PUT", '/article/comment', true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        
+        var data = JSON.stringify({
+        	cnumber : cnumber,
+        	content : newContent,
+        	ewriter : userid,
+        });
+        xhr.send(data);
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                // 수정 성공 시 화면 갱신
+                document.getElementById("commentContent_" + cnumber).textContent = newContent;
+                alert("댓글이 수정되었습니다.");
+            } else {
+                alert("댓글 수정에 실패했습니다.");
+            }
+        };
+    }
+}

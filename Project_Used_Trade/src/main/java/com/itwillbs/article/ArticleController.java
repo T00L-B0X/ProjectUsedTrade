@@ -310,6 +310,16 @@ public class ArticleController {
 	}
 
 	@ResponseBody
+	@PutMapping("comment")
+	public void modifyComment(@RequestBody CommentVO cvo) throws Exception {
+		logger.debug("ArticleController - modifyComment - PUT 호출");
+		
+		logger.debug("cvo: " + cvo);
+		
+		aService.modifyComment(cvo);
+	}
+	
+	@ResponseBody
 	@PatchMapping("comment")
 	public void deleteComment(@RequestBody CommentVO cvo) throws Exception {
 		logger.debug("ArticleController - deleteComment - PUT 호출");
