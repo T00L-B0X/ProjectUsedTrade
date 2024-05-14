@@ -86,8 +86,9 @@ public class ArticleController {
 
 		String path = "article/absence";
 
+		MemberVO mvo = new MemberVO();
+		
 		ArticleVO avo = aService.getArticle(anumber);
-		MemberVO mvo = null;
 		if (principal != null) {
 			String userid = principal.getName();
 

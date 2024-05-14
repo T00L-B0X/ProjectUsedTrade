@@ -7,6 +7,7 @@ public class Criteria {
 	private int employee_id;
 	private String search;
 	private String keyword;
+	private String categry;
 
 	public Criteria() {
 		this(1, 12);
@@ -72,11 +73,19 @@ public class Criteria {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+	
+	public String getCategry() {
+		return categry;
+	}
+	
+	public void setCategry(String categry) {
+		this.categry = categry;
+	}
 
 	@Override
 	public String toString() {
 		return "Criteria [page=" + page + ", pageSize=" + pageSize + ", employee_id=" + employee_id + ", search="
-				+ search + ", keyword=" + keyword + "]";
+				+ search + ", keyword=" + keyword + ", categry=" + categry + "]";
 	}
 
 }

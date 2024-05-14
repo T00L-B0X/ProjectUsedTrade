@@ -45,13 +45,17 @@ public class ChattingController {
 	//		MemberVO memberVO = userService.read(userid);
 	//		model.addAttribute("user", memberVO);
 		
-		String userid = principal.getName();
-		model.addAttribute("chatList", list);
+		String path = "/user/login";
+		
+		if (principal != null) {
+			model.addAttribute("chatList", list);
+			
+			logger.debug(" chatting.jsp 이동 ");
+			
+			path = "/chatting/chatting";
+		}
 
-		logger.debug("chatList : " + list);
-		logger.debug("userid : " + userid);
-		logger.debug(" chatting.jsp 이동 ");
-		return "/chatting/chatting";
+		return path;
 	}
 
 	// 채팅방 생성

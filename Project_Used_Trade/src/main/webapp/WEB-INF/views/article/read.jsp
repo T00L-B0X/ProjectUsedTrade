@@ -70,7 +70,12 @@
 			<input type="hidden" id="userid" value="${memberVO.userid }">
 			<input type="hidden" id="anumber" value="${articleVO.anumber }">
 		
-			<span class="artitle">${articleVO.artitle }</span>
+			<span class="artitle">
+				${articleVO.artitle }
+				<c:if test="${articleVO.regdate ne articleVO.edtdate }">
+					수정됨
+				</c:if>
+			</span>
 			<span class="locatns">지역: ${articleVO.locatns }</span>
 			<span class="cnt">조회수: ${articleVO.viewcnt } 좋아요: ${articleVO.likecnt }</span>
 			<c:if test="${not empty memberVO and (memberVO.userid eq articleVO.userid or fn:contains(memberVO.authList[0].auth, 'ROLE_ADMIN'))}">
