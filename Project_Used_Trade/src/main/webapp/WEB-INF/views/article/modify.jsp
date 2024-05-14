@@ -8,7 +8,6 @@
 <%@ include file="../include/header.jsp"%>
 
 <section>
-	${memberVO }
 	<input type="hidden" id="csrfToken" value="${_csrf.token }">
 	<input type="hidden" id="anumber" value="${articleVO.anumber }">
 	<input type="hidden" id="userid" value="${memberVO.userid }">

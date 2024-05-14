@@ -132,7 +132,6 @@ function editComment(cnumber, content) {
     var newContent = prompt("댓글을 수정하세요:", content);
     if (newContent !== null) {
         var xhr = new XMLHttpRequest();
-        var url = "comment";
         xhr.open("PUT", '/article/comment', true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
@@ -150,6 +149,33 @@ function editComment(cnumber, content) {
                 alert("댓글이 수정되었습니다.");
             } else {
                 alert("댓글 수정에 실패했습니다.");
+            }
+        };
+    }
+}
+
+function deleteComment(cnumber) {
+    const csrfToken = document.getElementById('csrfToken').value;
+    const userid = document.getElementById('userid').value;
+    if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("PATCH", "/article/comment");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        
+        var data = JSON.stringify({
+            cnumber: cnumber,
+            ewriter: userid
+        });
+        
+        xhr.send(data);
+        
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                alert("댓글이 삭제되었습니다.");
+                location.reload(true);
+            } else {
+                alert("댓글 삭제에 실패했습니다.");
             }
         };
     }

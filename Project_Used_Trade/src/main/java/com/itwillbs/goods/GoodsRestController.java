@@ -24,50 +24,37 @@ public class GoodsRestController {
 	private static final Logger logger = LoggerFactory.getLogger(GoodsRestController.class);
 	@Inject
 	private GoodsService gService;
-	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public ResponseEntity<List<GoodsVO>> goodsList() throws Exception{
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ResponseEntity<List<GoodsVO>> goodsList() throws Exception {
 		logger.debug(" goodsList() 호출 ");
-		
+
 		List<GoodsVO> goodsList = gService.getGoodsList();
-		
-		return new ResponseEntity<List<GoodsVO>>(goodsList,HttpStatus.OK);
+
+		return new ResponseEntity<List<GoodsVO>>(goodsList, HttpStatus.OK);
 	}
-	
-	@ResponseBody
-	@RequestMapping(value="/glist", method = RequestMethod.GET)
-	public List<GoodsVO> gList() throws Exception{
-		logger.debug(" goodsList() 호출 ");
-		
-		List<GoodsVO> goodsList = gService.getGoodsList();
-		
-		return goodsList;
-	}
-	
-	@RequestMapping(value="/list/search", method = RequestMethod.GET)
-	public ResponseEntity<List<GoodsVO>> goodsSearchList(
-			@RequestParam("keyword") String keyword,
-			@RequestParam("category") String category) throws Exception{
+
+	@RequestMapping(value = "/list/search", method = RequestMethod.GET)
+	public ResponseEntity<List<GoodsVO>> goodsSearchList(@RequestParam("keyword") String keyword,
+			@RequestParam("category") String category) throws Exception {
 		logger.debug(" goodsSearchList() 호출 ");
 		GoodsVO gvo = new GoodsVO();
 		gvo.setKeyword(keyword);
 		gvo.setCategory(category);
-		
-		
+
 		List<GoodsVO> goodsSearchList = gService.getSearchList(gvo);
-		
-		return new ResponseEntity<List<GoodsVO>>(goodsSearchList,HttpStatus.OK);
+
+		return new ResponseEntity<List<GoodsVO>>(goodsSearchList, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/read/{goods_id}", method = RequestMethod.GET)
-	public ResponseEntity<GoodsVO> goodsInfo(
-			@PathVariable("goods_id") int goods_id) throws Exception{
-		logger.debug(" goosInfo() 호출 ");		
+
+	@RequestMapping(value = "/read/{goods_id}", method = RequestMethod.GET)
+	public ResponseEntity<GoodsVO> goodsInfo(@PathVariable("goods_id") int goods_id) throws Exception {
+		logger.debug(" goosInfo() 호출 ");
 		GoodsVO goodsInfo = gService.getGoodsInfo(goods_id);
 		logger.debug("goodsInfo : " + goodsInfo);
-		
-		
-		return new ResponseEntity<GoodsVO>(goodsInfo,HttpStatus.OK);
-		
+
+		return new ResponseEntity<GoodsVO>(goodsInfo, HttpStatus.OK);
+
 	}
+
 }

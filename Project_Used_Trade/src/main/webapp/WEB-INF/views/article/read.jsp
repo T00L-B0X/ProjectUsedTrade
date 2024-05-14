@@ -109,8 +109,18 @@
 	<c:forEach items="${commentVO}" var="comment">
 	    <li id="comment_${comment.cnumber}">
 	        <span>${comment.cnumber}</span>
-	        <span id="commentContent_${comment.cnumber}">${comment.content}</span>
-	        <button id="editButton_${comment.cnumber}" onclick="editComment(${comment.cnumber}, '${comment.content}')">수정하기</button>
+	        <span id="commentContent_${comment.cnumber}">
+	            <c:choose>
+	                <c:when test="${comment.deleted == 1}">삭제된 댓글입니다.</c:when>
+	                <c:otherwise>${comment.content}, ${comment.userid }</c:otherwise>
+	            </c:choose>
+	        </span>
+	        <c:if test="${memberVO.userid eq comment.userid}">
+	            <button id="editButton_${comment.cnumber}" onclick="editComment(${comment.cnumber}, '${comment.content}');">수정하기</button>
+	            <c:if test="${comment.deleted eq '0' }">
+		            <button id="deleteButton_${comment.cnumber}" onclick="deleteComment(${comment.cnumber});">삭제하기</button>
+	            </c:if>
+	        </c:if>
 	    </li>
 	</c:forEach>
 	</div>

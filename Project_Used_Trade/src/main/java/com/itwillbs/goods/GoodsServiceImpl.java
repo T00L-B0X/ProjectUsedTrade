@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GoodsServiceImpl implements GoodsService{
+public class GoodsServiceImpl implements GoodsService {
 
 	private static final Logger logger = LoggerFactory.getLogger(GoodsServiceImpl.class);
 
@@ -44,15 +44,15 @@ public class GoodsServiceImpl implements GoodsService{
 	@Override
 	public int getNewGoodsId() {
 		logger.debug("getNewGoodsId()");
-		return GDao.selectNewGoodsId();		
+		return GDao.selectNewGoodsId();
 	}
 
 	@Override
 	public int insertImageInfo(GoodsImgVO ivo) {
 		logger.debug("insertImageInfo(GoodsImgVO ivo)");
-		logger.debug("ivo : "+ivo.getGoods_id() + ivo.getGoods_img());
+		logger.debug("ivo : " + ivo.getGoods_id() + ivo.getGoods_img());
 		return GDao.insertImageInfo(ivo);
-		
+
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class GoodsServiceImpl implements GoodsService{
 
 	@Override
 	public int modifyCurrentPrice(GoodsVO gvo) {
-		
+
 		return GDao.updateCurrentPrice(gvo);
 	}
 
@@ -86,5 +86,10 @@ public class GoodsServiceImpl implements GoodsService{
 		return GDao.selectNowPrice(goods_id);
 	}
 
-	
+	@Override
+	public List<FakeVO> fakeVO() {
+
+		return GDao.fakeVO();
+	}
+
 }

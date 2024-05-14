@@ -68,4 +68,9 @@
 		from GOODS
 		where goods_id = #{goods_id}
 	</select>
+	
+	<select id="FakeVO" resultType="FakeVO">
+		SELECT GOODS_TITLE, CURRENT_PRICE
+		FROM GOODS
+	</select>
 </mapper>

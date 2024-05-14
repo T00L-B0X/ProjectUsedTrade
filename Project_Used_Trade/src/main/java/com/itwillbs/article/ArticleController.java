@@ -127,8 +127,7 @@ public class ArticleController {
 
 		aService.dislike(lvo);
 	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN') or #principal.getName() == #avo.getUserid()")
+	
 	@GetMapping("/modify/{anumber}")
 	public String modifyArticle(@PathVariable("anumber") int anumber, Principal principal, Model model)
 			throws Exception {
