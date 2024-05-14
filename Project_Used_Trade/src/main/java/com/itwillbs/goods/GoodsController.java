@@ -50,24 +50,33 @@ public class GoodsController {
 	private static final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 
 	// http://localhost:8088/goods/goodsMain
-		@RequestMapping(value = "/goods/goodsMain", method = RequestMethod.GET)
-		public void GoodsListGET() throws Exception {
-			logger.debug(" GoodsListGET() 호출 ");
-		}
+	@RequestMapping(value = "/goods/goodsMain", method = RequestMethod.GET)
+	public void GoodsListGET() throws Exception {
+		logger.debug(" GoodsListGET() 호출 ");
+	}
+	
 	@RequestMapping(value = "/goods/read", method = RequestMethod.GET)
 	public void GoodsInfoGET(@RequestParam("goods_id") int goods_id, Model model) throws Exception {
 		logger.debug(" GoodsInfoGET() 호출 ");
 		// 글정보 저장
 		GoodsVO gvo = gService.getGoodsInfo(goods_id);
 		AuctionVO avo = aService.getAuctionInfo(goods_id);
-
+		
+		AuctionRecordVO arvo = aService.getBuyInfo(goods_id);
+		logger.debug("arvo : "+arvo);
+		model.addAttribute("arvo", arvo);
+		
+		
 		// 입찰 횟수
 		int bidCount = aService.getBidCount(goods_id);
-
+		List<String> imgList = gService.getImgList(goods_id);
+		int imgCount = imgList.size();
+		//int imgCount = gService.get
 		model.addAttribute(gvo);
 		model.addAttribute("avo", avo);
+		model.addAttribute("imgCount", imgCount);
 		logger.debug("gvo : " + gvo);
-
+		
 		model.addAttribute("bidCount", bidCount);
 	}
 
