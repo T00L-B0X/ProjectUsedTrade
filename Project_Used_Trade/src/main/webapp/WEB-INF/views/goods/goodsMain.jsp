@@ -60,6 +60,7 @@
 	
 	.card-text {
 	    margin-bottom: .75rem;
+	    width: 600px;
 	}
 	
 	.goodsEnd {
@@ -88,7 +89,7 @@ $(document).ready(function() {
                         <a><img class="goodsImg" target="_blank" style="max-width: 95%; height: 95%;" alt="..."></a>
                     </div>
                     <div class="col-md-9">
-                        <div class="card-body">
+                        <div class="card-body" style="max-width: 1200px">
                             <h5 id="titleLink" class="card-title">
                                 <a target="_blank"><span class="goodsTitle"></span></a>
                             </h5>

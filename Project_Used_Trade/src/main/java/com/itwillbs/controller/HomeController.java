@@ -34,7 +34,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(HttpSession session, Principal principal) throws Exception {
 		logger.debug("main() 호출");
-		String path = "/main";
+		String path = "/goods/goodsMain";
 		
 		if(principal != null) {
 		String userid = principal.getName();
