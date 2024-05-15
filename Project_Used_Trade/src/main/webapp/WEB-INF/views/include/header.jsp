@@ -10,7 +10,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no"
 >
 <meta name="author" content="Untree.co">
-<link rel="shortcut icon" href="favicon.png">
+<link rel="icon" href="/resources/images/favicon.ico" type="image/x-icon">
 
 <meta name="description" content="" />
 <meta name="keywords" content="bootstrap, bootstrap4" />
@@ -33,8 +33,7 @@
 <link href="/resources/css/style.css" rel="stylesheet">
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- <link href="/resources/css/test.css" rel="stylesheet"> -->
-<title>Furni Free Bootstrap 5 Template for Furniture and
-	Interior Design Websites by Untree.co</title>
+<title>중고 팔아다오.</title>
 <style>
 .container {
 	display: flex;
