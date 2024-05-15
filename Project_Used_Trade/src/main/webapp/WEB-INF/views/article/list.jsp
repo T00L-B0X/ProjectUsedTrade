@@ -83,7 +83,7 @@
 	    		<tr style="background-color: #eee">
 	    			<td class="ad" colspan="1">광고</td>
 	    			<c:set var="maxLength" value="20" />
-					<c:set var="content" value="${adList[adCount].content}" />
+					<c:set var="content" value="${adList[adCount].artitle}" />
 	    			<td class="ad" colspan="6">
 	    				<c:choose>
 						    <c:when test="${fn:length(content) > maxLength}">
