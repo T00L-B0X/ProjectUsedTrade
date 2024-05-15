@@ -4,10 +4,9 @@ public class Criteria {
 
 	private int page;
 	private int pageSize;
-	private int employee_id;
 	private String search;
 	private String keyword;
-	private String categry;
+	private String locatns;
 
 	public Criteria() {
 		this(1, 12);
@@ -50,14 +49,6 @@ public class Criteria {
 		this.pageSize = pageSize;
 	}
 
-	public int getEmployee_id() {
-		return employee_id;
-	}
-
-	public void setEmployee_id(int employee_id) {
-		this.employee_id = employee_id;
-	}
-
 	public String getSearch() {
 		return search;
 	}
@@ -74,18 +65,18 @@ public class Criteria {
 		this.keyword = keyword;
 	}
 	
-	public String getCategry() {
-		return categry;
+	public String getLocatns() {
+		return locatns;
 	}
 	
-	public void setCategry(String categry) {
-		this.categry = categry;
+	public void setLocatns(String locatns) {
+		this.locatns = locatns;
 	}
 
 	@Override
 	public String toString() {
-		return "Criteria [page=" + page + ", pageSize=" + pageSize + ", employee_id=" + employee_id + ", search="
-				+ search + ", keyword=" + keyword + ", categry=" + categry + "]";
+		return "Criteria [page=" + page + ", pageSize=" + pageSize + ", search="
+				+ search + ", keyword=" + keyword + ", locatns=" + locatns + "]";
 	}
 
 }

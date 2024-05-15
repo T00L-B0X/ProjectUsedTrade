@@ -229,9 +229,6 @@ $(function() {
     });
 });
 </script>
-${arvo }
-${avo }
-${gvo }
 <div class="container">
     <div class="product-info">
 	    <div id="titleDate">

@@ -9,8 +9,8 @@
 <section>
 	<input type="hidden" id="csrfToken" value="${_csrf.token}">
 	<input type="hidden" id="userid" value="${memberVO.userid}">
-	<input type="text" id="artitle" name="artitle" placeholder="제목을 입력해주세요." required="required" />
-	
+	<input type="text" id="artitle" name="artitle" placeholder="제목을 입력해주세요." required="required" autofocus="autofocus" />
+
 	<select id="locatns" name="locatns">
 		<option value="전국">전국</option>
 		<option value="강원권">강원권</option>

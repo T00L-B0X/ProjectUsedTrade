@@ -145,7 +145,7 @@ function editComment(cnumber, content) {
         xhr.onload = () => {
             if (xhr.status === 200) {
                 // 수정 성공 시 화면 갱신
-                document.getElementById("commentContent_" + cnumber).textContent = newContent;
+                document.getElementById("modi" + cnumber).textContent = newContent;
                 alert("댓글이 수정되었습니다.");
             } else {
                 alert("댓글 수정에 실패했습니다.");

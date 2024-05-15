@@ -71,17 +71,17 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
-	public List<ArticleVO> selectArticleList() throws Exception {
+	public List<ArticleVO> selectArticleList(Criteria cri) throws Exception {
 		logger.debug("selectArticleList() 호출");
 
-		return sqlSession.selectList(NAMESPACE + ".selectArticleList");
+		return sqlSession.selectList(NAMESPACE + ".selectArticleList", cri);
 	}
 
 	@Override
-	public List<ArticleVO> selectNotiList() throws Exception {
-		logger.debug("selectNotiList() 호출");
+	public List<ArticleVO> selectNotiList(Criteria cri) throws Exception {
+		logger.debug("selectNotiList(Criteria cri) 호출");
 
-		return sqlSession.selectList(NAMESPACE + ".selectNotiList");
+		return sqlSession.selectList(NAMESPACE + ".selectNotiList", cri);
 	}
 
 	@Override
@@ -138,9 +138,55 @@ public class ArticleDAOImpl implements ArticleDAO {
 	@Override
 	public List<CommentVO> selectComment(Integer anumber) throws Exception {
 		logger.debug("selectComment(Integer anumber) 호출");
-		
+
 		return sqlSession.selectList(NAMESPACE + ".selectComment", anumber);
 	}
 
+	@Override
+	public int selectArticleCount(Criteria cri) throws Exception {
+		logger.debug("selectArticleCount(Criteria cri) 호출");
+
+		return sqlSession.selectOne(NAMESPACE + ".selectArticleCount", cri);
+	}
+
+	@Override
+	public int selectNotiCount(Criteria cri) throws Exception {
+		logger.debug("selectNotiCount(Criteria cri) 호출");
+
+		return sqlSession.selectOne(NAMESPACE + ".selectNotiCount", cri);
+	}
+
+	@Override
+	public int countComment(Integer anumber) throws Exception {
+		logger.debug("countComment(Integer anumber)");
+
+		return sqlSession.selectOne(NAMESPACE + ".countComment", anumber);
+	}
+
+	@Override
+	public int countLikeArticle(int anumber) throws Exception {
+		logger.debug("countLikeArticle(int anumber) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".countLikeArticle", anumber);
+	}
+
+	@Override
+	public void plusLike(LikecntVO lvo) throws Exception {
+		logger.debug("plusLike(LikecntVO lvo) 호출");
+
+		sqlSession.update(NAMESPACE + ".plusLike", lvo);
+	}
+
+	@Override
+	public void minusLike(LikecntVO lvo) throws Exception {
+		logger.debug("minusLike(LikecntVO lvo) 호출");
+
+		sqlSession.update(NAMESPACE + ".minusLike", lvo);
+	}
+
+	@Override
+	public void plusView(Integer anumber) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update(NAMESPACE + ".plusView", anumber);
+	}
 
 }

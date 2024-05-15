@@ -21,6 +21,7 @@
 		<option value="제주권">제주권</option>
 		<option value="수도권">수도권</option>
 	</select>
+	
 	<select id="categry" name="categry">
 		<option value="공지">공지</option>
 		<option value="광고">광고</option>

@@ -45,14 +45,32 @@
 		SELECT *
 		FROM ARTICLE
 		WHERE DELETED='0' and CATEGRY='동네 소식'
+		<if test="search != null and search != ''">
+			<if test="keyword != null">			
+	            AND ${search} LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+        </if>
+        <if test="locatns != null">
+	    	AND LOCATNS LIKE CONCAT('%', #{locatns}, '%')
+	    </if>
 		ORDER BY ANUMBER DESC
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 	
 	<select id="selectNotiList" resultType="ArticleVO">
 		SELECT *
 		FROM ARTICLE
-		WHERE DELETED='0' and (CATEGRY='공지' OR CATEGRY='광고')
+		WHERE DELETED='0' AND CATEGRY='공지'
+		<if test="search != null and search != ''">
+			<if test="keyword != null">			
+	            AND ${search} LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+        </if>
+        <if test="locatns != null">
+	    	AND LOCATNS LIKE CONCAT('%', #{locatns}, '%')
+	    </if>
 		ORDER BY ANUMBER DESC
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 	
 	<select id="selectNotiList5" resultType="ArticleVO">
@@ -98,5 +116,60 @@
 		SELECT * FROM COMMENT
 		WHERE ANUMBER=#{anumber}
 	</select>
+	
+	<select id="selectArticleCount" resultType="int">
+		SELECT COUNT(ANUMBER)
+		FROM ARTICLE
+		WHERE DELETED='0' and CATEGRY='동네 소식'
+		<if test="search != null and search != ''">
+			<if test="keyword != null">			
+	            AND ${search} LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+        </if>
+        <if test="locatns != null">
+	    	AND LOCATNS LIKE CONCAT('%', #{locatns}, '%')
+	    </if>
+	</select>
+	
+	<select id="selectNotiCount" resultType="int">
+		SELECT COUNT(ANUMBER)
+		FROM ARTICLE
+		WHERE DELETED='0' AND CATEGRY='공지'
+		<if test="search != null and search != ''">
+			<if test="keyword != null">			
+	            AND ${search} LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+        </if>
+        <if test="locatns != null">
+	    	AND LOCATNS LIKE CONCAT('%', #{locatns}, '%')
+	    </if>
+	</select>
+	
+	<select id="countComment" resultType="int">
+		SELECT COUNT(CNUMBER)
+		FROM COMMENT
+		WHERE ANUMBER=#{anumber} AND DELETED='0';
+	</select>
+	
+	<select id="countLikeArticle" resultType="int">
+		SELECT COUNT(ANUMBER)
+		FROM LIKECNT
+		WHERE ANUMBER=#{anumber}
+	</select>
+	
+	<update id="plusLike">
+		UPDATE ARTICLE SET LIKECNT=LIKECNT+1
+		WHERE ANUMBER=#{anumber}
+	</update>
+	
+	<update id="minusLike">
+		UPDATE ARTICLE SET LIKECNT=LIKECNT-1
+		WHERE ANUMBER=#{anumber}
+	</update>
+	
+	<update id="plusView">
+		UPDATE ARTICLE SET VIEWCNT=VIEWCNT+1
+		WHERE ANUMBER=#{anumber}
+	</update>
 
 </mapper>

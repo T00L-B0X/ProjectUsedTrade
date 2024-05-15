@@ -108,6 +108,8 @@ public class ArticleController {
 			path = "/article/read";
 		}
 
+		model.addAttribute("countComment", aService.countComment(anumber));
+
 		return path;
 	}
 
@@ -127,7 +129,7 @@ public class ArticleController {
 
 		aService.dislike(lvo);
 	}
-	
+
 	@GetMapping("/modify/{anumber}")
 	public String modifyArticle(@PathVariable("anumber") int anumber, Principal principal, Model model)
 			throws Exception {
@@ -186,7 +188,7 @@ public class ArticleController {
 
 	// http://localhost:8088/article/list
 	@GetMapping("/list")
-	public void getArticleList(Principal principal, Model model) throws Exception {
+	public void getArticleList(Criteria cri, Principal principal, Model model) throws Exception {
 		logger.debug("ArticleController - getArticleList - GET 호출");
 
 		if (principal != null) {
@@ -197,10 +199,13 @@ public class ArticleController {
 		}
 
 		model.addAttribute("NotiList5", aService.getNotiList5());
-		model.addAttribute("ArticleList", aService.getArticleList());
+		model.addAttribute("ArticleList", aService.getArticleList(cri));
+		model.addAttribute("pageCri", new PageCri(cri, aService.countArticle(cri)));
+		model.addAttribute("cri", cri);
+
+		model.addAttribute("ad0", aService.getAds());
 		model.addAttribute("ad1", aService.getAds());
 		model.addAttribute("ad2", aService.getAds());
-		model.addAttribute("ad3", aService.getAds());
 	}
 
 	@ResponseBody
@@ -213,13 +218,9 @@ public class ArticleController {
 
 		// goods_id를 사용하여 작성자 정보 등을 가져오거나 필요한 처리를 수행한다.
 		member.setChat_no(chatService.getChatNo(chat_no));
-		logger.debug("dsfafasd@@@@@@@@@@@@@: " + chatService.getMemberFromArticle(anumber));
 		member.setUserid(chatService.getMemberFromArticle(anumber));
-		logger.debug("asdsadasdsa: " + member.getUserid());
 		member.setAuth_role("게시글 작성자");
-		logger.debug("@@@@@@@@@@@@@@@@@@@@@: " + chatService.getUserNameFromArticle(anumber));
 		member.setUsernm(chatService.getUserNameFromArticle(anumber));
-		logger.debug("asdfasfsadf: " + member.getUsernm());
 		logger.debug("DB에 저장되는 게시글 작성자 정보 : " + member);
 
 		// 채팅 멤버에 추가하는 작업을 수행한다.
@@ -261,7 +262,7 @@ public class ArticleController {
 			MemberVO mvo = mService.read(userid);
 			model.addAttribute("memberVO", mvo);
 
-			path = "/article/articles";
+			path = "/article/notices";
 		}
 
 		return path;
@@ -285,7 +286,7 @@ public class ArticleController {
 
 	// http://localhost:8088/article/notilist
 	@GetMapping("/notilist")
-	public void getNotiList(Principal principal, Model model) throws Exception {
+	public void getNotiList(Criteria cri, Principal principal, Model model) throws Exception {
 		logger.debug("ArticleController - getArticleList - GET 호출");
 
 		if (principal != null) {
@@ -295,7 +296,9 @@ public class ArticleController {
 			model.addAttribute("memberVO", mvo);
 		}
 
-		model.addAttribute("NotiList", aService.getNotiList());
+		model.addAttribute("NotiList", aService.getNotiList(cri));
+		model.addAttribute("pageCri", new PageCri(cri, aService.countNoti(cri)));
+		model.addAttribute("cri", cri);
 	}
 
 	@ResponseBody
@@ -312,12 +315,12 @@ public class ArticleController {
 	@PutMapping("comment")
 	public void modifyComment(@RequestBody CommentVO cvo) throws Exception {
 		logger.debug("ArticleController - modifyComment - PUT 호출");
-		
+
 		logger.debug("cvo: " + cvo);
-		
+
 		aService.modifyComment(cvo);
 	}
-	
+
 	@ResponseBody
 	@PatchMapping("comment")
 	public void deleteComment(@RequestBody CommentVO cvo) throws Exception {

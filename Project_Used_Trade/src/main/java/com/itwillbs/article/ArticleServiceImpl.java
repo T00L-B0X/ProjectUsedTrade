@@ -30,6 +30,8 @@ public class ArticleServiceImpl implements ArticleService {
 	public ArticleVO getArticle(Integer anumber) throws Exception {
 		logger.debug("getTopic(int bno) 호출");
 
+		artDAO.plusView(anumber);
+
 		return artDAO.selectArticle(anumber);
 	}
 
@@ -48,32 +50,33 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int like(LikecntVO lvo) throws Exception {
+	public void like(LikecntVO lvo) throws Exception {
 		logger.debug("like(LikecntVO lvo) 호출");
-		// logger.debug("@@@@@@@"+artDAO.insertLike(lvo));
 
-		return artDAO.insertLike(lvo);
+		artDAO.insertLike(lvo);
+		artDAO.plusLike(lvo);
 	}
 
 	@Override
-	public int dislike(LikecntVO lvo) throws Exception {
+	public void dislike(LikecntVO lvo) throws Exception {
 		logger.debug("dislike(LikecntVO lvo) 호출");
 
-		return artDAO.deleteLike(lvo);
+		artDAO.deleteLike(lvo);
+		artDAO.minusLike(lvo);
 	}
 
 	@Override
-	public List<ArticleVO> getArticleList() throws Exception {
+	public List<ArticleVO> getArticleList(Criteria cri) throws Exception {
 		logger.debug("getArticleList() 호출");
 
-		return artDAO.selectArticleList();
+		return artDAO.selectArticleList(cri);
 	}
 
 	@Override
-	public List<ArticleVO> getNotiList() throws Exception {
-		logger.debug("getNotiList() 호출");
+	public List<ArticleVO> getNotiList(Criteria cri) throws Exception {
+		logger.debug("getNotiList(Criteria cri) 호출");
 
-		return artDAO.selectNotiList();
+		return artDAO.selectNotiList(cri);
 	}
 
 	@Override
@@ -101,8 +104,8 @@ public class ArticleServiceImpl implements ArticleService {
 		logger.debug("addComment(CommentVO cvo) 호출");
 
 		cvo.setCnumber(artDAO.selectCno());
-		cvo.setEwriter(cvo.getUserid());		
-		
+		cvo.setEwriter(cvo.getUserid());
+
 		artDAO.insertComment(cvo);
 	}
 
@@ -125,8 +128,28 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<CommentVO> getComment(Integer anumber) throws Exception {
 		logger.debug("getComment(Integer anumber) 호출");
-		
+
 		return artDAO.selectComment(anumber);
+	}
+
+	@Override
+	public int countArticle(Criteria cri) throws Exception {
+		logger.debug("countArticle(Criteria cri) 호출");
+
+		return artDAO.selectArticleCount(cri);
+	}
+
+	@Override
+	public int countNoti(Criteria cri) throws Exception {
+		logger.debug("countNoti(Criteria cri) 호출");
+
+		return artDAO.selectNotiCount(cri);
+	}
+
+	@Override
+	public int countComment(Integer anumber) throws Exception {
+		logger.debug("countComment(Integer anumber)");
+		return artDAO.countComment(anumber);
 	}
 
 }

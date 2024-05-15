@@ -34,15 +34,19 @@ public class ChatController {
 	// 채팅방 폼으로 이동
 	@RequestMapping(value = "chathome", method = RequestMethod.GET)
 	public String chatForm(Model model, Principal principal, HttpSession session) throws Exception {
+		logger.debug("ChatController - chatForm - GET 호출");
 
-		// ${user}
-		String userid = principal.getName();
-		MemberVO memberVO = userService.read(userid);
-//		model.addAttribute("user", memberVO);
-		logger.debug(memberVO + "");
-		session.setAttribute("user", memberVO);
-		logger.debug(" chat.jsp 페이지로 이동 ");
-		return "/chatting/chat";
+		String path = "/user/login";
+
+		if (principal != null) {
+			String userid = principal.getName();
+			MemberVO memberVO = userService.read(userid);
+			session.setAttribute("user", memberVO);
+
+			path = "/chatting/chat";
+		}
+
+		return path;
 	}
 
 	// 채팅방 리스트 가져오기 ajax

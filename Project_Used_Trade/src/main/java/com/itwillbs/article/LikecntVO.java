@@ -8,6 +8,11 @@ public class LikecntVO {
 	private String userid;
 	private int anumber;
 
+	@Override
+	public String toString() {
+		return "LikecntVO [userid=" + userid + ", anumber=" + anumber + "]";
+	}
+
 	public String getUserid() {
 		return userid;
 	}
@@ -22,13 +27,6 @@ public class LikecntVO {
 
 	public void setAnumber(int anumber) {
 		this.anumber = anumber;
-	}
-
-	@Override
-	public String toString() {
-		return "LikecntVO [userid=" + userid + ", anumber=" + anumber + ", getUserid()=" + getUserid()
-				+ ", getAnumber()=" + getAnumber() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
 	}
 
 }

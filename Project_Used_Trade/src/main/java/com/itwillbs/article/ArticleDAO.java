@@ -18,9 +18,9 @@ public interface ArticleDAO {
 
 	public int deleteLike(LikecntVO lvo) throws Exception;
 
-	public List<ArticleVO> selectArticleList() throws Exception;
+	public List<ArticleVO> selectArticleList(Criteria cri) throws Exception;
 
-	public List<ArticleVO> selectNotiList() throws Exception;
+	public List<ArticleVO> selectNotiList(Criteria cri) throws Exception;
 
 	public List<ArticleVO> selectNotiList5() throws Exception;
 
@@ -31,11 +31,25 @@ public interface ArticleDAO {
 	public int selectCno() throws Exception;
 
 	public void insertComment(CommentVO cvo) throws Exception;
-	
+
 	public void updateComment(CommentVO cvo) throws Exception;
-	
+
 	public void deleteComment(CommentVO cvo) throws Exception;
-	
+
 	public List<CommentVO> selectComment(Integer anumber) throws Exception;
+
+	public int selectArticleCount(Criteria cri) throws Exception;
+
+	public int selectNotiCount(Criteria cri) throws Exception;
+
+	public int countComment(Integer anumber) throws Exception;
+
+	public int countLikeArticle(int anumber) throws Exception;
+
+	public void plusLike(LikecntVO lvo) throws Exception;
+
+	public void minusLike(LikecntVO lvo) throws Exception;
+	
+	public void plusView(Integer anumber) throws Exception;
 
 }

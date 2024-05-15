@@ -6,6 +6,16 @@ function insertArticle() {
 	const userid = document.getElementById('userid').value;
 	const content = editor.getHTML();
 	
+	if (!artitle) {
+        alert('제목을 입력해주세요.');
+        return false;
+    }
+
+	if (content === "<p><br></p>") {
+		alert('내용을 입력해주세요.');
+		return false;
+	}
+	
 	const xhr = new XMLHttpRequest();
 	xhr.open('POST', '/article/articles');
 	xhr.setRequestHeader('Content-Type', 'application/json');

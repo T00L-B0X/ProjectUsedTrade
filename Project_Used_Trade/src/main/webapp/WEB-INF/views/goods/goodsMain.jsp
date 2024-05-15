@@ -60,6 +60,7 @@
 	
 	.card-text {
 	    margin-bottom: .75rem;
+	    width: 600px;
 	}
 	
 	.goodsEnd {
