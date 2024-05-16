@@ -97,13 +97,13 @@
 </script>
 
 <div class="container">
-	<h2 class="mt-6 mb-4">페이 환불 신청 페이지</h2>
+	<h2 class="mt-6 mb-4">페이 환불</h2>
 
 	<div class="row">
 		<!-- 왼쪽 영역: 환불할 금액과 환불 계좌 입력 표시 -->
 		<div class="col-md-6">
 			<!-- 환불금액 입력 -->
-			<select class="form-select" aria-label="Default select example" id="selbox">
+			<select class="form-select" style="width: 75%;" aria-label="Default select example" id="selbox">
 				<option value="" selected disabled hidden="">금액을 선택해주세요</option>
 				<option value="1000">1000</option>
 				<option value="5000">5000</option>
@@ -125,9 +125,11 @@
 					<input type="text" id="accountNumber" required><br><br>
 					<label for="accountHolder">이름:</label>
 					<input type="text" id="accountHolder" required><br><br>
-					<div class="col-md-6">
+					<label for="payCause">환불사유</label>
+					<textarea class="form-control" style="width: 75%;" rows="3" name="content"></textarea><br><br>
+					<div class="col-md-6 mb-4">
 						<!-- 환불 신청하기 버튼  -->
-						<button type="button" class="btn btn-primary" onclick="refundPay()">환불 신청하기</button>
+						<button type="button" class="btn btn-block btn-warning" onclick="refundPay()">환불 신청하기</button>
 					</div>
 				</form>
 			</div>
@@ -139,15 +141,15 @@
 			<div class="row">
 				<div class="col-md-4">
 					<p>현재 페이 금액</p>
-					<input type="text" class="form-control" id="currentAmount" value="${pResultVO.PAY_BALANCE }" readonly>
+					<input type="text" class="form-control" style="width: 90%;" id="currentAmount" value="${pResultVO.PAY_BALANCE }" readonly>
 				</div>
 				<div class="col-md-4">
 					<p>환불할 금액</p>
-					<input type="text" class="form-control" id="refundAmount" readonly>
+					<input type="text" class="form-control" style="width: 90%;" id="refundAmount" readonly>
 				</div>
 				<div class="col-md-4">
 					<p>환불 후 페이 금액</p>
-					<input type="text" class="form-control" id="afterAmount" readonly>
+					<input type="text" class="form-control" style="width: 90%;" id="afterAmount" readonly>
 				</div>
 			</div>
 		</div>

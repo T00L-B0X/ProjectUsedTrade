@@ -104,20 +104,25 @@ public class PaymentController {
 		logger.debug(" DAO의 결제 검증 동작 성공! ");
 		
 		// 완료 후 결제완료 페이지로 이동
-		return "purchaseSuccess";
+		return "purchaseSuccess?goods_id="+result.get("GOODS_ID");
 	}
 	
 	// 결제완료 페이지 GET
 	@RequestMapping(value = "/purchaseSuccess", method = RequestMethod.GET)
-	public void purchaseSuccessGET(Principal principal, Model model) throws Exception {
+	public void purchaseSuccessGET(@RequestParam("goods_id") int goods_id, Principal principal, Model model) throws Exception {
 		logger.debug("purchaseSuccessGET() 실행");
 		logger.debug("/purchaseSuccessGET.jsp 뷰 연결");
+		
+		GoodsVO goodsInfo = gService.getGoodsInfo(goods_id);
+		logger.debug("goodsInfo : " + goodsInfo);
 		
 		String id = principal.getName();
 		logger.debug(" id : "+id);
 		
 		PayVO pResultVO = pService.memberPay(id);
 		
+		// 물건 정보와 페이 정보를 모델에 추가
+		model.addAttribute("goodsVO", goodsInfo);
 		model.addAttribute("pResultVO", pResultVO);
 		
 	}
