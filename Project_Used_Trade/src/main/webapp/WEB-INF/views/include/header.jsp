@@ -219,7 +219,7 @@
 
 								// 백틱 사용시 에러
 								// msg += `<li><a style='color: black;' class='dropdown-item' id='${'${res[i].alarm_no}'}' href='chatting'>${res[i].alarm_prefix}<br>${res[i].alarm_cdate}</a></li>`;
-								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='http://localhost:8088/chathome'>"
+								msg += "<li><a style='color: black;' class='dropdown-item' id='" + res[i].alarm_no + "' href='/chathome'>"
 										+ res[i].alarm_prefix
 										+ "<br>"
 										+ res[i].alarm_cdate + "</a></li>";
@@ -360,7 +360,7 @@
 							<c:otherwise>
 								<li><a id="logout-link" class="nav-link" href="/user/login">로그아웃</a></li>
 								<li><a class="nav-link"
-									href="http://localhost:8088/user/mypage"
+									href="/user/mypage"
 								> <img src="/resources/images/user.svg"
 										style="padding-left: 10px; margin-left: 10px;"
 									></a></li>
