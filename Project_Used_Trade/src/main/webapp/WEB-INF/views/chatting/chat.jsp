@@ -6,7 +6,7 @@
 
 
 
-<div class="container" style = "margin: auto; margin-bottom: 100px;">
+<div class="chatContainer" style = "margin: auto; margin-bottom: 100px;">
 	<div class="chatList">
 		<!-- 채팅방리스트 동적 처리 -->
 	</div>
