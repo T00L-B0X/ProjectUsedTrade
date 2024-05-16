@@ -20,5 +20,5 @@
 <div class="bxslider">
 	<div><img src="/resources/article/img/itwillbs.png" style="width: 100%;" /></div>
 	<div><img src="/resources/article/img/baekjoon.png" style="width: 100%;" /></div>
-	<div><img src="/resources/article/img/itwillbs.png" style="width: 100%;" /></div>
+	<div><img src="/resources/article/img/dongbeak.png" style="width: 100%;" /></div>
 </div>
