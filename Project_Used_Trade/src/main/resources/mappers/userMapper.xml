@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+	<mapper namespace="com.itwillbs.mapper.UserMapper">
+
+	<resultMap type="com.itwillbs.user.MemberVO" id="userMap">
+		<id property="userid" column="userid"/>
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="userpw"/>
+		<result property="uemail" column="uemail"/>
+		<result property="usernm" column="usernm"/>
+		<result property="ubirth" column="ubirth"/>
+		<result property="gender" column="gender"/>
+		<result property="uphone" column="uphone"/>
+		<result property="regdate" column="regdate"/>
+		<result property="edtdat" column="edtdat"/>
+		<result property="uintro" column="uintro"/>
+		
+		<collection property="authList" resultMap="authMap"></collection>
+		<collection property="gradeList" resultMap="gradeMap"></collection>
+		
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.user.AuthVO" id="authMap">
+		
+		<result property="userid" column="userid"/>
+		<result property="auth" column="auth"/>
+		
+	</resultMap>
+	
+	<resultMap type="com.itwillbs.user.UGradeVO" id="gradeMap">
+		
+		<result property="ugrade" column="ugrade"/>
+		<result property="feerage" column="feerage"/>
+	
+	</resultMap>
+	
+	<insert id="join">
+		insert into MEMBER (userid,userpw,uemail,usernm,ubirth,gender,uphone)
+		values(#{userid},#{userpw},#{uemail},#{usernm},#{ubirth},#{gender},#{uphone}) 
+	</insert>
+	
+	<insert id="authJoin">
+		insert into AUTH (userid) values(#{userid})
+	</insert>
+	
+	<select id="login" resultType="com.itwillbs.user.MemberVO">
+		select * from MEMBER
+		where userid=#{userid} AND userpw=#{userpw}
+	</select>
+
+	<select id="checkId" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE userid=#{userid}
+	</select>
+	
+	<select id="findId" resultType="com.itwillbs.user.MemberVO">
+		select * from MEMBER
+		where usernm=#{usernm} AND uemail=#{uemail}
+	</select>
+	
+	<select id="findPw" resultType="com.itwillbs.user.MemberVO">
+		select * from MEMBER
+		where userid=#{userid} AND uemail=#{uemail}
+	</select>
+	
+	<update id="newPw">
+		UPDATE MEMBER SET userpw = #{userpw}
+    	WHERE userid = #{userid} AND uemail = #{uemail}
+	</update>
+	
+	<select id="list" resultMap="userMap">
+		SELECT MEMBER.userid, userpw, usernm, ubirth, gender, uphone, uemail, enabled, auth, regdate, edtdat, uintro, UGRADE.ugrade, UGRADE.feerage
+		FROM MEMBER
+		LEFT OUTER JOIN AUTH ON MEMBER.userid = AUTH.userid
+		LEFT OUTER JOIN UGRADE ON MEMBER.ugrade = UGRADE.ugrade
+		WHERE MEMBER.userid = #{userid};
+	</select>
+	
+	<update id="updateUser">
+		update MEMBER set userpw = #{userpw}, uphone=#{uphone}, uemail = #{uemail}, uintro = #{uintro}, edtdat = now()
+		where userid = #{userid}
+
+	</update>
+	
+
+	
+	
+	
+	
+	</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mapper.AuctionMapper">
+	<insert id="insertAuctionInfo" parameterType="AuctionVO">
+		insert into AUCTION(goods_id, userid, au_title, instant_price, start_time, end_time, start_price, au_status)
+		values(#{goods_id}, #{userid}, #{au_title}, #{instant_price}, #{start_time}, #{end_time}, #{start_price}, #{au_status})
+	</insert>
+	
+	<select id="selectAuctionInfo" resultType="AuctionVO">
+		select * from AUCTION
+		where goods_id = #{goods_id}
+	</select>
+	<select id="sellinfo" resultType="AuctionVO">
+		select * from AUCTION
+		where userid = #{userid}
+	</select>
+	<insert id="insertRecord" parameterType="AuctionRecordVO">
+		insert into AUCTION_RECORD(goods_id,bid_price,ar_userid)
+		values(#{goods_id}, #{bid_price}, #{ar_userid})
+	</insert>
+	<select id="selectBidCount" resultType="Int">
+		select count(*) from AUCTION_RECORD
+		where goods_id = #{goods_id};
+	</select>
+	<select id="selectAuctionRecord" resultType="AuctionRecordVO">
+		select * from AUCTION_RECORD
+		WHERE goods_id = #{goods_id} order by bid_time desc;
+	</select>
+	<select id="selectInstantPrice" resultType="int">
+		select instant_price from AUCTION
+		where goods_id = #{goods_id}
+	</select>
+	<update id="updateAuctionStatus">
+		update AUCTION set au_status = 0
+		where goods_id = #{goods_id}
+	</update>
+	<update id="updateAuStatusEnd">
+		update AUCTION set au_status = 0
+		where goods_id = #{goods_id}
+	</update>
+	<select id="selectBuyInfo" resultType="AuctionRecordVO">
+		select ar_no, goods_id, bid_time, bid_price,ar_userid
+		from AUCTION_RECORD
+		WHERE goods_id = #{goods_id}
+		ORDER BY bid_price DESC
+		LIMIT 1;
+	</select>
+</mapper>

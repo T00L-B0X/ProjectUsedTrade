@@ -19,6 +19,16 @@
 		<level value="debug" />
 	</logger>
 	
+	<logger name="com.itwillbs.goods">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.auction">
+		<level value="debug" />
+	</logger>
+	
+	
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

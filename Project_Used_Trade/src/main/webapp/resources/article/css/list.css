@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+/* 전체 섹션 */
+section {
+    width: 70%;
+    margin: 0 auto; /* 가운데 정렬 */
+}
+
+/* 테이블 스타일 */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* 테이블 헤더 스타일 */
+.table th {
+    background-color: #87CEFA;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* 테이블 셀 스타일 */
+.table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+/* 짝수 행 배경색 */
+.table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* 홀수 행 배경색 */
+.table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+/* 광고 행 배경색 */
+.table tr.ad {
+    background-color: #eee;
+}
+
+/* 검색 필드와 버튼 스타일 */
+#search, #keyword, button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* 게시글 작성 버튼 스타일 */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* 게시글 작성 버튼 활성화 */
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.searchField {
+    float: left;
+}
+
+/* 오른쪽 정렬을 위한 스타일 */
+.writeField {
+    float: right;
+}

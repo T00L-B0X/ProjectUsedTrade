@@ -3,4 +3,173 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.itwillbs.mapper.ArticleMapper"></mapper>
+<mapper namespace="com.itwillbs.mapper.ArticleMapper">
+
+	<select id="selectAno" resultType="int">
+		SELECT IFNULL(MAX(ANUMBER), 0) + 1 AS next_id FROM ARTICLE
+	</select>
+	
+	<insert id="insertArticle">
+		INSERT INTO ARTICLE (ANUMBER, CATEGRY, LOCATNS, ARTITLE, USERID, CONTENT, EWRITER)
+		VALUES (#{anumber}, #{categry}, #{locatns}, #{artitle}, #{userid}, #{content}, #{ewriter})
+	</insert>
+	
+	<select id="selectArticle" resultType="ArticleVO">
+		SELECT *
+		FROM ARTICLE
+		WHERE ANUMBER=#{anumber}
+	</select>
+	
+	<select id="checkLike" resultType="int">
+		SELECT COUNT(USERID)
+		FROM LIKECNT
+		WHERE ANUMBER=#{anumber} and USERID=#{userid}
+	</select>
+	
+	<insert id="insertLike">
+		INSERT INTO LIKECNT (USERID, ANUMBER)
+		VALUES (#{userid}, #{anumber})
+	</insert>
+	
+	<delete id="deleteLike">
+		DELETE FROM LIKECNT
+		WHERE ANUMBER=#{anumber} and USERID=#{userid}
+	</delete>
+	
+	<update id="updateArticle">
+		UPDATE ARTICLE SET LOCATNS=#{locatns}, ARTITLE=#{artitle}, CONTENT=#{content}, EWRITER=#{ewriter}, EDTDATE=NOW()
+		WHERE ANUMBER=#{anumber}
+	</update>
+	
+	<select id="selectArticleList" resultType="ArticleVO">
+		SELECT *
+		FROM ARTICLE
+		WHERE DELETED='0' and CATEGRY='동네 소식'
+		<if test="search != null and search != ''">
+			<if test="keyword != null">			
+	            AND ${search} LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+        </if>
+        <if test="locatns != null">
+	    	AND LOCATNS LIKE CONCAT('%', #{locatns}, '%')
+	    </if>
+		ORDER BY ANUMBER DESC
+		LIMIT #{startPage}, #{pageSize}
+	</select>
+	
+	<select id="selectNotiList" resultType="ArticleVO">
+		SELECT *
+		FROM ARTICLE
+		WHERE DELETED='0' AND CATEGRY='공지'
+		<if test="search != null and search != ''">
+			<if test="keyword != null">			
+	            AND ${search} LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+        </if>
+        <if test="locatns != null">
+	    	AND LOCATNS LIKE CONCAT('%', #{locatns}, '%')
+	    </if>
+		ORDER BY ANUMBER DESC
+		LIMIT #{startPage}, #{pageSize}
+	</select>
+	
+	<select id="selectNotiList5" resultType="ArticleVO">
+	    SELECT *
+	    FROM ARTICLE
+	    WHERE DELETED='0' AND CATEGRY='공지'
+	    ORDER BY ANUMBER DESC
+	    LIMIT 5
+	</select>
+	
+	<select id="selectAds" resultType="ArticleVO">
+		SELECT * 
+		FROM ARTICLE 
+		WHERE CATEGRY = '광고' AND DELETED = '0' 
+		ORDER BY RAND() 
+		LIMIT 1;
+	</select>
+	
+	<update id="deleteArticle">
+		UPDATE ARTICLE SET DELETED='1', EWRITER=#{ewriter}, EDTDATE=NOW()
+		WHERE ANUMBER=#{anumber}
+	</update>
+	
+	<select id="selectCno" resultType="int">
+		SELECT IFNULL(MAX(CNUMBER), 0) + 1 AS next_id FROM COMMENT
+	</select>
+	
+	<insert id="insertComment">
+		INSERT INTO COMMENT (CNUMBER, ANUMBER, PNUMBER, COMMLIV, USERID, CONTENT, EWRITER)
+		VALUES (#{cnumber}, #{anumber}, #{pnumber}, #{commliv}, #{userid}, #{content}, #{ewriter})
+	</insert>
+	
+	<update id="updateComment">
+		UPDATE COMMENT SET CONTENT=#{content}, EWRITER=#{ewriter}, EDTDATE=NOW() WHERE CNUMBER=#{cnumber}
+	</update>
+	
+	<update id="deleteComment">
+		UPDATE COMMENT SET DELETED='1', EWRITER=#{ewriter}, EDTDATE=NOW()
+		WHERE CNUMBER=#{cnumber}
+	</update>
+	
+	<select id="selectComment" resultType="CommentVO">
+		SELECT * FROM COMMENT
+		WHERE ANUMBER=#{anumber}
+	</select>
+	
+	<select id="selectArticleCount" resultType="int">
+		SELECT COUNT(ANUMBER)
+		FROM ARTICLE
+		WHERE DELETED='0' and CATEGRY='동네 소식'
+		<if test="search != null and search != ''">
+			<if test="keyword != null">			
+	            AND ${search} LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+        </if>
+        <if test="locatns != null">
+	    	AND LOCATNS LIKE CONCAT('%', #{locatns}, '%')
+	    </if>
+	</select>
+	
+	<select id="selectNotiCount" resultType="int">
+		SELECT COUNT(ANUMBER)
+		FROM ARTICLE
+		WHERE DELETED='0' AND CATEGRY='공지'
+		<if test="search != null and search != ''">
+			<if test="keyword != null">			
+	            AND ${search} LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+        </if>
+        <if test="locatns != null">
+	    	AND LOCATNS LIKE CONCAT('%', #{locatns}, '%')
+	    </if>
+	</select>
+	
+	<select id="countComment" resultType="int">
+		SELECT COUNT(CNUMBER)
+		FROM COMMENT
+		WHERE ANUMBER=#{anumber} AND DELETED='0';
+	</select>
+	
+	<select id="countLikeArticle" resultType="int">
+		SELECT COUNT(ANUMBER)
+		FROM LIKECNT
+		WHERE ANUMBER=#{anumber}
+	</select>
+	
+	<update id="plusLike">
+		UPDATE ARTICLE SET LIKECNT=LIKECNT+1
+		WHERE ANUMBER=#{anumber}
+	</update>
+	
+	<update id="minusLike">
+		UPDATE ARTICLE SET LIKECNT=LIKECNT-1
+		WHERE ANUMBER=#{anumber}
+	</update>
+	
+	<update id="plusView">
+		UPDATE ARTICLE SET VIEWCNT=VIEWCNT+1
+		WHERE ANUMBER=#{anumber}
+	</update>
+
+</mapper>

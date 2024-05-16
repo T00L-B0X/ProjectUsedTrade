@@ -14,6 +14,48 @@
 	<logger name="com.itwillbs.article">
 		<level value="debug" />
 	</logger>
+	<logger name="com.itwillbs.goods">
+		<level value="debug" />
+	</logger>
+	<logger name="com.itwillbs.auction">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.controller">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.user">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.security">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.user">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.board">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.chatting">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.controller">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.pay">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.itwillbs.payment">
+		<level value="debug" />
+	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

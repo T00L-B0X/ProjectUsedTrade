@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.itwillbs.mapper.ChattingMapper">
+  
+  	<!-- 채팅 게시글 list 가져오기 -->
+	<select id="getChatGroupList" resultType="ChatGroupVO">
+		SELECT * FROM CHATGROUP
+		WHERE CHAT_TYPE = 0
+		ORDER BY CHAT_NO DESC;
+	</select>
+	
+	<!-- 자신을 뺀 모든 유저 리스트 가져오기 -->
+	<select id = "getUserList" resultType = "MemberVO" parameterType="String">
+		SELECT * FROM MEMBER WHERE USERID != #{userid}
+	</select>
+	
+	<!-- 채팅 게시글 등록 시 Alarm 테이블에도 등록 -->
+	<insert id = "insertAlarm" parameterType="String">
+		INSERT INTO ALARM (userid, alarm_type, alarm_cdate, alarm_prefix, chat_No, chat_type) 
+		VALUES (#{userid}, 'new_chat', NOW(), '${sender_name}님의 채팅', #{chat_no}, #{chat_type});
+	</insert>
+	
+	<!-- 채팅 게시글 등록 쿼리 -->
+	<insert id="insertChat" parameterType="ChatGroupVO" useGeneratedKeys="true" keyProperty="chat_no">
+	    INSERT INTO CHATGROUP (chat_title, userid, chat_date, usernm, chat_type)
+	    VALUES (#{chat_title}, #{userid}, NOW(), #{usernm}, #{chat_type})
+	</insert>
+	
+	<!-- 채팅 멤버 추가 쿼리 -->
+	<insert id = "addChatMember" parameterType="ChatGroupVO">
+		INSERT INTO CHATMEMBER
+		VALUES(#{chat_no}, #{userid}, #{usernm}, #{auth_role}, 0)
+	</insert>
+	
+	<!-- 해당 아이디에 대한 안읽은 alarm 리스트 가져오기 -->
+	<select id = "getAlarmInfo" parameterType="String" resultType="AlarmVO">
+		SELECT * FROM ALARM WHERE userid = #{userid} and chat_type = 1
+	</select>	
+	
+	<!-- 읽은 알람 지우기 쿼리 -->
+	<delete id = "deleteAlarm" parameterType = "int">
+		DELETE FROM ALARM WHERE ALARM_NO = #{alarm_no}
+	</delete>
+	
+	<!-- 모든 알람 지우기 쿼리 -->
+	<delete id = "deleteAllAlarm" parameterType="String">
+		DELETE FROM ALARM WHERE USERID = #{userid}
+	</delete>
+	
+	
+	<!-- 채팅 가입하기 쿼리 -->
+	<insert id = "joinChatGroup" parameterType="ChatMemberVO">
+		INSERT INTO CHATMEMBER 
+		VALUES (#{chat_no}, #{userid}, #{usernm}, #{auth_role}, 0)
+	</insert>
+	
+	
+	<!-- =================================== 채팅 기능 쿼리 추가 =================================== -->
+	<!-- 해당 채팅방의 메시지 리스트 가져오기 -->
+	<select id = "messageList" parameterType="int" resultType="ChatMessageVO">
+		SELECT * FROM CHATMESSAGE WHERE CHAT_NO = #{chat_no}
+	</select>
+	
+	<!-- 메시지 등록하기 -->
+	<insert id = "insertMessage" parameterType="ChatMessageVO" useGeneratedKeys="true">
+<!-- 		INSERT INTO chatmessage (message_id, chat_no, message_content, message_regdat, userid, unread_count, usernm) -->
+<!-- 		VALUES (NULL, #{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{usernm}) -->
+	INSERT INTO CHATMESSAGE (message_id, chat_no, message_content, message_regdat, userid, unread_count, usernm)
+	VALUES (NULL, #{chat_no}, #{message_content}, DEFAULT, #{userid}, #{unread_count}, #{usernm})
+	</insert>
+	
+	<!-- 나를 제외한 해당 방에 속한 사람들 안 읽은 메시지 개수 업데이트 -->
+	<update id = "updateMessageCountExceptMe" parameterType="ChatMessageVO">
+		UPDATE CHATMEMBER
+		SET
+		MSG_COUNT = MSG_COUNT + 1
+		WHERE USERID != #{userid}
+		AND CHAT_NO = #{chat_no}
+	</update>
+	
+	<!-- 해당 유저가 속하는 채팅방 가져오기 -->
+	<select id = "getChatGroupListById" parameterType="String" resultType="ChatGroupVO">
+	SELECT A.*, B.MSG_COUNT FROM CHATGROUP A, CHATMEMBER B
+	WHERE A.CHAT_NO = B.CHAT_NO AND
+    B.USERID = #{userid}
+	</select>
+	
+	<!-- 채팅인원 목록 가져오기 -->
+	<select id = "getChatMember" parameterType="int" resultType="ChatMemberVO">
+		SELECT * FROM CHATMEMBER
+		WHERE CHAT_NO = #{chat_no}
+	</select>
+	
+	<!-- 채팅들 읽음 처리 -->
+	<update id = "readChatMessage" parameterType="ChatMessageVO">
+		UPDATE CHATMEMBER
+		SET
+		MSG_COUNT = 0
+		WHERE USERID = #{userid}
+		AND CHAT_NO = #{chat_no}
+	</update>
+	
+	<!-- 해당 유저의 안읽은 메시지 개수 -->
+	<select id = "getChatCnt" parameterType="string" resultType = "int">
+		SELECT COALESCE(SUM(msg_count), 0) AS cnt FROM CHATMEMBER
+    	WHERE userid = #{userid}
+	</select>
+	
+	<!-- 채팅방 인원수 가져오기 -->
+	<select id = "getMemberCount" parameterType="int" resultType = "int">
+		select count(*) as cnt
+		from CHATMEMBER
+		where chat_no = #{chat_no}
+	</select>
+	
+	<!-- 메시지 안읽은 유저 테이블에 삽입 -->
+	<insert id = "insertUnreadMember" parameterType="hashMap">
+		INSERT INTO UNREADMEMBER (message_id, userid, chat_no) 
+		VALUES (#{message_id}, #{userid}, #{chat_no})
+	</insert>
+	
+	<!-- 방 안에서 해당 메시지 읽음 카운트 -1 처리 -->
+	<update id = "readMessageInRoom" parameterType = "ChatMessageVO">
+		UPDATE CHATMESSAGE
+		SET UNREAD_COUNT = UNREAD_COUNT - 1
+		WHERE CHAT_NO = #{chat_no}
+		AND MESSAGE_ID = #{message_id}
+	</update>
+	
+	<!-- 안읽은 메시지 테이블에서 해당 방에 대한 유저의 행 삭제 -->
+	<delete id = "deleteUnreadMsg" parameterType="ChatMessageVO">
+		DELETE FROM UNREADMEMBER
+		WHERE CHAT_NO = #{chat_no}
+		AND USERID = #{userid}
+	</delete>
+	
+	<!-- 메시지 안읽은 개수 가져오기 -->
+	<select id = "getUnreadCntByUser" parameterType="ChatMessageVO" resultType = "int">
+		SELECT MESSAGE_ID FROM UNREADMEMBER
+		WHERE CHAT_NO = #{chat_no}
+		AND USERID = #{userid}
+	</select>
+	
+	<!-- 가장 최신의 message_id 불러오기 -->
+	<!-- unreadmember 테이블에 message_id를 넣기 위한 구문 -->
+	<select id = "getMessageId" resultType="int" parameterType="ChatMessageVO">
+		SELECT MAX(MESSAGE_ID) FROM CHATMESSAGE
+	</select>
+	
+	<!-- 가장 최신의 chat_no 불러오기 -->
+	<select id = "getChatNo" resultType="int">
+		SELECT MAX(CHAT_NO) FROM CHATGROUP
+	</select>
+	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (userid) -->
+	<select id = "getMemberFromTable" resultType = "String">
+	SELECT MEMBER.USERID
+	FROM MEMBER
+	INNER JOIN GOODS
+	ON
+	MEMBER.USERID = GOODS.USERID
+	WHERE GOODS.GOODS_ID = #{goods_id}
+	</select>
+	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (usernm) -->
+	<select id = "getUserNameFromTable" resultType = "String">
+	SELECT MEMBER.usernm
+	FROM MEMBER
+	INNER JOIN GOODS
+	ON
+	MEMBER.USERID = GOODS.USERID
+	WHERE GOODS.GOODS_ID = #{goods_id}
+	</select>
+	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (userid) -->
+	<select id = "getMemberFromArticle" resultType = "String">
+		SELECT MEMBER.USERID
+		FROM MEMBER
+		INNER JOIN ARTICLE
+		ON MEMBER.USERID = ARTICLE.USERID
+		WHERE ARTICLE.ANUMBER=#{anumber}
+	</select>
+	
+	<!-- 게시글 번호로 member 테이블에 있는 유저 정보 가져오기 (usernm) -->
+	<select id = "getUserNameFromArticle" resultType = "String">
+		SELECT MEMBER.USERNM
+		FROM MEMBER
+		INNER JOIN ARTICLE
+		ON MEMBER.USERID=ARTICLE.USERID
+		WHERE ARTICLE.ANUMBER=#{anumber}
+	</select>
+	
+	
+
+	
+	
+</mapper>

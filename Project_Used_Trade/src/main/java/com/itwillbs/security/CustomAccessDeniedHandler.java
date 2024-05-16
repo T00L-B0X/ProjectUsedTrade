@@ -14,13 +14,17 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
-
+	
 	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
-			throws IOException, ServletException {
-		logger.debug("CustomAcessDeniedHandler");
-
-		response.sendRedirect("/accessError");
-	}
-
+	public void handle(HttpServletRequest request, HttpServletResponse response,
+			AccessDeniedException accessDeniedException) throws IOException, ServletException {
+		
+		logger.debug(" CustomAccessDeniedHandler_handle() 실행 ");
+		logger.debug(" 접근 권한이 없음! ");
+		
+		logger.debug(accessDeniedException+"");
+		
+		response.sendRedirect("/user/accessError");
+		
+	} 
 }

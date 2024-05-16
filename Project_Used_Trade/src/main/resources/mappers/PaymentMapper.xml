@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mapper.PaymentMapper">
+
+	<!-- 현제 페이 금액 조회 -->
+	<select id="getMemberPay" resultType="com.itwillbs.pay.PayVO">
+    	select * from PAY 
+    	where USERID = #{USERID}
+    </select>
+	
+	<!-- 결제 정보 저장 -->
+	<insert id="insertPayment" parameterType="PaymentVO">
+		insert into PAYMENT 
+		values(#{PAYMENT_ID}, NOW(), #{PAYMENT_AMOUNT}, #{PAYMENT_STATE}, #{DELIVERY_TYPE}, #{USERID}, #{GOODS_ID}, NOW(), NULL)
+	</insert>
+	
+	<!-- 결제시 차감 금액 저장 -->
+	<update id="updatePayDeduct">
+		update PAY set PAY_BALANCE = PAY_BALANCE - #{PAYMENT_AMOUNT}
+		where USERID = #{USERID};
+	</update>
+	
+	<!-- 결제 정보 조회 -->
+	<select id="selectPayment" resultType="com.itwillbs.payment.PaymentVO">
+	    select * from PAYMENT
+    	where USERID = #{USERID}
+	</select>
+	
+	<!-- 결제 취소 -->
+	<!-- 결제 취소 정보 저장 -->
+	<insert id="insertPayInfoCancel" parameterType="PaymentVO">
+		insert into PAYMENT 
+		values(#{PAYMENT_ID}, NOW(), #{PAYMENT_AMOUNT}, #{PAYMENT_STATE}, #{DELIVERY_TYPE}, #{USERID}, #{GOODS_ID}, NOW(), NULL)
+	</insert>
+	
+	<!-- 결제 취소시 반환 금액 저장 -->
+	<update id="updatePayCancel">
+		update PAY set PAY_BALANCE = PAY_BALANCE + #{PAYMENT_AMOUNT}
+		where USERID = #{USERID};
+	</update>
+
+
+</mapper>

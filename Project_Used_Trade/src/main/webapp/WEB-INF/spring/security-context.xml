@@ -1,53 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
-
-	<!-- security-context.xml : 시큐리티 관련 설정  -->
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<!-- 접근 권한 처리 객체 -->
-	<bean id="customAccessDenied" class="com.bswill.security.CustomAccessDeniedHandler" />
+		<!-- security-context.xml : 시큐리티 관련 설정 -->
 	
-	<!-- 로그인 성공 시 처리 객체 -->
-	<bean id="customLoginSuccess" class="com.bswill.security.CustomLoginSuccessHandler" />
+	<!-- 접근 권한 처리하는 객체 -->
+	<bean id="customAccessDenied" 
+		  class="com.itwillbs.security.CustomAccessDeniedHandler">
+	</bean>
 	
-	<!-- 로그인 실패 시 처리 객체 -->
-	<bean id="customLoginFailure" class="com.bswill.security.CustomLoginFailureHandler" />
+	<!-- 로그인 처리 후 이동객체 -->
+	<bean id="customLoginSuccess" 
+		  class="com.itwillbs.security.CustomLoginSuccessHandler">
+	</bean>
 	
-	<!-- 암호화 처리 객체 -->
-	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-
+	<!-- 암호화 처리 객체(임시, 실제 암호화X) -->
+	<!-- <bean id="CustomNoopPasswordEncoder"
+		  class="test.itwillbs.security.CustomNoopPasswordEncoder">
+	</bean> -->
+	
+	<!-- 암호화 처리 객체(실제 암호화) -->
+	<bean id="bcryptPasswordEncoder"
+		  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	</bean>
+	
+	<bean id="userLoginFailHandler"
+		  class="com.itwillbs.security.UserLoginFailHandler">
+	</bean>
+	
 	<security:http>
-		<!-- 접근 권한 -->
-		<security:intercept-url pattern="/main" access="isAuthenticated()" />
-		<security:intercept-url pattern="/employee/*" access="isAuthenticated()" />
-		<security:intercept-url pattern="/event/*" access="isAuthenticated()" />
-
-		<!-- 접근 권한이 없을 때 -->
-		<security:access-denied-handler ref="customAccessDenied" />
-
+		
+		<!--  접근 권한이 없을 때 보여지는 뷰 페이지 설정 -->
+<!-- 	<security:access-denied-handler error-page="/accessErr"/> -->
+		
+		<!--  접근 권한이 없을 때 보여지는 뷰 페이지 이동(redirect) -->
+		<security:access-denied-handler ref="customAccessDenied"/>
+		
+		<security:intercept-url pattern="/user/home" access="permitAll"/>
+		<security:intercept-url pattern="/user/login" access="permitAll"/>
+		<security:intercept-url pattern="/member" access="hasRole('ROLE_MANAGER')"/>
+		<security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+		
+		
 		<!-- 로그인 -->
-		<security:form-login login-page="/loginBswill" authentication-success-handler-ref="customLoginSuccess"
-			authentication-failure-handler-ref="customLoginFailure" />
+		<security:form-login 
+		authentication-success-handler-ref="customLoginSuccess"
+		authentication-failure-handler-ref = "userLoginFailHandler"/>
+		
+<!-- 		login-page="/user/login" -->
+<!-- 		username-parameter="id" -->
+<!-- 		password-parameter="pw" -->
+<!-- 		default-target-url="/user/home" -->
+
+		<!-- 
+		username-parameter : input 태그의 아이디 혹은 이메일 name 속성 값 (default: username)
+		password-parameter : input 태그의 비밀번호 name 속성 값 (default: password)
+		login-page : 새로운 로그인 화면 url (default: 스프링 기본 로그인 화면)
+		login-processing-url : form 태그의 action 속성 (default: POST /login)
+		default-target-url : 로그인 성공시 호출할 url
+		authentication-failure-url : 로그인 실패시 호출할 url (default: /login?error=1)
+		authentication-success-handler-ref : 로그인 성공시 default-target-url이 아닌 핸들러로 리다이렉트
+		authentication-failure-handler-ref : 로그인 실패시 authentication-failure-url이 아닌 핸들러로 리다이렉트
+		always-use-default-target : 무조건 핸들러가 지정한 페이지로 이동 (default: false)
+		-->
+		
+		<security:remember-me remember-me-cookie="remember-me" token-validity-seconds="604800"/>
 		
 		<!-- 로그아웃 -->
-		<security:logout logout-url="/logoutBswill" logout-success-url="/loginBswill?logout=1" invalidate-session="true" />
-
+		<security:logout logout-url="/customLogout"  logout-success-url="/user/login" invalidate-session="true" />
+		
+		
+		
 	</security:http>
-
+	
+	<!-- 시큐리티 관련 처리(경비팀) -->
 	<security:authentication-manager>
-
+		<!-- 시큐리티 관련 처리(경비팀 소속경비원) -->
 		<security:authentication-provider>
+		<!-- 사용자 인증정보 관리(+JDBC) -->
+		<security:jdbc-user-service data-source-ref="dataSource"
+									users-by-username-query="select userid,userpw,enabled from MEMBER where userid=?"
+									authorities-by-username-query="select userid,auth from AUTH where userid=?" />
 
-			<security:jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="SELECT employee_id, PASSWD, enabled FROM tbl_employee WHERE employee_id=?"
-				authorities-by-username-query="SELECT employee_id, auth FROM tbl_auth WHERE employee_id=?" />
-
-			<security:password-encoder ref="bcryptPasswordEncoder" />
-
+		<!-- <security:password-encoder ref="CustomNoopPasswordEncoder"/> -->
+		<security:password-encoder ref="bcryptPasswordEncoder"/>
+		
+		
+		
+		
+			<!-- 사용자 인증정보 관리 -->
+			<!-- <security:user-service>
+				사용자 정보 등록(방문록 작성)
+				<security:user name="asdqwe" password="{noop}asdqwe123" authorities="ROLE_MEMBER"/>
+				<security:user name="asdqweas" password="{noop}asdqwe123" authorities="ROLE_MEMBER,ROLE_ADMIN"/>
+			</security:user-service> -->
 		</security:authentication-provider>
-
+	
 	</security:authentication-manager>
-
+	
+	
 </beans>

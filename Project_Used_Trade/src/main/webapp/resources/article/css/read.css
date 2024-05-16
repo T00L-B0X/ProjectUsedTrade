@@ -1,0 +1,145 @@
+/* article.css */
+
+/* 섹션 스타일 */
+.article {
+	width: 70%;
+	margin: auto;
+}
+
+/* 제목 스타일 */
+.title {
+	border: solid 1px #ccc;
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.title h3 {
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+.title .titleBtn {
+	text-align: right;
+	margin-bottom: 10px;
+}
+
+.title .titleBtn button {
+	margin-right: 10px;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+/* 내용 스타일 */
+.content {
+	border: solid 1px #ccc;
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 20px;
+	line-height: 1.6;
+}
+
+/* 좋아요 버튼 스타일 */
+.like {
+    margin-bottom: 20px;
+    text-align: center; /* 가운데 정렬 추가 */
+}
+
+.like button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.like img {
+    width: 30px;
+}
+
+/* 목록으로, 실시간 채팅 버튼 스타일 */
+.button-container {
+	margin-bottom: 20px;
+}
+
+.button-container button {
+	margin-right: 10px;
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+	background-color: #0056b3;
+}
+
+/* 댓글 스타일 */
+.comment {
+	margin-bottom: 20px;
+}
+
+.comment textarea {
+	width: calc(100% - 20px); /* 텍스트 영역의 너비 계산 */
+	margin-bottom: 10px;
+	padding: 10px;
+	border: solid 1px #ccc;
+	border-radius: 5px;
+}
+
+.comment button {
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    float: right; /* 수정된 부분 */
+    margin-left: 10px; /* 버튼과의 간격 조정 */
+}
+
+.comment button:hover {
+    background-color: #218838;
+}
+
+.comment hr {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+/* 댓글 스타일 */
+.comment li {
+    border: solid 1px #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    font-size: 16px; /* 글꼴 크기 조정 */
+}
+
+.comment .meta {
+	font-size: 14px;
+	color: #666;
+}
+
+.comment .buttons {
+	margin-top: 10px;
+}
+
+.comment button {
+	padding: 5px 10px;
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.comment button:hover {
+	background-color: #c82333;
+}
