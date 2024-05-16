@@ -35,7 +35,8 @@
 <!-- <link href="/resources/css/test.css" rel="stylesheet"> -->
 <title>중고 팔아다오.</title>
 <style>
-.container {
+
+.chatContainer {
 	display: flex;
 	margin-top: 20px;
 }
@@ -166,18 +167,17 @@
 	// 처음 로드시 실행
 	getAlarm();
 
-	//3초마다 반복 실행
-	//   setInterval(() => {
-	// 	  getAlarm();
-	// 	}, 3000);
+	// 	3초마다 반복 실행
+	  setInterval(() => {
+		  getAlarm();
+		}, 3000);
 
 	function getAlarm() {
 		// CSRF 토큰 가져오기
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
 
-		$
-				.ajax({
+		$.ajax({
 					type : "post",
 					url : "/chatting/getAlarmInfo",
 					beforeSend : function(xhr) {
