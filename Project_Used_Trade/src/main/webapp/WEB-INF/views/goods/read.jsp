@@ -262,12 +262,9 @@ $(function() {
     		<input id="bidEnd" type="button" value="경매 종료 하기">
     		<div id="bidEndMessage"></div>
     	</c:if>
-    	${avo.au_status }
-    	${arvo.ar_userid }
-    	${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }
     	<!-- arvo.ar_userid는 auction_record테이블에 있는 가장 높게 입찰한 사람의 id -->
         <c:if test="${avo.au_status == 0 && arvo.ar_userid eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}">
-        	<button>결제하기</button>
+			<input type="button" class="btn btn-block btn-success" value="결제하기" onclick="location.href='/payment/purchase?goods_id=${goodsVO.goods_id}'"/><hr>
         </c:if>
         <h3>상품 설명</h3>
             <p>${goodsVO.goods_info}</p>
