@@ -56,6 +56,25 @@
 	margin: auto;    
 }
 
+.chatCnt {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 15px;
+    margin-left: -18px;
+    margin-top: 10px;
+}
+
+.chat-none {
+    display: none; /* 초기에 숨김 처리 */
+}
+
+
 
 
 /* .chatList{flex:2} */
@@ -322,26 +341,29 @@
 					<li><a class="nav-link" href="/goods/goodsMain">팔아요</a></li>
 					<li><a class="nav-link" href="/article/list">소통해요</a></li>
 					<li><a class="nav-link" href="/chatting">구해요</a></li>
-					<li><a class="nav-link" href="/chathome">채팅창</a>
-						<div class="chatCnt chat-none"></div></li>
+					<li><a class="nav-link" href="/chathome">채팅창</a></li>
+					<span class="chatCnt chat-none"></span>
 				</ul>
 
+
 				<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="alarm" role="button"
-						data-bs-toggle="dropdown">알림</a>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="alarm" role="button"
+						data-bs-toggle="dropdown"
+					>알림</a>
 						<ul class="dropdown-menu" id="toast">
 							<!-- 동적 처리 -->
-						</ul> 
-						<c:choose>
+						</ul> <c:choose>
 							<c:when test="${empty user}">
 								<li><a class="nav-link" href="/user/login">로그인</a></li>
 							</c:when>
 							<c:otherwise>
 								<li><a id="logout-link" class="nav-link" href="/user/login">로그아웃</a></li>
 								<li><a class="nav-link"
-									href="http://localhost:8088/user/mypage">
-									<img src="/resources/images/user.svg" style="padding-left: 10px; margin-left: 10px;"></a>
-								</li>
+									href="http://localhost:8088/user/mypage"
+								> <img src="/resources/images/user.svg"
+										style="padding-left: 10px; margin-left: 10px;"
+									></a></li>
 							</c:otherwise>
 						</c:choose>
 				</ul>
