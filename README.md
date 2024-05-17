@@ -25,4 +25,6 @@ samples, guidance on mobile development, and a full API reference.
 5. lib > main.dart를 붙여넣기한다.
 6. ..loadRequest(Uri.parse('http://c6d2311t1.itwillbs.com/'));
    var response = await Dio().get('http://c6d2311t1.itwillbs.com/goods/glist');
-   주소를 확인한다.(학원에서 주소를 내렸을 시 sts 로컬 주소로 변경한 후 로컬 서버를 실행해야 작동함.)
+   주소를 확인한다.
+   학원에서 주소를 내렸을 시 sts 로컬 주소로 변경한 후 로컬 서버를 실행해야 작동함.
+   cmd의 ifconfig 명령어를 통해 http://{ip 주소}:{톰캣 포트번호}/ 로 변경하면 된다.
